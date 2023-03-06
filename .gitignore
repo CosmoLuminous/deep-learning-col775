@@ -4,6 +4,7 @@ catboost*/
 notebooks/
 a1/resnet/data/
 a1/resnet/refs/
+a1/resnet/checkpoints/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
