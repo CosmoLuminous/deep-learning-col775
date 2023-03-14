@@ -18,9 +18,9 @@ from tqdm import tqdm
 from datetime import datetime
 
 from src.resnet import ResNet
-from src.utils import load_checkpoint
+from src.utils import *
 
-def train(args):
+def get_loaders(args):    
 
     if args.aug:
 
@@ -66,6 +66,9 @@ def train(args):
 
     print("Train Size = {}, Val Size = {}, Test Size = {}".format(len(train_dataset), len(val_dataset), len(test_dataset)))
     
+    return train_loader, val_loader, test_loader
+
+def train(args, train_loader, val_loader):
 
     net = ResNet(norm_type = args.norm_type)
     print(net)
@@ -76,7 +79,10 @@ def train(args):
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs) #Check for self.epochs param
     
     loss_tracker = defaultdict(list)
-    accuracy_tracker = defaultdict(list)
+    accuracy_tracker = defaultdict(list)    
+    time_tracker = defaultdict(list)
+    ft_quantile_tracker = defaultdict(list)
+
     best_accuracy = -1
     best_accu_epoch = -1
 
@@ -92,7 +98,7 @@ def train(args):
         
         net.train()
         for idx, batch in enumerate(train_loader):
-                
+            # print(idx, len(batch[0]))
             optimizer.zero_grad()
             
             images, labels = batch
@@ -117,11 +123,12 @@ def train(args):
         accuracy_tracker["train"].append(round(correct_pred/total_samples*100, 2))
 
         scheduler.step()
-
+        print("validating...")
         net.eval()
         correct_pred = 0
         total_samples = 0
         val_loss = []
+        feature_list = []
         for idx, batch in enumerate(val_loader):
             
             images, labels = batch
@@ -137,17 +144,23 @@ def train(args):
             verdict = torch.eq(pred, labels)
             correct_pred += verdict.sum().item()
             total_samples += labels.size(0)
+            
+            feature_list.extend(list(net.get_features().view(-1,1).numpy()))
         
         loss_tracker["val"].append(np.mean(val_loss))
         val_accuracy = round(correct_pred/total_samples*100, 2)
         accuracy_tracker["val"].append(val_accuracy)
+        
+        ft_quantile_tracker[1].append(np.percentile(feature_list, 1))
+        ft_quantile_tracker[20].append(np.percentile(feature_list, 20))
+        ft_quantile_tracker[80].append(np.percentile(feature_list, 80))
+        ft_quantile_tracker[99].append(np.percentile(feature_list, 99))
 
         t1 = time()
 
         print("Epoch: {}, Total Time Elapsed: {}Mins, Train Loss: {}, Train Accuracy: {}%, Validation Loss: {}, Validation Accuracy: {}%".format(epoch, round((t1-t0)/60,2), loss_tracker["train"][-1], accuracy_tracker["train"][-1], loss_tracker["val"][-1], accuracy_tracker["val"][-1]))
-
+        time_tracker['train'].append(round((t1-t0)/60,2))
         model_state = {
-                'net': net.state_dict(),
                 'accu': val_accuracy,
                 'epoch': epoch,
                 'best_accu': best_accuracy,
@@ -155,9 +168,10 @@ def train(args):
             }
 
         print("Epoch: {}, Saving Model Checkpoint: {}".format(epoch, now.strftime("%d-%m-%y %H:%M")))
-
-        torch.save(model_state, os.path.join(args.checkpoint_dir, "latest_checkpoint_{}.pth".format(args.norm_type)))
-            
+        
+        torch.save(net, os.path.join(args.checkpoint_dir, "latest_checkpoint_{}.pth".format(args.norm_type)))
+        with open(os.path.join(args.checkpoint_dir, "training_progress_{}.json".format(args.norm_type)), "w") as outfile:
+            json.dump(model_state, outfile)
         
         if val_accuracy > best_accuracy:
 
@@ -165,7 +179,6 @@ def train(args):
             best_accu_epoch = epoch
 
             model_state = {
-                'net': net.state_dict(),
                 'accu': val_accuracy,
                 'epoch': epoch,
                 'best_accu': best_accuracy,
@@ -175,8 +188,9 @@ def train(args):
             print("Best Validation Accuracy Updated = {}%, Last Best = {}%".format(val_accuracy, best_accuracy))
             print("Saving Best Model Checkpoint:", now.strftime("%d-%m-%y %H:%M"))
 
-            torch.save(model_state, os.path.join(args.checkpoint_dir, "best_val_checkpoint_{}.pth".format(args.norm_type)))
-            
+            torch.save(net, os.path.join(args.checkpoint_dir, "best_val_checkpoint_{}.pth".format(args.norm_type)))
+            with open(os.path.join(args.checkpoint_dir, "training_progress_{}.json".format(args.norm_type)), "w") as outfile:
+                json.dump(model_state, outfile)
 
 
         with open(os.path.join(args.result_dir, "loss_tracker_{}_{}.json".format(args.norm_type, date_time)), "w") as outfile:
@@ -184,20 +198,28 @@ def train(args):
 
         with open(os.path.join(args.result_dir, "accuracy_tracker_{}_{}.json".format(args.norm_type, date_time)), "w") as outfile:
             json.dump(accuracy_tracker, outfile)
+
+        with open(os.path.join(args.result_dir, "time_tracker_{}_{}.json".format(args.norm_type, date_time)), "w") as outfile:
+            json.dump(time_tracker, outfile)
+
+        with open(os.path.join(args.result_dir, "ft_quantile_tracker_{}_{}.json".format(args.norm_type, date_time)), "w") as outfile:
+            json.dump(ft_quantile_tracker, outfile)
     
 
-    return test_loader, net
+    return
 
 
-def test(args, test_loader):
-    net = load_checkpoint(args.checkpoint_dir, "best", args.norm_type)
+def model_eval(args, test_loader, train_loader, val_loader):
+    # print(net_dict.keys(), net_dict[net])
+    net = load_checkpoint(args, "best")
     net = net.to(device)
-    net.eval()    
+    net.eval()   
+
     actuals = []
     predictions = []
 
     for idx, batch in enumerate(test_loader):
-        
+
         images, labels = batch
         images = images.to(device)
         labels = labels.to(device)
@@ -207,21 +229,68 @@ def test(args, test_loader):
         predictions.extend(torch.argmax(outputs, dim=1).squeeze().tolist())
 
     conf_mat = confusion_matrix(actuals, predictions)
-    accu = accuracy_score(actuals, predictions)
+    accu = round(accuracy_score(actuals, predictions)*100,2)
     micro_f1 = round(f1_score(actuals, predictions, average='micro'), 4)
     macro_f1 = round(f1_score(actuals, predictions, average='macro'), 4)
 
-    test_accuracy = "Test Accuracy = " + str(round(correct_pred/total_samples*100, 2)) + "%"
-    micro_f1 = "Micro-F1 Score = " + str(micro_f1)
-    macro_f1 = "Micro-F1 Score = " + str(macro_f1)
+    test_accuracy = "Test Accuracy = " + str(accu) + "%"
+    test_micro_f1 = "Test Micro-F1 Score = " + str(micro_f1)
+    test_macro_f1 = "Test Micro-F1 Score = " + str(macro_f1)
 
-    test_result = [EXP_NAME, test_accuracy, micro_f1, macro_f1]
-    with open(os.path.join(args.result_dir, "test_perormance.txt"), "w") as res:
+    actuals = []
+    predictions = []
+
+    for idx, batch in enumerate(train_loader):
+
+        images, labels = batch
+        images = images.to(device)
+        labels = labels.to(device)
+
+        actuals.extend(labels.squeeze().tolist())
+        outputs = net(images)
+        predictions.extend(torch.argmax(outputs, dim=1).squeeze().tolist())
+
+    conf_mat = confusion_matrix(actuals, predictions)
+    accu = round(accuracy_score(actuals, predictions)*100,2)
+    micro_f1 = round(f1_score(actuals, predictions, average='micro'), 4)
+    macro_f1 = round(f1_score(actuals, predictions, average='macro'), 4)
+
+    train_accuracy = "Train Accuracy = " + str(accu) + "%"
+    train_micro_f1 = "Train Micro-F1 Score = " + str(micro_f1)
+    train_macro_f1 = "Train Micro-F1 Score = " + str(macro_f1)
+
+    actuals = []
+    predictions = []
+
+    for idx, batch in enumerate(val_loader):
+
+        images, labels = batch
+        images = images.to(device)
+        labels = labels.to(device)
+
+        actuals.extend(labels.squeeze().tolist())
+        outputs = net(images)
+        predictions.extend(torch.argmax(outputs, dim=1).squeeze().tolist())
+
+    conf_mat = confusion_matrix(actuals, predictions)
+    accu = round(accuracy_score(actuals, predictions)*100,2)
+    micro_f1 = round(f1_score(actuals, predictions, average='micro'), 4)
+    macro_f1 = round(f1_score(actuals, predictions, average='macro'), 4)
+
+    val_accuracy = "Val Accuracy = " + str(accu) + "%"
+    val_micro_f1 = "Val Micro-F1 Score = " + str(micro_f1)
+    val_macro_f1 = "Val Micro-F1 Score = " + str(macro_f1)
+
+    test_result = [
+        EXP_NAME, test_accuracy, test_micro_f1, test_macro_f1, train_accuracy,
+        train_micro_f1, train_macro_f1, val_accuracy, val_micro_f1, val_macro_f1
+     ]
+    with open(os.path.join(args.result_dir, f"evaluation_perormance_{date_time}.txt"), "w") as res:
         for r in test_result:
             res.writelines(r)
             res.writelines("\n")
 
-    print("\n\n###########-------------------- Test Accuracy =", test_accuracy)
+    print("\n\n@@@@@@@@@--------- \nTest Accuracy = {}, \nTrain Accuracy = {}, \nVal Accuracy = {} \n---------@@@@@@@@@".format(test_accuracy, train_accuracy, val_accuracy))
 
 
 
@@ -262,6 +331,9 @@ def get_parser():
     # data augmentation
     parser.add_argument("--aug", type=bool, default=True, help="Whether to perform data augmentation during training.")
 
+    # data augmentation
+    # parser.add_argument("--comparison_plots_only", type=bool, default=False, help="Whether to perform data augmentation during training.")
+
 
     return parser
 
@@ -273,15 +345,17 @@ if __name__ == "__main__":
     parser = get_parser()
     args = parser.parse_args()
     
-    if args.aug:
-        dir_name = args.norm_type + "_" + "aug"
-    else:
+    if not args.aug:
         dir_name = args.norm_type + "_" + "noaug"
+    else:
+        dir_name = args.norm_type
     
     print(dir_name)
     args.data_dir = os.path.relpath(args.data_dir)
+    
     args.result_dir = os.path.join(os.path.relpath(args.result_dir), dir_name)
     args.checkpoint_dir = os.path.join(os.path.relpath(args.checkpoint_dir), dir_name)
+
 
     now = datetime.now()
     date_time = now.strftime("%Y%m%d_%H%M")
@@ -300,7 +374,17 @@ if __name__ == "__main__":
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print("Running on device =", device)
 
-    test_loader = train(args)
-    test(args, test_loader, net)
+    comparison_plots_only = True # CHANGE THIS FLAG BEFORE RUNNING TO SWITCH BETWEEN TRAINING AND GENERATING PLOTS
+    if comparison_plots_only:
+        args.result_dir = "/".join(args.result_dir.split("/")[:-1])
+        plot_loss_comparison(args)
+        plot_accu_comparison(args)
+        plot_time_comparison(args)
+    else:
+        train_loader, val_loader, test_loader = get_loaders(args)
+        train(args, train_loader, val_loader)
+        model_eval(args, test_loader, train_loader, val_loader)
+        plot_train_val_stats(args, date_time)
+        plot_quantiles(args, date_time)
 
 

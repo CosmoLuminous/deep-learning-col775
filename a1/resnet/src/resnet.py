@@ -8,12 +8,32 @@ import torch
 import torchvision
 import torch.nn as nn
 import torch.nn.functional as F
-
+from src.normalization import NoNorm, BatchNorm, InstanceNorm, LayerNorm, GroupNorm, BatchInstanceNorm
 
 def layer_normalization(dim, norm_type):
     if norm_type == "torch_bn":
         return nn.BatchNorm2d(dim)
 
+    elif norm_type == "bn":
+        return BatchNorm(num_features=dim)
+
+    elif norm_type == "nn":
+        return NoNorm()
+
+    elif norm_type == "in":
+        return InstanceNorm(num_features=dim)
+
+    elif norm_type == "ln":
+        return LayerNorm(num_features=dim)
+    
+    elif norm_type == "gn":
+        return GroupNorm(num_features=dim)
+
+    elif norm_type == "bin":
+        return BatchInstanceNorm(num_features=dim)
+
+    else:
+        pass
 
 class ResidualBlock(nn.Module):
     """
@@ -81,10 +101,11 @@ class ResNet(nn.Module):
         self.norm_type = norm_type
         
         self.conv = nn.Conv2d(3, n_channels[0], kernel_size=3, stride=1, padding=1, bias=False)
-        self.layer_norm = layer_normalization(n_channels[0], norm_type)
+        self.layer_norm = layer_normalization(n_channels[0], self.norm_type)
         self.relu = nn.ReLU()
         self.in_channels = n_channels[0]        
         self.out_channels = 0
+        self.features = None
                  
         layers = dict()
         for c in range(len(n_channels)):
@@ -99,13 +120,13 @@ class ResNet(nn.Module):
                     downsample = nn.Sequential(
                         nn.Conv2d(self.in_channels, self.out_channels, kernel_size=3, 
                                   stride=2, padding=1, bias=False), 
-                        layer_normalization(self.out_channels, norm_type)
+                        layer_normalization(self.out_channels, self.norm_type)
                     )
                 if c > 0 and l == 0:
                     stride = 2
                 else:
                     stride = 1
-                layer.append(ResidualBlock(self.in_channels, self.out_channels, stride = stride, downsample = downsample))
+                layer.append(ResidualBlock(self.in_channels, self.out_channels, stride = stride, downsample = downsample, norm_type = self.norm_type))
                 if l == 0:
                     self.in_channels = self.out_channels       
             layers[c+1] = layer
@@ -134,7 +155,11 @@ class ResNet(nn.Module):
         x = self.avg_pool(x)
         
         # flatten and fc out
+        self.features = x.view(-1).detach().cpu()
         x = x.view(-1, 64)
         x = self.fc(x)
         
         return x
+
+    def get_features(self):
+        return self.features
