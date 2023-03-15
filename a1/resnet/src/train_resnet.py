@@ -6,11 +6,11 @@ import torchvision
 from torchvision.datasets import CIFAR10
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.data import random_split
-import torchvision.transforms as transforms
 import torch.optim as optim
-from sklearn.metrics import r2_score, precision_score, recall_score, f1_score, confusion_matrix, accuracy_score
 import torch.nn as nn
 import torch.nn.functional as F
+import torchvision.transforms as transforms
+from sklearn.metrics import f1_score, confusion_matrix, accuracy_score
 from collections import defaultdict
 import json 
 from time import time
@@ -21,7 +21,9 @@ from src.resnet import ResNet
 from src.utils import *
 
 def get_loaders(args):    
-
+    norm1 = (0.4914, 0.4822, 0.4465)
+    norm2 = (0.2023, 0.1994, 0.2010)
+    split_ratio = [40000, 10000]
     if args.aug:
 
         train_transforms = transforms.Compose([
@@ -29,22 +31,20 @@ def get_loaders(args):
             transforms.RandomCrop(32),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
-            transforms.Normalize((0.4914, 0.4822, 0.4465),
-                                (0.2023, 0.1994, 0.2010))
+            transforms.Normalize(norm1, norm2)
         ])
     
     else:
 
         train_transforms = transforms.Compose([
             transforms.ToTensor(),
-            transforms.Normalize((0.4914, 0.4822, 0.4465),
-                                (0.2023, 0.1994, 0.2010))
+            transforms.Normalize(norm1, norm2)
         ])
 
 
     dataset = torchvision.datasets.CIFAR10(root=args.data_dir, train=True, transform=train_transforms)
     
-    train_dataset, val_dataset = torch.utils.data.random_split(dataset, [40000, 10000])
+    train_dataset, val_dataset = torch.utils.data.random_split(dataset, split_ratio)
     
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size = args.batch_size, shuffle = True, num_workers = args.num_workers
@@ -56,8 +56,7 @@ def get_loaders(args):
     
     test_transforms = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465),
-                             (0.2023, 0.1994, 0.2010))])
+        transforms.Normalize(norm1, norm2)])
     
     test_dataset = torchvision.datasets.CIFAR10(root=args.data_dir, train=False, transform=test_transforms)
     test_loader = torch.utils.data.DataLoader(
@@ -76,7 +75,11 @@ def train(args, train_loader, val_loader):
 
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(net.parameters(), lr=0.1, weight_decay=1e-4, momentum=0.9)
-    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs) #Check for self.epochs param
+    schedulers = [
+        optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.1, last_epoch=- 1, verbose=False),
+        optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs, verbose=False)
+        ]
+    scheduler =  schedulers[1] #Check for self.epochs param
     
     loss_tracker = defaultdict(list)
     accuracy_tracker = defaultdict(list)    

@@ -37,8 +37,9 @@ class BatchNorm(nn.Module):
         if self.training:            
                 
             n = x.numel() / x.size(1)
-            var = x.var(dim=(0,2,3), keepdim=True, unbiased=False)
-            mean = x.mean(dim=(0,2,3), keepdim=True)
+            dimensions = (0,2,3)
+            var = x.var(dim=dimensions, keepdim=True, unbiased=False)
+            mean = x.mean(dim=dimensions, keepdim=True)
 
             with torch.no_grad():
                 
@@ -49,8 +50,8 @@ class BatchNorm(nn.Module):
             # print(self.running_mean, self.running_var)
             mean = self.running_mean
             var = self.running_var
-
-        x = (x - mean)/ torch.sqrt(var + self.eps)
+        dn = torch.sqrt(var + self.eps)
+        x = (x - mean)/ dn
         if self.affine:
             x = x * self.gamma + self.beta
 
@@ -87,9 +88,10 @@ class InstanceNorm(nn.Module):
         # print(x.shape)
         # x = x.view(N, self.num_features, -1)
         # print(x.shape, "\n")
+        dimensions = (2,3)
         if self.training:
-            mean = x.mean(dim=(2,3), keepdim=True)
-            var = x.var(dim=(2,3), keepdim=True)
+            mean = x.mean(dim=dimensions, keepdim=True)
+            var = x.var(dim=dimensions, keepdim=True)
             # print(mean.shape, var.shape)
             # with torch.no_grad():
                 
@@ -99,10 +101,10 @@ class InstanceNorm(nn.Module):
         else:
             # mean = self.running_mean
             # var = self.running_var            
-            mean = x.mean(dim=(2,3), keepdim=True)
-            var = x.var(dim=(2,3), keepdim=True)
-
-        x = (x - mean)/ torch.sqrt(var + self.eps)
+            mean = x.mean(dim=dimensions, keepdim=True)
+            var = x.var(dim=dimensions, keepdim=True)
+        dn = torch.sqrt(var + self.eps)
+        x = (x - mean)/ dn
 
         # x = x.view(N, C, H, W)
 
@@ -136,15 +138,15 @@ class LayerNorm(nn.Module):
         N, C, H, W = x.shape
 
         assert C == self.num_features
-
+        dimensions = (1,2,3)
         if self.training:
-            mean = x.mean(dim=(1,2,3), keepdim=True)            
-            var = x.var(dim=(1,2,3), keepdim=True)
+            mean = x.mean(dim=dimensions, keepdim=True)            
+            var = x.var(dim=dimensions, keepdim=True)
         else:
-            mean = x.mean(dim=(1,2,3), keepdim=True)            
-            var = x.var(dim=(1,2,3), keepdim=True)
-
-        x = (x - mean)/ torch.sqrt(var + self.eps)
+            mean = x.mean(dim=dimensions, keepdim=True)            
+            var = x.var(dim=dimensions, keepdim=True)
+        dn = torch.sqrt(var + self.eps)
+        x = (x - mean)/ dn
 
         if self.affine:
             x = x * self.gamma + self.beta
@@ -179,12 +181,12 @@ class GroupNorm(nn.Module):
         assert C % self.group == 0
         assert self.num_features == C
 
-        x = x.view(N, self.group, C // self.group, H, W)
-        
-        mean = x.mean(dim=(1,2,3), keepdim=True)
-        var = x.var(dim=(1,2,3), keepdim=True)
-
-        x = (x - mean)/ torch.sqrt(var + self.eps)
+        x = x.view(N, self.group, int(C / self.group), H, W)
+        dimensions = (1,2,3)
+        mean = x.mean(dim=dimensions, keepdim=True)
+        var = x.var(dim=dimensions, keepdim=True)
+        dn = torch.sqrt(var + self.eps)
+        x = (x - mean)/ dn
         x = x.view(N, C, H, W)
         
         if self.affine:
@@ -220,8 +222,9 @@ class BatchInstanceNorm(nn.Module):
         if self.training:            
                 
             n = x.numel() / x.size(1)
-            var_bn = x.var(dim=(0,2,3), keepdim=True, unbiased=False)
-            mean_bn = x.mean(dim=(0,2,3), keepdim=True)
+            dimensions = (0,2,3)
+            var_bn = x.var(dim=dimensions, keepdim=True, unbiased=False)
+            mean_bn = x.mean(dim=dimensions, keepdim=True)
 
             with torch.no_grad():
                 
@@ -231,13 +234,13 @@ class BatchInstanceNorm(nn.Module):
         else:
             mean_bn = self.running_mean
             var_bn = self.running_var
-
-        x_bn = (x - mean_bn)/ torch.sqrt(var_bn + self.eps)
-
-        mean_in = x.mean(dim=(2,3), keepdim=True)
-        var_in = x.var(dim=(2,3), keepdim=True)
-
-        x_in = (x - mean_in)/ torch.sqrt(var_in + self.eps)
+        dn = torch.sqrt(var_bn + self.eps)
+        x_bn = (x - mean_bn)/ dn
+        dimensions = (2,3)
+        mean_in = x.mean(dim=dimensions, keepdim=True)
+        var_in = x.var(dim=dimensions, keepdim=True)
+        dn = torch.sqrt(var_in + self.eps)
+        x_in = (x - mean_in)/ dn
 
         x = self.rho * x_bn + (1-self.rho) * x_in
 
