@@ -1,0 +1,10 @@
+bn_20230309_2228
+Test Accuracy = 89.14%
+Test Micro-F1 Score = 0.8914
+Test Micro-F1 Score = 0.8916
+Train Accuracy = 98.87%
+Train Micro-F1 Score = 0.9887
+Train Micro-F1 Score = 0.9887
+Val Accuracy = 89.21%
+Val Micro-F1 Score = 0.8921
+Val Micro-F1 Score = 0.8927

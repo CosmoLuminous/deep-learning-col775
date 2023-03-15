@@ -119,7 +119,7 @@ def plot_loss_comparison(args):
         
         norm_type = file.split("/")[-2]
         if norm_type != "torch_bn":
-            print(norm_type)
+            # print(norm_type)
             plt.plot(list(range(100)), json_dict['val'], label=norm_type.upper())
         
     plt.title(f"Validation Loss variation with Epochs")

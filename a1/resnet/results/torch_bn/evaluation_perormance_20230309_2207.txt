@@ -1,0 +1,10 @@
+torch_bn_20230309_2207
+Test Accuracy = 89.57%
+Test Micro-F1 Score = 0.8957
+Test Micro-F1 Score = 0.8956
+Train Accuracy = 99.03%
+Train Micro-F1 Score = 0.9903
+Train Micro-F1 Score = 0.9903
+Val Accuracy = 89.39%
+Val Micro-F1 Score = 0.8939
+Val Micro-F1 Score = 0.8938
