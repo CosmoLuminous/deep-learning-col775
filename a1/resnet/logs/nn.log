@@ -1,0 +1,672 @@
+nn
+
+ Namespace(aug=True, batch_size=128, checkpoint_dir='checkpoints/nn', data_dir='data', epochs=100, n=2, norm_type='nn', num_workers=16, r=10, result_dir='results_temp/nn')
+Running on device = cuda
+Train Size = 40000, Val Size = 10000, Test Size = 10000
+ResNet(
+  (conv): Conv2d(3, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (layer_norm): NoNorm()
+  (relu): ReLU()
+  (layer1): Sequential(
+    (0): ResidualBlock(
+      (conv1): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (conv2): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (relu): ReLU()
+      (norm1): NoNorm()
+      (norm2): NoNorm()
+    )
+    (1): ResidualBlock(
+      (conv1): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (conv2): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (relu): ReLU()
+      (norm1): NoNorm()
+      (norm2): NoNorm()
+    )
+  )
+  (layer2): Sequential(
+    (0): ResidualBlock(
+      (downsample): Sequential(
+        (0): Conv2d(16, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (1): NoNorm()
+      )
+      (conv1): Conv2d(16, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (relu): ReLU()
+      (norm1): NoNorm()
+      (norm2): NoNorm()
+    )
+    (1): ResidualBlock(
+      (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (relu): ReLU()
+      (norm1): NoNorm()
+      (norm2): NoNorm()
+    )
+  )
+  (layer3): Sequential(
+    (0): ResidualBlock(
+      (downsample): Sequential(
+        (0): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (1): NoNorm()
+      )
+      (conv1): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (relu): ReLU()
+      (norm1): NoNorm()
+      (norm2): NoNorm()
+    )
+    (1): ResidualBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (relu): ReLU()
+      (norm1): NoNorm()
+      (norm2): NoNorm()
+    )
+  )
+  (avg_pool): AvgPool2d(kernel_size=8, stride=8, padding=0)
+  (fc): Linear(in_features=64, out_features=10, bias=True)
+)
+
+
+---------------------------- MODEL TRAINING BEGINS ----------------------------
+
+#------------------ Epoch: 0 ------------------#
+validating...
+Epoch: 0, Total Time Elapsed: 0.14Mins, Train Loss: 2.103213533806725, Train Accuracy: 20.04%, Validation Loss: 1.8126323819160461, Validation Accuracy: 30.81%
+Epoch: 0, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 30.81%, Last Best = 30.81%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 1 ------------------#
+validating...
+Epoch: 1, Total Time Elapsed: 0.27Mins, Train Loss: 1.6914792319837089, Train Accuracy: 36.42%, Validation Loss: 1.5946484327316284, Validation Accuracy: 42.03%
+Epoch: 1, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 42.03%, Last Best = 42.03%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 2 ------------------#
+validating...
+Epoch: 2, Total Time Elapsed: 0.41Mins, Train Loss: 1.449500078591295, Train Accuracy: 47.37%, Validation Loss: 1.3049645364284514, Validation Accuracy: 53.48%
+Epoch: 2, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 53.48%, Last Best = 53.48%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 3 ------------------#
+validating...
+Epoch: 3, Total Time Elapsed: 0.55Mins, Train Loss: 1.2818222969484787, Train Accuracy: 54.16%, Validation Loss: 1.201530635356903, Validation Accuracy: 56.46%
+Epoch: 3, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 56.46%, Last Best = 56.46%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 4 ------------------#
+validating...
+Epoch: 4, Total Time Elapsed: 0.69Mins, Train Loss: 1.160725580046352, Train Accuracy: 59.26%, Validation Loss: 1.2098870992660522, Validation Accuracy: 57.32%
+Epoch: 4, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 57.32%, Last Best = 57.32%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 5 ------------------#
+validating...
+Epoch: 5, Total Time Elapsed: 0.83Mins, Train Loss: 1.0910577800708077, Train Accuracy: 61.63%, Validation Loss: 1.1702680885791779, Validation Accuracy: 58.84%
+Epoch: 5, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 58.84%, Last Best = 58.84%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 6 ------------------#
+validating...
+Epoch: 6, Total Time Elapsed: 0.97Mins, Train Loss: 1.0091671197178265, Train Accuracy: 64.79%, Validation Loss: 0.9613203585147858, Validation Accuracy: 67.1%
+Epoch: 6, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 67.1%, Last Best = 67.1%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 7 ------------------#
+validating...
+Epoch: 7, Total Time Elapsed: 1.11Mins, Train Loss: 0.9470627669709178, Train Accuracy: 67.27%, Validation Loss: 0.9071837812662125, Validation Accuracy: 69.1%
+Epoch: 7, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 69.1%, Last Best = 69.1%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 8 ------------------#
+validating...
+Epoch: 8, Total Time Elapsed: 1.25Mins, Train Loss: 0.8966363561800874, Train Accuracy: 69.16%, Validation Loss: 0.8564862370491028, Validation Accuracy: 70.46%
+Epoch: 8, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 70.46%, Last Best = 70.46%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 9 ------------------#
+validating...
+Epoch: 9, Total Time Elapsed: 1.38Mins, Train Loss: 0.8655835054933835, Train Accuracy: 70.49%, Validation Loss: 0.8447148472070694, Validation Accuracy: 71.06%
+Epoch: 9, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 71.06%, Last Best = 71.06%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 10 ------------------#
+validating...
+Epoch: 10, Total Time Elapsed: 1.52Mins, Train Loss: 0.8349994910410798, Train Accuracy: 71.35%, Validation Loss: 0.8628778696060181, Validation Accuracy: 70.63%
+Epoch: 10, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 11 ------------------#
+validating...
+Epoch: 11, Total Time Elapsed: 1.67Mins, Train Loss: 0.8275954203483776, Train Accuracy: 71.95%, Validation Loss: 0.8130731374025345, Validation Accuracy: 72.12%
+Epoch: 11, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 72.12%, Last Best = 72.12%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 12 ------------------#
+validating...
+Epoch: 12, Total Time Elapsed: 1.81Mins, Train Loss: 0.7903457721963096, Train Accuracy: 72.91%, Validation Loss: 0.8043922245502472, Validation Accuracy: 72.63%
+Epoch: 12, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 72.63%, Last Best = 72.63%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 13 ------------------#
+validating...
+Epoch: 13, Total Time Elapsed: 1.95Mins, Train Loss: 0.7679530530691908, Train Accuracy: 73.89%, Validation Loss: 0.8382278203964233, Validation Accuracy: 70.98%
+Epoch: 13, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 14 ------------------#
+validating...
+Epoch: 14, Total Time Elapsed: 2.09Mins, Train Loss: 0.7517946002582392, Train Accuracy: 74.45%, Validation Loss: 0.8048324257135391, Validation Accuracy: 72.54%
+Epoch: 14, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 15 ------------------#
+validating...
+Epoch: 15, Total Time Elapsed: 2.23Mins, Train Loss: 0.7446512539927571, Train Accuracy: 74.63%, Validation Loss: 0.7570945024490356, Validation Accuracy: 74.16%
+Epoch: 15, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 74.16%, Last Best = 74.16%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 16 ------------------#
+validating...
+Epoch: 16, Total Time Elapsed: 2.37Mins, Train Loss: 0.7346428913620714, Train Accuracy: 75.18%, Validation Loss: 0.7577867567539215, Validation Accuracy: 74.63%
+Epoch: 16, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 74.63%, Last Best = 74.63%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 17 ------------------#
+validating...
+Epoch: 17, Total Time Elapsed: 2.51Mins, Train Loss: 0.7067385929080244, Train Accuracy: 75.75%, Validation Loss: 0.7365323513746261, Validation Accuracy: 75.44%
+Epoch: 17, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 75.44%, Last Best = 75.44%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 18 ------------------#
+validating...
+Epoch: 18, Total Time Elapsed: 2.65Mins, Train Loss: 0.7041459049279697, Train Accuracy: 76.28%, Validation Loss: 0.7476946771144867, Validation Accuracy: 74.69%
+Epoch: 18, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 19 ------------------#
+validating...
+Epoch: 19, Total Time Elapsed: 2.78Mins, Train Loss: 0.6970488904192805, Train Accuracy: 76.44%, Validation Loss: 0.7355183154344559, Validation Accuracy: 75.24%
+Epoch: 19, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 20 ------------------#
+validating...
+Epoch: 20, Total Time Elapsed: 2.92Mins, Train Loss: 0.6829775165254697, Train Accuracy: 76.84%, Validation Loss: 0.7942450165748596, Validation Accuracy: 73.51%
+Epoch: 20, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 21 ------------------#
+validating...
+Epoch: 21, Total Time Elapsed: 3.06Mins, Train Loss: 0.6689490263644879, Train Accuracy: 77.09%, Validation Loss: 0.7105996042490006, Validation Accuracy: 76.03%
+Epoch: 21, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 76.03%, Last Best = 76.03%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 22 ------------------#
+validating...
+Epoch: 22, Total Time Elapsed: 3.2Mins, Train Loss: 0.6688981020031646, Train Accuracy: 77.39%, Validation Loss: 0.706763744354248, Validation Accuracy: 76.01%
+Epoch: 22, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 23 ------------------#
+validating...
+Epoch: 23, Total Time Elapsed: 3.34Mins, Train Loss: 0.6620350492457612, Train Accuracy: 77.41%, Validation Loss: 0.683051860332489, Validation Accuracy: 76.92%
+Epoch: 23, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 76.92%, Last Best = 76.92%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 24 ------------------#
+validating...
+Epoch: 24, Total Time Elapsed: 3.47Mins, Train Loss: 0.6356079082329052, Train Accuracy: 78.33%, Validation Loss: 0.6785295575857162, Validation Accuracy: 77.01%
+Epoch: 24, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 77.01%, Last Best = 77.01%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 25 ------------------#
+validating...
+Epoch: 25, Total Time Elapsed: 3.62Mins, Train Loss: 0.6283739012079879, Train Accuracy: 78.59%, Validation Loss: 0.6621538668870925, Validation Accuracy: 77.72%
+Epoch: 25, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 77.72%, Last Best = 77.72%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 26 ------------------#
+validating...
+Epoch: 26, Total Time Elapsed: 3.76Mins, Train Loss: 0.6259746601025518, Train Accuracy: 78.92%, Validation Loss: 0.742230698466301, Validation Accuracy: 74.69%
+Epoch: 26, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 27 ------------------#
+validating...
+Epoch: 27, Total Time Elapsed: 3.9Mins, Train Loss: 0.6165408433054964, Train Accuracy: 79.0%, Validation Loss: 0.6783901691436768, Validation Accuracy: 77.17%
+Epoch: 27, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 28 ------------------#
+validating...
+Epoch: 28, Total Time Elapsed: 4.03Mins, Train Loss: 0.6000224707035211, Train Accuracy: 79.67%, Validation Loss: 0.6542986690998077, Validation Accuracy: 78.72%
+Epoch: 28, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 78.72%, Last Best = 78.72%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 29 ------------------#
+validating...
+Epoch: 29, Total Time Elapsed: 4.17Mins, Train Loss: 0.5904487995103526, Train Accuracy: 79.99%, Validation Loss: 0.6652765721082687, Validation Accuracy: 78.14%
+Epoch: 29, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 30 ------------------#
+validating...
+Epoch: 30, Total Time Elapsed: 4.31Mins, Train Loss: 0.5865750383264341, Train Accuracy: 79.97%, Validation Loss: 0.6497935146093369, Validation Accuracy: 78.1%
+Epoch: 30, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 31 ------------------#
+validating...
+Epoch: 31, Total Time Elapsed: 4.45Mins, Train Loss: 0.5735739901804695, Train Accuracy: 80.58%, Validation Loss: 0.681686133146286, Validation Accuracy: 77.49%
+Epoch: 31, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 32 ------------------#
+validating...
+Epoch: 32, Total Time Elapsed: 4.59Mins, Train Loss: 0.5731454101233436, Train Accuracy: 80.64%, Validation Loss: 0.6876607865095139, Validation Accuracy: 77.83%
+Epoch: 32, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 33 ------------------#
+validating...
+Epoch: 33, Total Time Elapsed: 4.73Mins, Train Loss: 0.5682769840517745, Train Accuracy: 80.88%, Validation Loss: 0.7158225566148758, Validation Accuracy: 75.42%
+Epoch: 33, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 34 ------------------#
+validating...
+Epoch: 34, Total Time Elapsed: 4.87Mins, Train Loss: 0.5623339955418255, Train Accuracy: 80.85%, Validation Loss: 0.6596179306507111, Validation Accuracy: 79.11%
+Epoch: 34, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 79.11%, Last Best = 79.11%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 35 ------------------#
+validating...
+Epoch: 35, Total Time Elapsed: 5.01Mins, Train Loss: 0.5342774494958762, Train Accuracy: 81.71%, Validation Loss: 0.6122367039322854, Validation Accuracy: 79.58%
+Epoch: 35, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 79.58%, Last Best = 79.58%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 36 ------------------#
+validating...
+Epoch: 36, Total Time Elapsed: 5.15Mins, Train Loss: 0.5318249910593794, Train Accuracy: 82.0%, Validation Loss: 0.5784024149179459, Validation Accuracy: 79.9%
+Epoch: 36, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 79.9%, Last Best = 79.9%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 37 ------------------#
+validating...
+Epoch: 37, Total Time Elapsed: 5.29Mins, Train Loss: 0.5309908465265085, Train Accuracy: 81.77%, Validation Loss: 0.6362087249755859, Validation Accuracy: 79.26%
+Epoch: 37, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 38 ------------------#
+validating...
+Epoch: 38, Total Time Elapsed: 5.43Mins, Train Loss: 0.5080263720343288, Train Accuracy: 82.69%, Validation Loss: 0.5874625131487846, Validation Accuracy: 80.45%
+Epoch: 38, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 80.45%, Last Best = 80.45%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 39 ------------------#
+validating...
+Epoch: 39, Total Time Elapsed: 5.57Mins, Train Loss: 0.5045800738441296, Train Accuracy: 82.94%, Validation Loss: 0.6022986173629761, Validation Accuracy: 80.64%
+Epoch: 39, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 80.64%, Last Best = 80.64%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 40 ------------------#
+validating...
+Epoch: 40, Total Time Elapsed: 5.7Mins, Train Loss: 0.4972650853399271, Train Accuracy: 83.03%, Validation Loss: 0.5976424634456634, Validation Accuracy: 80.45%
+Epoch: 40, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 41 ------------------#
+validating...
+Epoch: 41, Total Time Elapsed: 5.85Mins, Train Loss: 0.47812761656773356, Train Accuracy: 83.66%, Validation Loss: 0.6114924073219299, Validation Accuracy: 79.22%
+Epoch: 41, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 42 ------------------#
+validating...
+Epoch: 42, Total Time Elapsed: 5.99Mins, Train Loss: 0.4752368364280786, Train Accuracy: 83.84%, Validation Loss: 0.5747097417712211, Validation Accuracy: 81.04%
+Epoch: 42, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 81.04%, Last Best = 81.04%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 43 ------------------#
+validating...
+Epoch: 43, Total Time Elapsed: 6.13Mins, Train Loss: 0.4775911223488494, Train Accuracy: 83.74%, Validation Loss: 0.5777508690953255, Validation Accuracy: 80.87%
+Epoch: 43, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 44 ------------------#
+validating...
+Epoch: 44, Total Time Elapsed: 6.27Mins, Train Loss: 0.46010714664626806, Train Accuracy: 84.31%, Validation Loss: 0.576600095629692, Validation Accuracy: 80.4%
+Epoch: 44, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 45 ------------------#
+validating...
+Epoch: 45, Total Time Elapsed: 6.41Mins, Train Loss: 0.45288567116466194, Train Accuracy: 84.5%, Validation Loss: 0.5671883970499039, Validation Accuracy: 81.67%
+Epoch: 45, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 81.67%, Last Best = 81.67%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 46 ------------------#
+validating...
+Epoch: 46, Total Time Elapsed: 6.55Mins, Train Loss: 0.4464075493926819, Train Accuracy: 84.67%, Validation Loss: 0.5620571225881577, Validation Accuracy: 81.39%
+Epoch: 46, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 47 ------------------#
+validating...
+Epoch: 47, Total Time Elapsed: 6.69Mins, Train Loss: 0.43134156074196384, Train Accuracy: 85.15%, Validation Loss: 0.5474346563220024, Validation Accuracy: 81.64%
+Epoch: 47, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 48 ------------------#
+validating...
+Epoch: 48, Total Time Elapsed: 6.83Mins, Train Loss: 0.42573079662010693, Train Accuracy: 85.41%, Validation Loss: 0.6228400558233261, Validation Accuracy: 79.59%
+Epoch: 48, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 49 ------------------#
+validating...
+Epoch: 49, Total Time Elapsed: 6.97Mins, Train Loss: 0.4248709963343014, Train Accuracy: 85.46%, Validation Loss: 0.5343503013253212, Validation Accuracy: 82.85%
+Epoch: 49, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 82.85%, Last Best = 82.85%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 50 ------------------#
+validating...
+Epoch: 50, Total Time Elapsed: 7.11Mins, Train Loss: 0.4142458693097575, Train Accuracy: 86.03%, Validation Loss: 0.5118820816278458, Validation Accuracy: 82.85%
+Epoch: 50, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 51 ------------------#
+validating...
+Epoch: 51, Total Time Elapsed: 7.25Mins, Train Loss: 0.40524191963977324, Train Accuracy: 86.07%, Validation Loss: 0.5018690079450607, Validation Accuracy: 83.16%
+Epoch: 51, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 83.16%, Last Best = 83.16%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 52 ------------------#
+validating...
+Epoch: 52, Total Time Elapsed: 7.39Mins, Train Loss: 0.3966246004017016, Train Accuracy: 86.55%, Validation Loss: 0.5403546631336212, Validation Accuracy: 81.68%
+Epoch: 52, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 53 ------------------#
+validating...
+Epoch: 53, Total Time Elapsed: 7.54Mins, Train Loss: 0.38502943096831205, Train Accuracy: 86.75%, Validation Loss: 0.5266456887125969, Validation Accuracy: 83.29%
+Epoch: 53, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 83.29%, Last Best = 83.29%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 54 ------------------#
+validating...
+Epoch: 54, Total Time Elapsed: 7.68Mins, Train Loss: 0.3736944860353257, Train Accuracy: 87.13%, Validation Loss: 0.5030726417899132, Validation Accuracy: 83.76%
+Epoch: 54, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 83.76%, Last Best = 83.76%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 55 ------------------#
+validating...
+Epoch: 55, Total Time Elapsed: 7.82Mins, Train Loss: 0.36604596436404574, Train Accuracy: 87.28%, Validation Loss: 0.550068186223507, Validation Accuracy: 81.64%
+Epoch: 55, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 56 ------------------#
+validating...
+Epoch: 56, Total Time Elapsed: 7.96Mins, Train Loss: 0.36016738752777966, Train Accuracy: 87.48%, Validation Loss: 0.5134663671255112, Validation Accuracy: 83.21%
+Epoch: 56, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 57 ------------------#
+validating...
+Epoch: 57, Total Time Elapsed: 8.1Mins, Train Loss: 0.3533963633421511, Train Accuracy: 87.84%, Validation Loss: 0.5590622574090958, Validation Accuracy: 82.6%
+Epoch: 57, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 58 ------------------#
+validating...
+Epoch: 58, Total Time Elapsed: 8.24Mins, Train Loss: 0.34006572659975426, Train Accuracy: 88.23%, Validation Loss: 0.4918991312384605, Validation Accuracy: 83.99%
+Epoch: 58, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 83.99%, Last Best = 83.99%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 59 ------------------#
+validating...
+Epoch: 59, Total Time Elapsed: 8.38Mins, Train Loss: 0.3354720879857913, Train Accuracy: 88.38%, Validation Loss: 0.4893061652779579, Validation Accuracy: 84.21%
+Epoch: 59, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 84.21%, Last Best = 84.21%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 60 ------------------#
+validating...
+Epoch: 60, Total Time Elapsed: 8.53Mins, Train Loss: 0.32386396872921114, Train Accuracy: 88.89%, Validation Loss: 0.49601309448480607, Validation Accuracy: 83.1%
+Epoch: 60, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 61 ------------------#
+validating...
+Epoch: 61, Total Time Elapsed: 8.67Mins, Train Loss: 0.3116945589597995, Train Accuracy: 89.2%, Validation Loss: 0.4855528846383095, Validation Accuracy: 84.05%
+Epoch: 61, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 62 ------------------#
+validating...
+Epoch: 62, Total Time Elapsed: 8.81Mins, Train Loss: 0.31625076728506973, Train Accuracy: 89.12%, Validation Loss: 0.48862613588571546, Validation Accuracy: 84.58%
+Epoch: 62, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 84.58%, Last Best = 84.58%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 63 ------------------#
+validating...
+Epoch: 63, Total Time Elapsed: 8.95Mins, Train Loss: 0.3021363141342474, Train Accuracy: 89.59%, Validation Loss: 0.4890285313129425, Validation Accuracy: 84.51%
+Epoch: 63, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 64 ------------------#
+validating...
+Epoch: 64, Total Time Elapsed: 9.09Mins, Train Loss: 0.2924523867262057, Train Accuracy: 89.85%, Validation Loss: 0.4956596985459328, Validation Accuracy: 84.5%
+Epoch: 64, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 65 ------------------#
+validating...
+Epoch: 65, Total Time Elapsed: 9.24Mins, Train Loss: 0.289552277459885, Train Accuracy: 90.0%, Validation Loss: 0.47742043882608415, Validation Accuracy: 84.35%
+Epoch: 65, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 66 ------------------#
+validating...
+Epoch: 66, Total Time Elapsed: 9.38Mins, Train Loss: 0.27607896747870947, Train Accuracy: 90.35%, Validation Loss: 0.48792302906513213, Validation Accuracy: 84.63%
+Epoch: 66, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 84.63%, Last Best = 84.63%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 67 ------------------#
+validating...
+Epoch: 67, Total Time Elapsed: 9.52Mins, Train Loss: 0.27159108231052426, Train Accuracy: 90.53%, Validation Loss: 0.4719239756464958, Validation Accuracy: 85.38%
+Epoch: 67, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 85.38%, Last Best = 85.38%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 68 ------------------#
+validating...
+Epoch: 68, Total Time Elapsed: 9.66Mins, Train Loss: 0.2623078653368706, Train Accuracy: 90.79%, Validation Loss: 0.48106570839881896, Validation Accuracy: 84.8%
+Epoch: 68, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 69 ------------------#
+validating...
+Epoch: 69, Total Time Elapsed: 9.8Mins, Train Loss: 0.2577967530431839, Train Accuracy: 91.16%, Validation Loss: 0.4549516499042511, Validation Accuracy: 85.48%
+Epoch: 69, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 85.48%, Last Best = 85.48%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 70 ------------------#
+validating...
+Epoch: 70, Total Time Elapsed: 9.95Mins, Train Loss: 0.25011315384802346, Train Accuracy: 91.29%, Validation Loss: 0.4832350894808769, Validation Accuracy: 84.85%
+Epoch: 70, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 71 ------------------#
+validating...
+Epoch: 71, Total Time Elapsed: 10.09Mins, Train Loss: 0.237697201819656, Train Accuracy: 91.67%, Validation Loss: 0.4723654597997665, Validation Accuracy: 85.89%
+Epoch: 71, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 85.89%, Last Best = 85.89%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 72 ------------------#
+validating...
+Epoch: 72, Total Time Elapsed: 10.24Mins, Train Loss: 0.23378174721052092, Train Accuracy: 91.91%, Validation Loss: 0.4646021962165833, Validation Accuracy: 85.53%
+Epoch: 72, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 73 ------------------#
+validating...
+Epoch: 73, Total Time Elapsed: 10.38Mins, Train Loss: 0.22378838664521805, Train Accuracy: 92.09%, Validation Loss: 0.47215028703212736, Validation Accuracy: 85.54%
+Epoch: 73, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 74 ------------------#
+validating...
+Epoch: 74, Total Time Elapsed: 10.52Mins, Train Loss: 0.2210055207387327, Train Accuracy: 92.21%, Validation Loss: 0.4656894266605377, Validation Accuracy: 85.58%
+Epoch: 74, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 75 ------------------#
+validating...
+Epoch: 75, Total Time Elapsed: 10.67Mins, Train Loss: 0.20978411263265548, Train Accuracy: 92.56%, Validation Loss: 0.4733434021472931, Validation Accuracy: 85.88%
+Epoch: 75, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 76 ------------------#
+validating...
+Epoch: 76, Total Time Elapsed: 10.81Mins, Train Loss: 0.20518819783061457, Train Accuracy: 92.81%, Validation Loss: 0.45041569620370864, Validation Accuracy: 86.2%
+Epoch: 76, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 86.2%, Last Best = 86.2%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 77 ------------------#
+validating...
+Epoch: 77, Total Time Elapsed: 10.96Mins, Train Loss: 0.19879136684413154, Train Accuracy: 92.85%, Validation Loss: 0.46386328637599944, Validation Accuracy: 86.5%
+Epoch: 77, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 86.5%, Last Best = 86.5%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 78 ------------------#
+validating...
+Epoch: 78, Total Time Elapsed: 11.1Mins, Train Loss: 0.1935679340086425, Train Accuracy: 93.09%, Validation Loss: 0.4749101251363754, Validation Accuracy: 86.04%
+Epoch: 78, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 79 ------------------#
+validating...
+Epoch: 79, Total Time Elapsed: 11.24Mins, Train Loss: 0.19180808728114485, Train Accuracy: 93.41%, Validation Loss: 0.46591532826423643, Validation Accuracy: 86.35%
+Epoch: 79, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 80 ------------------#
+validating...
+Epoch: 80, Total Time Elapsed: 11.39Mins, Train Loss: 0.18382387355969737, Train Accuracy: 93.57%, Validation Loss: 0.46037094593048095, Validation Accuracy: 86.03%
+Epoch: 80, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 81 ------------------#
+validating...
+Epoch: 81, Total Time Elapsed: 11.53Mins, Train Loss: 0.18087408365532995, Train Accuracy: 93.75%, Validation Loss: 0.4623651817440987, Validation Accuracy: 86.82%
+Epoch: 81, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 86.82%, Last Best = 86.82%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 82 ------------------#
+validating...
+Epoch: 82, Total Time Elapsed: 11.68Mins, Train Loss: 0.17439523217872308, Train Accuracy: 93.81%, Validation Loss: 0.45790537297725675, Validation Accuracy: 86.61%
+Epoch: 82, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 83 ------------------#
+validating...
+Epoch: 83, Total Time Elapsed: 11.82Mins, Train Loss: 0.1673664009323516, Train Accuracy: 93.95%, Validation Loss: 0.46585132330656054, Validation Accuracy: 86.23%
+Epoch: 83, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 84 ------------------#
+validating...
+Epoch: 84, Total Time Elapsed: 11.96Mins, Train Loss: 0.1627463783842687, Train Accuracy: 94.33%, Validation Loss: 0.45883811414241793, Validation Accuracy: 86.53%
+Epoch: 84, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 85 ------------------#
+validating...
+Epoch: 85, Total Time Elapsed: 12.1Mins, Train Loss: 0.1609338012080604, Train Accuracy: 94.31%, Validation Loss: 0.4454629302024841, Validation Accuracy: 86.9%
+Epoch: 85, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 86.9%, Last Best = 86.9%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 86 ------------------#
+validating...
+Epoch: 86, Total Time Elapsed: 12.24Mins, Train Loss: 0.15621041086392282, Train Accuracy: 94.49%, Validation Loss: 0.45370798707008364, Validation Accuracy: 86.63%
+Epoch: 86, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 87 ------------------#
+validating...
+Epoch: 87, Total Time Elapsed: 12.38Mins, Train Loss: 0.15001719931777294, Train Accuracy: 94.7%, Validation Loss: 0.48126031011343, Validation Accuracy: 86.34%
+Epoch: 87, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 88 ------------------#
+validating...
+Epoch: 88, Total Time Elapsed: 12.52Mins, Train Loss: 0.15313654608381821, Train Accuracy: 94.64%, Validation Loss: 0.48436677157878877, Validation Accuracy: 86.47%
+Epoch: 88, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 89 ------------------#
+validating...
+Epoch: 89, Total Time Elapsed: 12.66Mins, Train Loss: 0.1424363079828957, Train Accuracy: 94.92%, Validation Loss: 0.4733550652861595, Validation Accuracy: 86.68%
+Epoch: 89, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 90 ------------------#
+validating...
+Epoch: 90, Total Time Elapsed: 12.8Mins, Train Loss: 0.1407379991830157, Train Accuracy: 94.91%, Validation Loss: 0.48038622587919233, Validation Accuracy: 86.91%
+Epoch: 90, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 86.91%, Last Best = 86.91%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 91 ------------------#
+validating...
+Epoch: 91, Total Time Elapsed: 12.95Mins, Train Loss: 0.13728247006861166, Train Accuracy: 95.28%, Validation Loss: 0.4671846866607666, Validation Accuracy: 87.09%
+Epoch: 91, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 87.09%, Last Best = 87.09%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 92 ------------------#
+validating...
+Epoch: 92, Total Time Elapsed: 13.09Mins, Train Loss: 0.1365764599424391, Train Accuracy: 95.2%, Validation Loss: 0.48574088960886, Validation Accuracy: 86.7%
+Epoch: 92, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 93 ------------------#
+validating...
+Epoch: 93, Total Time Elapsed: 13.23Mins, Train Loss: 0.13681126706087932, Train Accuracy: 95.22%, Validation Loss: 0.4666188284754753, Validation Accuracy: 86.96%
+Epoch: 93, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 94 ------------------#
+validating...
+Epoch: 94, Total Time Elapsed: 13.38Mins, Train Loss: 0.13480838382253632, Train Accuracy: 95.21%, Validation Loss: 0.4605455182492733, Validation Accuracy: 86.84%
+Epoch: 94, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 95 ------------------#
+validating...
+Epoch: 95, Total Time Elapsed: 13.52Mins, Train Loss: 0.13347142763412037, Train Accuracy: 95.28%, Validation Loss: 0.47493833154439924, Validation Accuracy: 87.13%
+Epoch: 95, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 87.13%, Last Best = 87.13%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 96 ------------------#
+validating...
+Epoch: 96, Total Time Elapsed: 13.66Mins, Train Loss: 0.13322766177570478, Train Accuracy: 95.36%, Validation Loss: 0.4635106101632118, Validation Accuracy: 87.34%
+Epoch: 96, Saving Model Checkpoint: 15-03-23 12:51
+Best Validation Accuracy Updated = 87.34%, Last Best = 87.34%
+Saving Best Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 97 ------------------#
+validating...
+Epoch: 97, Total Time Elapsed: 13.8Mins, Train Loss: 0.13099049226925397, Train Accuracy: 95.44%, Validation Loss: 0.4717851623892784, Validation Accuracy: 87.12%
+Epoch: 97, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 98 ------------------#
+validating...
+Epoch: 98, Total Time Elapsed: 13.94Mins, Train Loss: 0.13278772377263243, Train Accuracy: 95.43%, Validation Loss: 0.4626244828104973, Validation Accuracy: 87.15%
+Epoch: 98, Saving Model Checkpoint: 15-03-23 12:51
+
+#------------------ Epoch: 99 ------------------#
+validating...
+Epoch: 99, Total Time Elapsed: 14.08Mins, Train Loss: 0.129405572867622, Train Accuracy: 95.53%, Validation Loss: 0.46634682863950727, Validation Accuracy: 86.88%
+Epoch: 99, Saving Model Checkpoint: 15-03-23 12:51
+
+|--------- Model Load Success. Trained Epoch: 99, Val Accu: 87.34%
+
+
+@@@@@@@@@--------- 
+Test Accuracy = Test Accuracy = 86.95%, 
+Train Accuracy = Train Accuracy = 95.32%, 
+Val Accuracy = Val Accuracy = 86.94% 
+---------@@@@@@@@@
