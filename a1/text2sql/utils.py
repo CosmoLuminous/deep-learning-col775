@@ -4,6 +4,7 @@ import torch
 from nltk import word_tokenize
 import re
 import spacy
+import json
 
 # Load the spaCy English tokenizer
 nlp = spacy.load('en_core_web_sm')
@@ -141,83 +142,20 @@ def tokenize_query(string):
             tokens.append(tok)
     return tokens
 
+def load_checkpoint(args, chkpt = "best"):
 
-# def tokenize_question(nl):
-#     '''
-#     return keywords of nl query
-#     '''
-#     nl_keywords = []
-#     nl = nl.strip()
-#     nl = nl.replace(";"," ; ").replace(",", " , ").replace("?", " ? ").replace("\t"," ")
-#     nl = nl.replace("(", " ( ").replace(")", " ) ")
-    
-#     str_1 = re.findall("\"[^\"]*\"", nl)
-#     str_2 = re.findall("\'[^\']*\'", nl)
-#     float_nums = re.findall("[-+]?\d*\.\d+", nl)
-    
-#     values = str_1 + str_2 + float_nums
-#     for val in values:
-#         nl = nl.replace(val.strip(), VALUE_NUM_SYMBOL)
-    
-    
-#     raw_keywords = nl.strip().split()
-#     for tok in raw_keywords:
-#         if "." in tok:
-#             to = tok.replace(".", " . ").split()
-#             to = [t.lower() for t in to if len(t)>0]
-#             nl_keywords.extend(to)
-#         elif "'" in tok and tok[0]!="'" and tok[-1]!="'":
-#             to = word_tokenize(tok)
-#             to = [t.lower() for t in to if len(t)>0]
-#             nl_keywords.extend(to)      
-#         elif len(tok) > 0:
-#             nl_keywords.append(tok.lower())
-#     return nl_keywords
+    if chkpt == "best":
+        model_name = os.path.join(args.checkpoint_dir, "best_loss_checkpoint_{}.pth".format(args.model_type))
+        status_file = os.path.join(args.checkpoint_dir, "best_loss_chkpt_status_{}.json".format(args.model_type))
+    else:
+        model_name = os.path.join(args.checkpoint_dir, "latest_checkpoint_{}.pth".format(args.model_type))
+        status_file = os.path.join(args.checkpoint_dir, "latest_chkpt_status_{}.json".format(args.model_type))
 
-
-# def tokenize_query(query):
-#     '''
-#     return keywords of sql query
-#     '''
-#     query_keywords = []
-#     query = query.strip().replace(";","").replace("\t","")
-#     query = query.replace("(", " ( ").replace(")", " ) ")
-#     query = query.replace(">=", " >= ").replace("<=", " <= ").replace("!=", " != ").replace("=", " = ")
-
+    assert os.path.isfile(model_name), f"Model path/name invalid: {model_name}"
     
-#     # then replace all stuff enclosed by "" with a numerical value to get it marked as {VALUE}
-#     str_1 = re.findall("\"[^\"]*\"", query)
-#     str_2 = re.findall("\'[^\']*\'", query)
-    
-#     values = str_1 + str_2
-#     for val in values:
-#         query = query.replace(val.strip(), VALUE_NUM_SYMBOL)
+    net = torch.load(model_name)
+    with open(status_file, "r") as file:
+        model_dict = json.load(file)
+    print(f"\n|--------- Model Load Success. Trained Epoch: {str(model_dict['epoch'])}")
 
-#     query_tokenized = query.split()
-#     float_nums = re.findall("[-+]?\d*\.\d+", query)
-#     query_tokenized = [VALUE_NUM_SYMBOL if qt in float_nums else qt for qt in query_tokenized]
-#     query = " ".join(query_tokenized)
-#     int_nums = [i.strip() for i in re.findall("[^tT]\d+", query)]
-
-    
-#     query_tokenized = [VALUE_NUM_SYMBOL if qt in int_nums else qt for qt in query_tokenized]
-#     # print int_nums, query, query_tokenized
-    
-#     for tok in query_tokenized:
-#         if "." in tok:
-#             table = re.findall("[Tt]\d+\.", tok)
-#             if len(table)>0:
-#                 to = tok.replace(".", " . ").split()
-#                 to = [t.lower() for t in to if len(t)>0]
-#                 query_keywords.extend(to)
-#             else:
-#                 query_keywords.append(tok.lower())
-
-#         elif len(tok) > 0:
-#             query_keywords.append(tok.lower())
-#     query_keywords = [w for w in query_keywords if len(w)>0]
-#     query_sentence = " ".join(query_keywords)
-#     query_sentence = query_sentence.replace("> =", ">=").replace("! =", "!=").replace("< =", "<=")
-# #     if '>' in query_sentence or '=' in query_sentence:
-# #        print query_sentence
-#     return query_sentence.split()
+    return net

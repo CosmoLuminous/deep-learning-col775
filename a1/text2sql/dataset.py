@@ -45,16 +45,17 @@ class Text2SQLDataset(Dataset):
     
     def __getitem__(self, idx):
 #         print(idx, "\n")
-        try:
-            query = ["<sos>"] + tokenize_query(self.data.loc[idx, "query"]) + ["<eos>"]
-            question =  ["<sos>"] + tokenize_question(self.data.loc[idx, "question"]) + ["<eos>"]
-            # print(query)
-            query = [self.de_word2idx[q] if q in self.de_word2idx else self.de_word2idx["<unk>"] for q in query]
-            question = [self.en_word2idx[q] if q in self.en_word2idx else self.en_word2idx["<unk>"] for q in question]
-            # print(query)
-            sample = {'question': question, 'query': query, 'index': idx}
-        except:
-            print(idx)
+        
+        query = ["<sos>"] + tokenize_query(self.data.loc[idx, "query"]) + ["<eos>"]
+        question =  ["<sos>"] + tokenize_question(self.data.loc[idx, "question"]) + ["<eos>"]
+        # print(query)
+        query = [self.de_word2idx[q] if q in self.de_word2idx else self.de_word2idx["<unk>"] for q in query]
+        question = [self.en_word2idx[q] if q in self.en_word2idx else self.en_word2idx["<unk>"] for q in question]
+        # print(query)
+        og_query = self.data.loc[idx, "orig_query"]
+        db_id =  self.data.loc[idx, 'db_id']
+        sample = {'question': question, 'query': query, 'db_id': db_id, 'og_query': og_query}
+        
             
         return sample
     
@@ -69,6 +70,8 @@ def collate(batch):
     query_lens = torch.zeros(len(batch), dtype=torch.long)
     padded_query = torch.zeros((len(batch), max_len_query), dtype=torch.long)
     indexes = torch.zeros(len(batch), dtype=torch.long)
+    og_query = list()
+    db_id = list()
 
     for idx in range(len(batch)):
         
@@ -79,9 +82,11 @@ def collate(batch):
         query_len = len(query)
         ques_lens[idx] = ques_len
         query_lens[idx] = query_len
-        indexes[idx] = batch[idx]['index']
+        # indexes[idx] = batch[idx]['index']
         
         padded_ques[idx, :ques_len] = torch.LongTensor(question)
         padded_query[idx, :query_len] = torch.LongTensor(query)
+        og_query.append(batch[idx]['og_query'])
+        db_id.append(batch[idx]['db_id'])
         
-    return {'question': padded_ques, 'query': padded_query, 'ques_lens': query_lens, 'query_lens': query_lens, 'index': indexes}
+    return {'question': padded_ques, 'query': padded_query, 'ques_lens': query_lens, 'query_lens': query_lens, 'db_id': db_id, 'og_query': og_query}

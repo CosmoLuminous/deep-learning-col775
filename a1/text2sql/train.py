@@ -15,6 +15,7 @@ import torch.nn as nn
 
 from text2sql import Seq2Seq
 from dataset import Text2SQLDataset, collate
+from utils import *
 
 def get_parser():
     """
@@ -42,10 +43,10 @@ def get_parser():
     parser.add_argument("--batch_size", type=int, default=16, help="Batch size to be used during training.")
 
     # number of workers for dataloader
-    parser.add_argument("--num_workers", type=int, default=8, help="Number of workers used for dataloading.")
+    parser.add_argument("--num_workers", type=int, default=24, help="Number of workers used for dataloading.")
 
     # max number of epochs
-    parser.add_argument("--epochs", type=int, default=200, help="Number of workers used for dataloading.")
+    parser.add_argument("--epochs", type=int, default=300, help="Number of workers used for dataloading.")
 
     parser.add_argument("--en_hidden", type=int, default=512, help="Encoder Hidden Units")
     
@@ -64,16 +65,21 @@ def get_parser():
     return parser
 
 
-def convert_idx_sentence(args, val_data, output, query, index, prefix):
-    query = query.cpu().detach().numpy()
+def convert_idx_sentence(args, output, og_query, db_id, prefix):
+    # query = query.cpu().detach().numpy()
     output = output.cpu().detach().numpy()
-    index = index.cpu().detach().numpy()
+    # index = index.cpu().detach().numpy()
+    # index = np.sort(index)
+    og_query = list(og_query)
+    db_id = list(db_id)
 
-    assert len(query) == len(output) and len(query) == len(index)
+    # print(index)
+    # print(len(og_query), len(output), len(og_query), len(db_id))
+    assert len(og_query) == len(output) and len(og_query) == len(db_id)
     queries = []
     preds = []
-    for i in range(len(query)):
-        q = val_data.loc[i, 'orig_query'] + "\t" + val_data.loc[i, 'db_id'] + "\n"
+    for i in range(len(og_query)):
+        q = og_query[i] + "\t" + db_id[i] + "\n"
 
         p = []
         for idx in output[i]:
@@ -95,13 +101,14 @@ def convert_idx_sentence(args, val_data, output, query, index, prefix):
 
     return
 
-
+def get_eval_stats(args, prefix):
+    with open(f"{args.result_dir}/{prefix}_results.txt", "r") as file:
+        data = file.readlines()
+    
+    return data[0].split()[-1], data[1].split()[-1], data[3].split()[-1], data[6].split()[-1]
 
 
 def train(args):
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') 
-    args.device = device
-    print(device)
     if args.model_type == "Seq2Seq":
         model = Seq2Seq(args).to(device)
         # Define the loss function and optimizer
@@ -117,12 +124,15 @@ def train(args):
                             num_workers=args.num_workers, collate_fn=collate)
 
     val_dataset = Text2SQLDataset(args.processed_data, "val")
-    val_loader = DataLoader(train_dataset, batch_size = args.batch_size*16, shuffle=True, 
-                            num_workers=args.num_workers*2, collate_fn=collate)
+    val_loader = DataLoader(val_dataset, batch_size = args.batch_size*16, shuffle=False, 
+                            num_workers=args.num_workers, collate_fn=collate)
     
     loss_tracker = defaultdict(list)
     time_tracker = defaultdict(list)
+    val_accuracy_tracker = defaultdict(list)
     min_train_loss = 10000
+    best_exec_accu = -1
+    best_match_accu = -1
     best_epoch = 0
     t0 = time()
     
@@ -142,20 +152,17 @@ def train(args):
         #     print("reshaped output and target", output.shape, query.shape)
             loss = criterion(output, query)
             loss.backward()
-            epoch_loss.append(loss.item()/len(query))
+            epoch_loss.append(loss.item())
 
             optimizer.step()
             # print(query)
-
-        avg_epoch_loss = np.mean(epoch_loss)          
+        
         scheduler.step()
         t1 = time()
-        print("Epoch: {}, Total Time Elapsed: {}Mins, Train Loss: {}, Prev Min Train Loss: {}".format(epoch, round((t1-t0)/60,2), avg_epoch_loss, min_train_loss))
-        time_tracker['train'].append(round((t1-t0)/60,2))
 
         model.eval()
-        val_loss = [0]
-        if epoch % 10 == 0:
+        val_loss = []
+        if epoch % 1 == 0:
             print("Evaluating model on val data.")            
             prefix = "train_eval"
             if os.path.exists(os.path.join(args.result_dir, f"{prefix}_gold.txt")):
@@ -167,36 +174,55 @@ def train(args):
             for i, data in enumerate(val_loader):
                 question = data['question'].to(device)
                 query = data['query'].to(device)
+                og_query = data['og_query']
+                db_id = data['db_id']
 
                 output, words = model(question, query)
-                # loss = criterion(words, query)
-                # val_loss.append(loss.item()/len(query))
-                convert_idx_sentence(args, val_data, words, query, data['index'], prefix)
-                if i == 2:
-                    break
-            
-            subprocess.call(f"python3 evaluation.py --gold {args.result_dir}/{prefix}_gold.txt --pred {args.result_dir}/{prefix}_pred.txt --db ./data/database/ --table ./data/tables.json --etype all", shell=True)
+                output = output.reshape(-1, output.shape[2])
+                query = query.reshape(-1)    
+                loss = criterion(output, query)
+                val_loss.append(loss.item())
+                convert_idx_sentence(args, words, og_query, db_id, prefix)
+
+            print("Running evaluation script...")
+            subprocess.call(f"python3 evaluation.py --gold {args.result_dir}/{prefix}_gold.txt --pred {args.result_dir}/{prefix}_pred.txt --db ./data/database/ --table ./data/tables.json --etype all >> {args.result_dir}/{prefix}_results.txt", shell=True)
+            _, _, exec_accu, exact_match_accu = get_eval_stats(args, prefix)
+            exec_accu = round(np.float64(exec_accu),3)
+            exact_match_accu = round(np.float64(exact_match_accu), 3)
+            val_accuracy_tracker["exec_accu"].append(exec_accu)
+            val_accuracy_tracker["exact_match_accu"].append(exact_match_accu)
         
+        avg_epoch_loss = np.mean(epoch_loss)  
+        avg_val_loss = np.mean(val_loss)
         loss_tracker['train'].append(avg_epoch_loss)
-        loss_tracker['val'].append(np.mean(val_loss))
+        loss_tracker['val'].append(avg_val_loss)
+
+        print("Epoch: {}, Total Time Elapsed: {}Mins, Train Loss: {}, Val Loss: {}, Execution Accuracy = {}, Exact Match Accuracy = {}".format(epoch, round((t1-t0)/60,2), avg_epoch_loss, avg_val_loss, val_accuracy_tracker["exec_accu"][-1], val_accuracy_tracker["exact_match_accu"][-1]))
+        time_tracker['train'].append(round((t1-t0)/60,2))
+
         with open(os.path.join(args.result_dir, "loss_tracker{}.json".format(args.model_type)), "w") as outfile:
             json.dump(loss_tracker, outfile)
+
+        with open(os.path.join(args.result_dir, "val_accuracy_tracker{}.json".format(args.model_type)), "w") as outfile:
+            json.dump(val_accuracy_tracker, outfile)
 
         torch.save(model, os.path.join(args.checkpoint_dir, "latest_checkpoint_{}.pth".format(args.model_type)))
         model_state = {
                 'epoch': epoch,
-                'loss' : avg_epoch_loss,
-                'best_loss' : min_train_loss,
-                'best_epoch': best_epoch
+                'train_loss' : avg_epoch_loss,
+                'val_loss' : avg_val_loss,
+                'prev_best_accu' : best_match_accu,
+                'prev_best_epoch': best_epoch
             }
         with open(os.path.join(args.checkpoint_dir, "latest_chkpt_status_{}.json".format(args.model_type)), "w") as outfile:
             json.dump(model_state, outfile)
 
-        if avg_epoch_loss < min_train_loss:
+        if exact_match_accu > best_match_accu:
             model_state = {
                 'epoch': epoch,
-                'loss' : avg_epoch_loss,
-                'prev_best_loss' : min_train_loss,
+                'train_loss' : avg_epoch_loss,
+                'val_loss' : avg_val_loss,
+                'prev_best_accu' : best_match_accu,
                 'prev_best_epoch': best_epoch
             }
             min_train_loss = avg_epoch_loss
@@ -206,6 +232,43 @@ def train(args):
             
             with open(os.path.join(args.checkpoint_dir, "best_loss_chkpt_status_{}.json".format(args.model_type)), "w") as outfile:
                 json.dump(model_state, outfile)
+
+    return
+
+def model_eval(args):
+    val_dataset = Text2SQLDataset(args.processed_data, "val")
+    val_loader = DataLoader(val_dataset, batch_size = args.batch_size*16, shuffle=True, 
+                            num_workers=args.num_workers*2, collate_fn=collate)
+
+    model = load_checkpoint(args, "best")
+    model.eval()
+    print("Evaluating model on val data.")            
+    prefix = "test_eval"
+    if os.path.exists(os.path.join(args.result_dir, f"{prefix}_gold.txt")):
+        os.remove(os.path.join(args.result_dir, f"{prefix}_gold.txt"))
+
+    if os.path.exists(os.path.join(args.result_dir, f"{prefix}_pred.txt")):
+        os.remove(os.path.join(args.result_dir, f"{prefix}_pred.txt"))
+    
+    for i, data in enumerate(val_loader):
+        question = data['question'].to(device)
+        query = data['query'].to(device)
+        og_query = data['og_query']
+        db_id = data['db_id']
+
+        output, words = model(question, query)
+        # loss = criterion(words, query)
+        # val_loss.append(loss.item()/len(query))
+        convert_idx_sentence(args, words, og_query, db_id, prefix)
+        
+    print("Running evaluation script...")
+    subprocess.call(f"python3 evaluation.py --gold {args.result_dir}/{prefix}_gold.txt --pred {args.result_dir}/{prefix}_pred.txt --db ./data/database/ --table ./data/tables.json --etype all >> {args.result_dir}/{prefix}_results.txt", shell=True)
+    _, _, exec_accu, exact_match_accu = get_eval_stats(args, prefix)
+    
+    exec_accu = round(np.float64(exec_accu),3)
+    exact_match_accu = round(np.float64(exact_match_accu), 3)
+    print("Execution Accuracy = {}, Exact Match Accuracy = {}".format(val_accuracy_tracker["exec_accu"][-1], val_accuracy_tracker["exact_match_accu"][-1]))
+
 
 
 
@@ -229,8 +292,13 @@ if __name__ == "__main__":
         os.mkdir(args.checkpoint_dir)
     if not os.path.isdir(args.result_dir):
         os.mkdir(args.result_dir)
+    
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') 
+    args.device = device
 
     print(args)
+    
+    print("Running on device:", device)
 
     with open(os.path.join(args.processed_data, "encoder_idx2word.pickle"), "rb") as file:
         encoder_idx2word = pickle.load(file)
@@ -242,3 +310,4 @@ if __name__ == "__main__":
     val_data = pd.read_excel(os.path.join(args.processed_data, "val_data.xlsx"))
 
     train(args)
+    model_eval(args)
