@@ -3,10 +3,6 @@ import numpy as np
 import torch
 from nltk import word_tokenize
 import re
-import spacy
-
-# Load the spaCy English tokenizer
-nlp = spacy.load('en_core_web_sm')
 
 NUM_VALUE_TOKEN = "<num_value>"
 STR_VALUE_TOKEN = "<str_value>"
@@ -63,19 +59,17 @@ def tokenize_question(question):
     # return [q.lower() for q in ques_tokens]
 
     """Developing sophisticated tokenizer"""
-    # tokens = list()
-    # question = sanatize_string(question)
-    # # question = identify_values(question)
+    tokens = list()
+    question = sanatize_string(question)
+    question = identify_values(question)
 
-    # for tok in question.split():
-    #     if "." in tok:
-    #         tokens.extend(tok.replace(".", " . ").split())
-    #     elif "'" in tok and tok[0]!="'" and tok[-1]!="'":
-    #         tokens.extend(word_tokenize(tok))
-    #     else:
-    #         tokens.append(tok)
-
-    tokens = [token.text.lower() for token in nlp(question)]
+    for tok in question:
+        if "." in tok:
+            tokens.extend(tok.replace(".", " . ").split())
+        elif "'" in tok and tok[0]!="'" and tok[-1]!="'":
+            tokens.extend(word_tokenize(tok))
+        else:
+            tokens.append(tok)
     
     return tokens
 
