@@ -624,9 +624,17 @@ def eval_exec_match(db, p_str, g_str, pred, gold):
         p_res = cursor.fetchall()
     except:
         return False
+    try:
+        cursor.execute(g_str)
+        q_res = cursor.fetchall()
+    except:
+        conn.text_factory = bytes        
+        cursor = conn.cursor()
+        cursor.execute(g_str)
+        q_res = cursor.fetchall()
 
-    cursor.execute(g_str)
-    q_res = cursor.fetchall()
+
+
 
     def res_map(res, val_units):
         rmap = {}

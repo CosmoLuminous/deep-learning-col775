@@ -159,3 +159,4 @@ def load_checkpoint(args, chkpt = "best"):
     print(f"\n|--------- Model Load Success. Trained Epoch: {str(model_dict['epoch'])}")
 
     return net
+

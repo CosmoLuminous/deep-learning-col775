@@ -62,6 +62,8 @@ def get_parser():
 
     parser.add_argument("--restore", type=bool, default=False , help="Restore last saved model.")
 
+    parser.add_argument("--search_type", type=str, default="greedy", help="Type of {greedy, beam} search to perform on decoder.")
+
     return parser
 
 
@@ -104,8 +106,12 @@ def convert_idx_sentence(args, output, og_query, db_id, prefix):
 def get_eval_stats(args, prefix):
     with open(f"{args.result_dir}/{prefix}_results.txt", "r") as file:
         data = file.readlines()
-    
-    return data[0].split()[-1], data[1].split()[-1], data[3].split()[-1], data[6].split()[-1]
+    try:
+        a,b,c,d = data[0].split()[-1], data[1].split()[-1], data[3].split()[-1], data[6].split()[-1]
+    except:        
+        print("Error in calculating performance. Returning -1")
+        a,b,c,d = (-1, -1, -1, -1)
+    return a,b,c,d
 
 
 def train(args):
@@ -115,7 +121,7 @@ def train(args):
         criterion = nn.CrossEntropyLoss(ignore_index=0)
         optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
         schedulers = [
-                optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.1, last_epoch=- 1, verbose=False),
+                optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.1, last_epoch= -1, verbose=False),
                 optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs, verbose=False)
                 ]
         scheduler =  schedulers[1]
@@ -124,7 +130,7 @@ def train(args):
                             num_workers=args.num_workers, collate_fn=collate)
 
     val_dataset = Text2SQLDataset(args.processed_data, "val")
-    val_loader = DataLoader(val_dataset, batch_size = args.batch_size*16, shuffle=False, 
+    val_loader = DataLoader(val_dataset, batch_size = args.batch_size, shuffle=False, 
                             num_workers=args.num_workers, collate_fn=collate)
     
     loss_tracker = defaultdict(list)
@@ -183,17 +189,21 @@ def train(args):
                 loss = criterion(output, query)
                 val_loss.append(loss.item())
                 convert_idx_sentence(args, words, og_query, db_id, prefix)
-
-            print("Running evaluation script...")
-            subprocess.call(f"python3 evaluation.py --gold {args.result_dir}/{prefix}_gold.txt --pred {args.result_dir}/{prefix}_pred.txt --db ./data/database/ --table ./data/tables.json --etype all >> {args.result_dir}/{prefix}_results.txt", shell=True)
-            _, _, exec_accu, exact_match_accu = get_eval_stats(args, prefix)
-            exec_accu = round(np.float64(exec_accu),3)
-            exact_match_accu = round(np.float64(exact_match_accu), 3)
+            if epoch % 5 == 0:
+                print("Running evaluation script...")
+                
+                if os.path.exists(f"{args.result_dir}/{prefix}_results.txt"):
+                    os.remove(f"{args.result_dir}/{prefix}_results.txt")
+                subprocess.call(f"python3 evaluation.py --gold {args.result_dir}/{prefix}_gold.txt --pred {args.result_dir}/{prefix}_pred.txt --db ./data/database/ --table ./data/tables.json --etype all >> {args.result_dir}/{prefix}_results.txt", shell=True)
+                _, _, exec_accu, exact_match_accu = get_eval_stats(args, prefix)
+                exec_accu = round(np.float64(exec_accu),3)
+                exact_match_accu = round(np.float64(exact_match_accu), 3)
             val_accuracy_tracker["exec_accu"].append(exec_accu)
             val_accuracy_tracker["exact_match_accu"].append(exact_match_accu)
-        
-        avg_epoch_loss = np.mean(epoch_loss)  
+            
         avg_val_loss = np.mean(val_loss)
+        avg_epoch_loss = np.mean(epoch_loss)  
+        
         loss_tracker['train'].append(avg_epoch_loss)
         loss_tracker['val'].append(avg_val_loss)
 
@@ -262,12 +272,15 @@ def model_eval(args):
         convert_idx_sentence(args, words, og_query, db_id, prefix)
         
     print("Running evaluation script...")
+    if os.path.exists(f"{args.result_dir}/{prefix}_results.txt"):
+        os.remove(f"{args.result_dir}/{prefix}_results.txt")
+
     subprocess.call(f"python3 evaluation.py --gold {args.result_dir}/{prefix}_gold.txt --pred {args.result_dir}/{prefix}_pred.txt --db ./data/database/ --table ./data/tables.json --etype all >> {args.result_dir}/{prefix}_results.txt", shell=True)
     _, _, exec_accu, exact_match_accu = get_eval_stats(args, prefix)
     
     exec_accu = round(np.float64(exec_accu),3)
     exact_match_accu = round(np.float64(exact_match_accu), 3)
-    print("Execution Accuracy = {}, Exact Match Accuracy = {}".format(val_accuracy_tracker["exec_accu"][-1], val_accuracy_tracker["exact_match_accu"][-1]))
+    print("Execution Accuracy = {}, Exact Match Accuracy = {}".format(exec_accu, exact_match_accu))
 
 
 
@@ -285,8 +298,9 @@ if __name__ == "__main__":
 
     args.data_dir = os.path.relpath(args.data_dir)
     args.processed_data = os.path.relpath(args.processed_data)
-    args.checkpoint_dir = os.path.join(os.path.relpath(args.checkpoint_dir), args.model_type.lower())
-    args.result_dir = os.path.join(os.path.relpath(args.result_dir), args.model_type.lower())
+    extension = args.model_type.lower() + "_" + str(args.en_num_layers) + "_" + str(args.de_num_layers) + "_" + str(args.en_hidden) + "_" + str(args.de_hidden) + "_" + str(args.embed_dim) + "_" + str(args.batch_size) + "_" + str(args.epochs)
+    args.checkpoint_dir = os.path.join(os.path.relpath(args.checkpoint_dir), extension)
+    args.result_dir = os.path.join(os.path.relpath(args.result_dir), extension)
 
     if not os.path.isdir(args.checkpoint_dir):
         os.mkdir(args.checkpoint_dir)
