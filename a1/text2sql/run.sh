@@ -1,4 +1,4 @@
-python3 train.py --batch_size 3 --search_type beam 2>&1 | tee logs/s2s_beam_exp.log
+python3 train.py --batch_size 32 --search_type beam 2>&1 | tee logs/s2s_beam_exp.log
 # python3 train.py --batch_size 32 2>&1 | tee logs/s2s_test.log
 # python3 train.py --batch_size 32 --epochs 200 --en_num_layers 2 --de_num_layers 1  2>&1 | tee logs/seq2seq_2_1_512_512_200_32_300.log && \
 # python3 train.py --batch_size 32 --epochs 200 --en_num_layers 1 --de_num_layers 2  2>&1 | tee logs/seq2seq_1_2_512_512_200_32_300.log && \

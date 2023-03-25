@@ -16,7 +16,7 @@ import torch.nn as nn
 from text2sql import Seq2Seq
 from dataset import Text2SQLDataset, collate
 from utils import *
-from beam_search import beam_search, greedy_decoder
+from beam_search import beam_search
 
 def get_parser():
     """
@@ -47,7 +47,7 @@ def get_parser():
     parser.add_argument("--num_workers", type=int, default=24, help="Number of workers used for dataloading.")
 
     # max number of epochs
-    parser.add_argument("--epochs", type=int, default=200, help="Number of workers used for dataloading.")
+    parser.add_argument("--epochs", type=int, default=300, help="Number of workers used for dataloading.")
 
     parser.add_argument("--en_hidden", type=int, default=512, help="Encoder Hidden Units")
     
@@ -69,9 +69,15 @@ def get_parser():
 
 
 def convert_idx_sentence(args, output, og_query, db_id, prefix):
+    # query = query.cpu().detach().numpy()
     output = output.cpu().detach().numpy()
+    # index = index.cpu().detach().numpy()
+    # index = np.sort(index)
     og_query = list(og_query)
     db_id = list(db_id)
+
+    # print(index)
+    # print(len(og_query), len(output), len(og_query), len(db_id))
     assert len(og_query) == len(output) and len(og_query) == len(db_id)
     queries = []
     preds = []
@@ -107,6 +113,8 @@ def get_eval_stats(args, prefix):
         print("Error in calculating performance. Returning -1")
         a,b,c,d = (-1, -1, -1, -1)
     return a,b,c,d
+
+
 
 def train(args):
     if args.model_type == "Seq2Seq":
@@ -145,7 +153,7 @@ def train(args):
             optimizer.zero_grad()
             question = data['question'].to(device)
             query = data['query'].to(device)
-            output, _ = model(question, query)
+            output = model(question, query)
         #     print("output and target", output.shape, query.shape)
             output = output.reshape(-1, output.shape[2])
             query = query.reshape(-1)    
@@ -165,28 +173,28 @@ def train(args):
         if epoch % 1 == 0:
             print("Evaluating model on val data.")            
             prefix = "train_eval"
-            if os.path.exists(os.path.join(args.result_dir, f"{prefix}_gold.txt")):
-                os.remove(os.path.join(args.result_dir, f"{prefix}_gold.txt"))
+            # if os.path.exists(os.path.join(args.result_dir, f"{prefix}_gold.txt")):
+            #     os.remove(os.path.join(args.result_dir, f"{prefix}_gold.txt"))
 
-            if os.path.exists(os.path.join(args.result_dir, f"{prefix}_pred.txt")):
-                os.remove(os.path.join(args.result_dir, f"{prefix}_pred.txt"))
+            # if os.path.exists(os.path.join(args.result_dir, f"{prefix}_pred.txt")):
+            #     os.remove(os.path.join(args.result_dir, f"{prefix}_pred.txt"))
             
             for i, data in enumerate(val_loader):
                 question = data['question'].to(device)
                 query = data['query'].to(device)
-                og_query = data['og_query']
-                db_id = data['db_id']
+                # og_query = data['og_query']
+                # db_id = data['db_id']
 
-                output, words = model(question, query)
+                output = model(question, query)
                 output = output.reshape(-1, output.shape[2])
                 query = query.reshape(-1)    
                 loss = criterion(output, query)
                 val_loss.append(loss.item())
                 # convert_idx_sentence(args, words, og_query, db_id, prefix)
             if epoch % 5 == 0:
-                print("Running evaluation script...")
-                exec_accu, exact_match_accu = model_eval(args, prefix, model, val_dataset.de_word2idx, val_loader)
-                
+                exec_accu, exact_match_accu = model_eval(args, prefix, model, val_dataset)
+                # exec_accu = round(np.float64(exec_accu),3)
+                # exact_match_accu = round(np.float64(exact_match_accu), 3)
             val_accuracy_tracker["exec_accu"].append(exec_accu)
             val_accuracy_tracker["exact_match_accu"].append(exact_match_accu)
             
@@ -234,67 +242,65 @@ def train(args):
 
     return
 
-def model_eval(args, prefix, model=None, de_word2idx = None, val_loader=None):
-    if val_loader == None:
+def model_eval(args, prefix, model=None, val_dataset=None):
+    if val_dataset == None:
         val_dataset = Text2SQLDataset(args.processed_data, "val")
 
-        val_loader = DataLoader(val_dataset, batch_size = args.batch_size, shuffle=False, 
-        num_workers=args.num_workers, collate_fn=collate)
-
-        de_word2idx = val_dataset.de_word2idx
-
+        val_loader = DataLoader(val_dataset, batch_size = args.batch_size*16, shuffle=False, 
+                            num_workers=args.num_workers, collate_fn=collate)
+    
     if model == None:
         print("loading saved model...")
-        model = load_checkpoint(args, "latest")
+        model = load_checkpoint(args, "best")
         model = model.to(args.device)
         model.eval()
     else:
         print("using existing model...")
+    
+    print("Evaluating model on val data.")            
+    
+    if os.path.exists(os.path.join(args.result_dir, f"{prefix}_gold.txt")):
+        os.remove(os.path.join(args.result_dir, f"{prefix}_gold.txt"))
 
-    print("Evaluating model on val data.")
+    if os.path.exists(os.path.join(args.result_dir, f"{prefix}_pred.txt")):
+        os.remove(os.path.join(args.result_dir, f"{prefix}_pred.txt"))
 
-    gold_file = os.path.join(args.result_dir, f"{prefix}_gold.txt")
-    pred_file = os.path.join(args.result_dir, f"{prefix}_pred.txt")
-    results_file = os.path.join(args.result_dir, f"{prefix}_results.txt")
-    
-    if os.path.exists(gold_file):
-        os.remove(gold_file)
-
-    if os.path.exists(pred_file):
-        os.remove(pred_file)    
-    
-    if os.path.exists(results_file):
-        os.remove(results_file)
-    
-    
-    start_token = de_word2idx["<sos>"]
-    end_token = de_word2idx["<eos>"]
-    target_vocab_size = len(de_word2idx)
+    target_vocab = val_dataset.de_word2idx
+    start_token = target_vocab["<sos>"]
+    end_token = target_vocab["<eos>"]
+    target_vocab_size = len(target_vocab)
+    print("target vocab size", target_vocab_size)
 
     for i, data in enumerate(val_loader):
-        
+        # print("entered val loader loop.")
         question = data['question'].to(device)
         query = data['query'].to(device)
         og_query = data['og_query']
         db_id = data['db_id']
-
+        
+        # output, words = model(question, query)
+        # loss = criterion(words, query)
+        # val_loss.append(loss.item()/len(query))
+        
         batch_size = question.shape[0]
         max_target_len = query.shape[1]
-
+        
+        # print(f"EVAL BATCH {i}, SIZE {batch_size}")
+        
         words = torch.zeros(batch_size, max_target_len).to(args.device)
 
         _, (hidden, cell) = model.encoder(question)
-        if args.search_type == "beam":
-            for b in range(batch_size):
-                words[b,:] = beam_search(args, model, hidden[:,b,:].unsqueeze(1), cell[:,b,:].unsqueeze(1),
-                start_token, end_token, max_target_len, 1)
-        else:
-            words = greedy_decoder(args, model, hidden, cell, query, batch_size, target_vocab_size, max_target_len)
+        
+        for b in range(batch_size):
+            words[b,:] = beam_search(args, model, hidden[:,b,:].unsqueeze(1), cell[:,b,:].unsqueeze(1), start_token, end_token, max_target_len, 3)
         
         convert_idx_sentence(args, words, og_query, db_id, prefix)
-
+        
     print("Running evaluation script...")
-    subprocess.call(f"python3 evaluation.py --gold {gold_file} --pred {pred_file} --db ./data/database/ --table ./data/tables.json --etype all >> {results_file}", shell=True)
+    if os.path.exists(f"{args.result_dir}/{prefix}_results.txt"):
+        os.remove(f"{args.result_dir}/{prefix}_results.txt")
+
+    subprocess.call(f"python3 evaluation.py --gold {args.result_dir}/{prefix}_gold.txt --pred {args.result_dir}/{prefix}_pred.txt --db ./data/database/ --table ./data/tables.json --etype all >> {args.result_dir}/{prefix}_results.txt", shell=True)
     _, _, exec_accu, exact_match_accu = get_eval_stats(args, prefix)
     
     exec_accu = round(np.float64(exec_accu),3)
@@ -302,6 +308,8 @@ def model_eval(args, prefix, model=None, de_word2idx = None, val_loader=None):
     print("Execution Accuracy = {}, Exact Match Accuracy = {}".format(exec_accu, exact_match_accu))
 
     return exec_accu, exact_match_accu 
+
+
 
 
 
