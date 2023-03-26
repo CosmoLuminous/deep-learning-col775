@@ -1,0 +1,41 @@
+2023-03-21 22:19:01.445598: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcusolver.so.11'; dlerror: libcusolver.so.11: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/cuda-11.0/lib64:/usr/local/cuda-11.0/lib64
+2023-03-21 22:19:01.446307: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/cuda-11.0/lib64:/usr/local/cuda-11.0/lib64
+2023-03-21 22:19:01.446333: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1835] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+Namespace(batch_size=32, checkpoint_dir='checkpoints/seq2seq_2_2_1024_512_300_32_200', data_dir='data', de_hidden=512, de_num_layers=2, device=device(type='cuda'), embed_dim=300, en_hidden=1024, en_num_layers=2, epochs=200, model_type='Seq2Seq', num_workers=24, processed_data='processed_data', restore=False, result_dir='results/seq2seq_2_2_1024_512_300_32_200', search_type='greedy')
+Running on device: cuda
+Loading GloVe embeddings...
+Loading Encoder...
+Loading Seq2Seq LSTM Decoder...
+Dataset Length = 7754
+Encoder Vocab Size = 2040, Decoder Vocab Size = 2342
+Dataset Length = 1939
+Encoder Vocab Size = 2040, Decoder Vocab Size = 2342
+
+
+
+|===================================== Epoch: 0 =====================================|
+/mnt/home/siy197580/projects/deep-learning/a1/text2sql/text2sql.py:54: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  embedding_matrix[v] = torch.tensor(glove.vectors[glove.stoi[k]])
+Traceback (most recent call last):
+  File "train.py", line 326, in <module>
+    train(args)
+  File "train.py", line 154, in train
+    output, _ = model(question, query)
+  File "/usr/local/lib/python3.7/dist-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/mnt/home/siy197580/projects/deep-learning/a1/text2sql/text2sql.py", line 130, in forward
+    output, (hidden, cell) = self.decoder(x, (hidden, cell))
+  File "/usr/local/lib/python3.7/dist-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/mnt/home/siy197580/projects/deep-learning/a1/text2sql/decoder.py", line 27, in forward
+    decoder_out, (ht, ct) = self.LSTM(x, h0_c0)
+  File "/usr/local/lib/python3.7/dist-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/usr/local/lib/python3.7/dist-packages/torch/nn/modules/rnn.py", line 579, in forward
+    self.check_forward_args(input, hx, batch_sizes)
+  File "/usr/local/lib/python3.7/dist-packages/torch/nn/modules/rnn.py", line 534, in check_forward_args
+    'Expected hidden[0] size {}, got {}')
+  File "/usr/local/lib/python3.7/dist-packages/torch/nn/modules/rnn.py", line 196, in check_hidden_size
+    raise RuntimeError(msg.format(expected_hidden_size, list(hx.size())))
+RuntimeError: Expected hidden[0] size (2, 32, 512), got [2, 32, 1024]

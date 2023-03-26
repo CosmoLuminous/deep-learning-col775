@@ -1,0 +1,13 @@
+2023-03-21 19:00:48.478401: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcusolver.so.11'; dlerror: libcusolver.so.11: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/cuda-11.0/lib64:/usr/local/cuda-11.0/lib64
+2023-03-21 19:00:48.479486: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/cuda-11.0/lib64:/usr/local/cuda-11.0/lib64
+2023-03-21 19:00:48.479505: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1835] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+Namespace(batch_size=32, checkpoint_dir='checkpoints/seq2seq_1_1_512_512_300_32_300', data_dir='data', de_hidden=512, de_num_layers=1, device=device(type='cuda'), embed_dim=300, en_hidden=512, en_num_layers=1, epochs=300, model_type='Seq2Seq', num_workers=24, processed_data='processed_data', restore=False, result_dir='results/seq2seq_1_1_512_512_300_32_300', search_type='greedy')
+Running on device: cuda
+Dataset Length = 1939
+Encoder Vocab Size = 2040, Decoder Vocab Size = 2342
+
+|--------- Model Load Success. Trained Epoch: 189
+Evaluating model on val data.
+Running evaluation script...
+Execution Accuracy = 0.194, Exact Match Accuracy = 0.209

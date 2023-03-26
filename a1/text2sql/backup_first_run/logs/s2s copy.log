@@ -1,0 +1,980 @@
+2023-03-20 17:46:11.819652: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcusolver.so.11'; dlerror: libcusolver.so.11: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/cuda-11.0/lib64:/usr/local/cuda-11.0/lib64
+2023-03-20 17:46:11.821829: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/cuda-11.0/lib64:/usr/local/cuda-11.0/lib64
+2023-03-20 17:46:11.821874: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1835] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+Namespace(batch_size=32, checkpoint_dir='checkpoints/seq2seq', data_dir='data', de_hidden=512, de_num_layers=1, device=device(type='cpu'), embed_dim=300, en_hidden=512, en_num_layers=1, epochs=200, model_type='Seq2Seq', num_workers=8, processed_data='processed_data', restore=False, result_dir='results/seq2seq')
+cuda
+Loading GloVe embeddings...
+Loading Encoder...
+Loading Seq2Seq LSTM Decoder...
+Dataset Length = 7754
+Encoder Vocab Size = 2040, Decoder Vocab Size = 2342
+Dataset Length = 1939
+Encoder Vocab Size = 2040, Decoder Vocab Size = 2342
+
+
+
+|===================================== Epoch: 0 =====================================|
+/mnt/home/siy197580/projects/deep-learning/a1/text2sql/text2sql.py:54: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  embedding_matrix[v] = torch.tensor(glove.vectors[glove.stoi[k]])
+/usr/local/lib/python3.7/dist-packages/torch/nn/modules/rnn.py:61: UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.3 and num_layers=1
+  "num_layers={}".format(dropout, num_layers))
+Epoch: 0, Total Time Elapsed: 0.4Mins, Train Loss: 0.002009131954508158, Prev Min Train Loss: 10000
+Evaluating model on val data.
+                     easy                 medium               hard                 extra                all                 
+count                345                  549                  333                  309                  1536                
+=====================   EXECUTION ACCURACY     =====================
+execution            0.000                0.000                0.000                0.000                0.000               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.000                0.000                0.000                0.000                0.000               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.000                0.000                0.000                0.000                0.000               
+select(no AGG)       0.000                0.000                0.000                0.000                0.000               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.000                0.000                0.000               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                0.831                0.856                0.718                0.852               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.000                0.000                0.000                0.000                0.000               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.000                0.000                0.000                0.000                0.000               
+select(no AGG)       0.000                0.000                0.000                0.000                0.000               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.000                0.000                0.000               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                1.000                1.000                1.000                1.000               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.000                0.000                0.000                0.000                0.000               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               1.000                1.000                1.000                1.000                1.000               
+select(no AGG)       1.000                1.000                1.000                1.000                1.000               
+where                1.000                1.000                1.000                1.000                1.000               
+where(no OP)         1.000                1.000                1.000                1.000                1.000               
+group(no Having)     1.000                1.000                1.000                1.000                1.000               
+group                1.000                1.000                1.000                1.000                1.000               
+order                1.000                1.000                1.000                1.000                1.000               
+and/or               1.000                0.907                0.922                0.836                0.920               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             1.000                1.000                1.000                1.000                1.000               
+
+
+
+|===================================== Epoch: 1 =====================================|
+Epoch: 1, Total Time Elapsed: 1.5Mins, Train Loss: 0.001865296874395958, Prev Min Train Loss: 0.002009131954508158
+
+
+
+|===================================== Epoch: 2 =====================================|
+Epoch: 2, Total Time Elapsed: 1.92Mins, Train Loss: 0.0016672927131947918, Prev Min Train Loss: 0.001865296874395958
+
+
+
+|===================================== Epoch: 3 =====================================|
+Epoch: 3, Total Time Elapsed: 2.34Mins, Train Loss: 0.0014915416569414824, Prev Min Train Loss: 0.0016672927131947918
+
+
+
+|===================================== Epoch: 4 =====================================|
+Epoch: 4, Total Time Elapsed: 2.74Mins, Train Loss: 0.0013389107373112537, Prev Min Train Loss: 0.0014915416569414824
+
+
+
+|===================================== Epoch: 5 =====================================|
+Epoch: 5, Total Time Elapsed: 3.14Mins, Train Loss: 0.0012705192980759028, Prev Min Train Loss: 0.0013389107373112537
+
+
+
+|===================================== Epoch: 6 =====================================|
+Epoch: 6, Total Time Elapsed: 3.55Mins, Train Loss: 0.0011578119672091896, Prev Min Train Loss: 0.0012705192980759028
+
+
+
+|===================================== Epoch: 7 =====================================|
+Epoch: 7, Total Time Elapsed: 3.94Mins, Train Loss: 0.0010846419091461305, Prev Min Train Loss: 0.0011578119672091896
+
+
+
+|===================================== Epoch: 8 =====================================|
+Epoch: 8, Total Time Elapsed: 4.34Mins, Train Loss: 0.0010347854998197768, Prev Min Train Loss: 0.0010846419091461305
+
+
+
+|===================================== Epoch: 9 =====================================|
+Epoch: 9, Total Time Elapsed: 4.75Mins, Train Loss: 0.0009966306970524022, Prev Min Train Loss: 0.0010347854998197768
+
+
+
+|===================================== Epoch: 10 =====================================|
+Epoch: 10, Total Time Elapsed: 5.16Mins, Train Loss: 0.0009155650401509617, Prev Min Train Loss: 0.0009966306970524022
+Evaluating model on val data.
+                     easy                 medium               hard                 extra                all                 
+count                345                  549                  333                  309                  1536                
+=====================   EXECUTION ACCURACY     =====================
+execution            0.000                0.000                0.003                0.000                0.001               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.000                0.000                0.000                0.000                0.000               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.000                0.000                1.000                0.000                0.286               
+select(no AGG)       0.000                0.000                1.000                0.000                0.286               
+where                0.500                0.000                0.000                0.000                0.200               
+where(no OP)         0.500                0.000                0.000                0.000                0.200               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                0.831                0.856                0.718                0.852               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.333                0.000                1.000                1.000                0.667               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.000                0.000                0.006                0.000                0.001               
+select(no AGG)       0.000                0.000                0.006                0.000                0.001               
+where                0.007                0.000                0.000                0.000                0.001               
+where(no OP)         0.007                0.000                0.000                0.000                0.001               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                1.000                1.000                1.000                1.000               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.005                0.000                0.006                0.003                0.003               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               1.000                1.000                0.012                1.000                0.003               
+select(no AGG)       1.000                1.000                0.012                1.000                0.003               
+where                0.013                1.000                1.000                1.000                0.002               
+where(no OP)         0.013                1.000                1.000                1.000                0.002               
+group(no Having)     1.000                1.000                1.000                1.000                1.000               
+group                1.000                1.000                1.000                1.000                1.000               
+order                1.000                1.000                1.000                1.000                1.000               
+and/or               1.000                0.907                0.922                0.836                0.920               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.010                1.000                0.012                0.006                0.006               
+
+
+
+|===================================== Epoch: 11 =====================================|
+Epoch: 11, Total Time Elapsed: 6.42Mins, Train Loss: 0.0008719939828156451, Prev Min Train Loss: 0.0009155650401509617
+
+
+
+|===================================== Epoch: 12 =====================================|
+Epoch: 12, Total Time Elapsed: 6.85Mins, Train Loss: 0.0008366960709903442, Prev Min Train Loss: 0.0008719939828156451
+
+
+
+|===================================== Epoch: 13 =====================================|
+Epoch: 13, Total Time Elapsed: 7.24Mins, Train Loss: 0.0008100815256581169, Prev Min Train Loss: 0.0008366960709903442
+
+
+
+|===================================== Epoch: 14 =====================================|
+Epoch: 14, Total Time Elapsed: 7.64Mins, Train Loss: 0.0007869135531742816, Prev Min Train Loss: 0.0008100815256581169
+
+
+
+|===================================== Epoch: 15 =====================================|
+Epoch: 15, Total Time Elapsed: 8.04Mins, Train Loss: 0.0007444821127795129, Prev Min Train Loss: 0.0007869135531742816
+
+
+
+|===================================== Epoch: 16 =====================================|
+Epoch: 16, Total Time Elapsed: 8.44Mins, Train Loss: 0.0006787696123016683, Prev Min Train Loss: 0.0007444821127795129
+
+
+
+|===================================== Epoch: 17 =====================================|
+Epoch: 17, Total Time Elapsed: 8.85Mins, Train Loss: 0.0006373823657175414, Prev Min Train Loss: 0.0006787696123016683
+
+
+
+|===================================== Epoch: 18 =====================================|
+Epoch: 18, Total Time Elapsed: 9.25Mins, Train Loss: 0.000619245122502911, Prev Min Train Loss: 0.0006373823657175414
+
+
+
+|===================================== Epoch: 19 =====================================|
+Epoch: 19, Total Time Elapsed: 9.64Mins, Train Loss: 0.0005958777238949838, Prev Min Train Loss: 0.000619245122502911
+
+
+
+|===================================== Epoch: 20 =====================================|
+Epoch: 20, Total Time Elapsed: 10.03Mins, Train Loss: 0.0005734049312784618, Prev Min Train Loss: 0.0005958777238949838
+Evaluating model on val data.
+                     easy                 medium               hard                 extra                all                 
+count                345                  549                  333                  309                  1536                
+=====================   EXECUTION ACCURACY     =====================
+execution            0.000                0.000                0.003                0.000                0.001               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.000                0.000                0.000                0.000                0.000               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.000                0.000                0.500                0.000                0.143               
+select(no AGG)       0.000                0.000                0.500                0.000                0.143               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.250                0.000                0.000                0.000                0.167               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                0.831                0.855                0.718                0.851               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.500                0.000                0.500                0.000                0.500               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.000                0.000                0.003                0.000                0.001               
+select(no AGG)       0.000                0.000                0.003                0.000                0.001               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.007                0.000                0.000                0.000                0.001               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                1.000                0.996                1.000                0.999               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.010                0.000                0.003                0.000                0.002               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               1.000                1.000                0.006                1.000                0.001               
+select(no AGG)       1.000                1.000                0.006                1.000                0.001               
+where                1.000                1.000                1.000                1.000                1.000               
+where(no OP)         0.013                1.000                1.000                1.000                0.002               
+group(no Having)     1.000                1.000                1.000                1.000                1.000               
+group                1.000                1.000                1.000                1.000                1.000               
+order                1.000                1.000                1.000                1.000                1.000               
+and/or               1.000                0.907                0.921                0.836                0.919               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.020                1.000                0.006                1.000                0.004               
+
+
+
+|===================================== Epoch: 21 =====================================|
+Epoch: 21, Total Time Elapsed: 10.96Mins, Train Loss: 0.0005442286053550716, Prev Min Train Loss: 0.0005734049312784618
+
+
+
+|===================================== Epoch: 22 =====================================|
+Epoch: 22, Total Time Elapsed: 11.35Mins, Train Loss: 0.0005113307409559478, Prev Min Train Loss: 0.0005442286053550716
+
+
+
+|===================================== Epoch: 23 =====================================|
+Epoch: 23, Total Time Elapsed: 11.75Mins, Train Loss: 0.0004982198339861562, Prev Min Train Loss: 0.0005113307409559478
+
+
+
+|===================================== Epoch: 24 =====================================|
+Epoch: 24, Total Time Elapsed: 12.15Mins, Train Loss: 0.0004762245028549128, Prev Min Train Loss: 0.0004982198339861562
+
+
+
+|===================================== Epoch: 25 =====================================|
+Epoch: 25, Total Time Elapsed: 12.54Mins, Train Loss: 0.0004540731905780151, Prev Min Train Loss: 0.0004762245028549128
+
+
+
+|===================================== Epoch: 26 =====================================|
+Epoch: 26, Total Time Elapsed: 12.95Mins, Train Loss: 0.00042756736489184044, Prev Min Train Loss: 0.0004540731905780151
+
+
+
+|===================================== Epoch: 27 =====================================|
+Epoch: 27, Total Time Elapsed: 13.35Mins, Train Loss: 0.0004108934348550509, Prev Min Train Loss: 0.00042756736489184044
+
+
+
+|===================================== Epoch: 28 =====================================|
+Epoch: 28, Total Time Elapsed: 13.74Mins, Train Loss: 0.0003898443754141695, Prev Min Train Loss: 0.0004108934348550509
+
+
+
+|===================================== Epoch: 29 =====================================|
+Epoch: 29, Total Time Elapsed: 14.14Mins, Train Loss: 0.0003880610179007344, Prev Min Train Loss: 0.0003898443754141695
+
+
+
+|===================================== Epoch: 30 =====================================|
+Epoch: 30, Total Time Elapsed: 14.55Mins, Train Loss: 0.00036949347902377115, Prev Min Train Loss: 0.0003880610179007344
+Evaluating model on val data.
+                     easy                 medium               hard                 extra                all                 
+count                345                  549                  333                  309                  1536                
+=====================   EXECUTION ACCURACY     =====================
+execution            0.000                0.000                0.000                0.000                0.000               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.000                0.000                0.000                0.000                0.000               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.000                0.000                0.000                0.000                0.000               
+select(no AGG)       0.000                0.000                0.000                0.000                0.000               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.000                0.000                0.000               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                0.831                0.855                0.718                0.851               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.667                1.000                1.000                0.000                0.667               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.000                0.000                0.000                0.000                0.000               
+select(no AGG)       0.000                0.000                0.000                0.000                0.000               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.000                0.000                0.000               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               0.997                1.000                0.996                1.000                0.998               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.010                0.002                0.003                0.000                0.003               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               1.000                1.000                1.000                1.000                1.000               
+select(no AGG)       1.000                1.000                1.000                1.000                1.000               
+where                1.000                1.000                1.000                1.000                1.000               
+where(no OP)         1.000                1.000                1.000                1.000                1.000               
+group(no Having)     1.000                1.000                1.000                1.000                1.000               
+group                1.000                1.000                1.000                1.000                1.000               
+order                1.000                1.000                1.000                1.000                1.000               
+and/or               0.999                0.907                0.921                0.836                0.919               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.020                0.004                0.006                1.000                0.006               
+
+
+
+|===================================== Epoch: 31 =====================================|
+Epoch: 31, Total Time Elapsed: 15.51Mins, Train Loss: 0.00037605588936743834, Prev Min Train Loss: 0.00036949347902377115
+
+
+
+|===================================== Epoch: 32 =====================================|
+Epoch: 32, Total Time Elapsed: 15.9Mins, Train Loss: 0.00040204225302639993, Prev Min Train Loss: 0.00036949347902377115
+
+
+
+|===================================== Epoch: 33 =====================================|
+Epoch: 33, Total Time Elapsed: 16.29Mins, Train Loss: 0.0003465580150135413, Prev Min Train Loss: 0.00036949347902377115
+
+
+
+|===================================== Epoch: 34 =====================================|
+Epoch: 34, Total Time Elapsed: 16.68Mins, Train Loss: 0.00032731831661396177, Prev Min Train Loss: 0.0003465580150135413
+
+
+
+|===================================== Epoch: 35 =====================================|
+Epoch: 35, Total Time Elapsed: 17.06Mins, Train Loss: 0.0003339692656830748, Prev Min Train Loss: 0.00032731831661396177
+
+
+
+|===================================== Epoch: 36 =====================================|
+Epoch: 36, Total Time Elapsed: 17.44Mins, Train Loss: 0.0003200981855130917, Prev Min Train Loss: 0.00032731831661396177
+
+
+
+|===================================== Epoch: 37 =====================================|
+Epoch: 37, Total Time Elapsed: 17.86Mins, Train Loss: 0.0002997268983021717, Prev Min Train Loss: 0.0003200981855130917
+
+
+
+|===================================== Epoch: 38 =====================================|
+Epoch: 38, Total Time Elapsed: 18.25Mins, Train Loss: 0.00030016207361519166, Prev Min Train Loss: 0.0002997268983021717
+
+
+
+|===================================== Epoch: 39 =====================================|
+Epoch: 39, Total Time Elapsed: 18.64Mins, Train Loss: 0.00028864350554788, Prev Min Train Loss: 0.0002997268983021717
+
+
+
+|===================================== Epoch: 40 =====================================|
+Epoch: 40, Total Time Elapsed: 19.06Mins, Train Loss: 0.00027624833330442805, Prev Min Train Loss: 0.00028864350554788
+Evaluating model on val data.
+                     easy                 medium               hard                 extra                all                 
+count                345                  549                  333                  309                  1536                
+=====================   EXECUTION ACCURACY     =====================
+execution            0.000                0.000                0.000                0.000                0.000               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.000                0.000                0.000                0.000                0.000               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.000                0.500                0.500                0.000                0.286               
+select(no AGG)       0.000                0.500                0.500                0.000                0.286               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.000                0.000                0.000               
+group(no Having)     0.000                0.000                1.000                0.000                1.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                0.831                0.856                0.718                0.852               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             1.000                0.500                0.500                0.000                0.600               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.000                0.002                0.003                0.000                0.001               
+select(no AGG)       0.000                0.002                0.003                0.000                0.001               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.000                0.000                0.000               
+group(no Having)     0.000                0.000                0.020                0.000                0.003               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                1.000                1.000                1.000                1.000               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.005                0.002                0.003                0.000                0.002               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               1.000                0.004                0.006                1.000                0.003               
+select(no AGG)       1.000                0.004                0.006                1.000                0.003               
+where                1.000                1.000                1.000                1.000                1.000               
+where(no OP)         1.000                1.000                1.000                1.000                1.000               
+group(no Having)     1.000                1.000                0.038                1.000                0.005               
+group                1.000                1.000                1.000                1.000                1.000               
+order                1.000                1.000                1.000                1.000                1.000               
+and/or               1.000                0.907                0.922                0.836                0.920               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.010                0.004                0.006                1.000                0.004               
+
+
+
+|===================================== Epoch: 41 =====================================|
+Epoch: 41, Total Time Elapsed: 20.02Mins, Train Loss: 0.0002792647792773153, Prev Min Train Loss: 0.00027624833330442805
+
+
+
+|===================================== Epoch: 42 =====================================|
+Epoch: 42, Total Time Elapsed: 20.4Mins, Train Loss: 0.000272038145773529, Prev Min Train Loss: 0.00027624833330442805
+
+
+
+|===================================== Epoch: 43 =====================================|
+Epoch: 43, Total Time Elapsed: 20.8Mins, Train Loss: 0.00028572342635572047, Prev Min Train Loss: 0.000272038145773529
+
+
+
+|===================================== Epoch: 44 =====================================|
+Epoch: 44, Total Time Elapsed: 21.2Mins, Train Loss: 0.00026519039093965543, Prev Min Train Loss: 0.000272038145773529
+
+
+
+|===================================== Epoch: 45 =====================================|
+Epoch: 45, Total Time Elapsed: 21.6Mins, Train Loss: 0.00025345790884009716, Prev Min Train Loss: 0.00026519039093965543
+
+
+
+|===================================== Epoch: 46 =====================================|
+Epoch: 46, Total Time Elapsed: 21.99Mins, Train Loss: 0.0002418249274006282, Prev Min Train Loss: 0.00025345790884009716
+
+
+
+|===================================== Epoch: 47 =====================================|
+Epoch: 47, Total Time Elapsed: 22.38Mins, Train Loss: 0.00024281565635542803, Prev Min Train Loss: 0.0002418249274006282
+
+
+
+|===================================== Epoch: 48 =====================================|
+Epoch: 48, Total Time Elapsed: 22.77Mins, Train Loss: 0.00027619736505575787, Prev Min Train Loss: 0.0002418249274006282
+
+
+
+|===================================== Epoch: 49 =====================================|
+Epoch: 49, Total Time Elapsed: 23.16Mins, Train Loss: 0.00024609796371133716, Prev Min Train Loss: 0.0002418249274006282
+
+
+
+|===================================== Epoch: 50 =====================================|
+Epoch: 50, Total Time Elapsed: 23.55Mins, Train Loss: 0.00023798248451453627, Prev Min Train Loss: 0.0002418249274006282
+Evaluating model on val data.
+                     easy                 medium               hard                 extra                all                 
+count                345                  549                  333                  309                  1536                
+=====================   EXECUTION ACCURACY     =====================
+execution            0.000                0.000                0.006                0.000                0.001               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.000                0.000                0.000                0.000                0.000               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.000                0.000                0.500                0.000                0.182               
+select(no AGG)       0.000                0.000                0.500                0.000                0.182               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.250                0.000                0.167               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                0.831                0.856                0.722                0.852               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.000                0.000                0.500                0.333                0.300               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.000                0.000                0.006                0.000                0.001               
+select(no AGG)       0.000                0.000                0.006                0.000                0.001               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.005                0.000                0.001               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                1.000                1.000                1.000                1.000               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.000                0.000                0.006                0.003                0.002               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               1.000                1.000                0.012                1.000                0.003               
+select(no AGG)       1.000                1.000                0.012                1.000                0.003               
+where                1.000                1.000                1.000                1.000                1.000               
+where(no OP)         1.000                1.000                0.009                1.000                0.002               
+group(no Having)     1.000                1.000                1.000                1.000                1.000               
+group                1.000                1.000                1.000                1.000                1.000               
+order                1.000                1.000                1.000                1.000                1.000               
+and/or               1.000                0.907                0.922                0.838                0.920               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             1.000                1.000                0.012                0.006                0.004               
+
+
+
+|===================================== Epoch: 51 =====================================|
+Epoch: 51, Total Time Elapsed: 24.51Mins, Train Loss: 0.0002249351584917185, Prev Min Train Loss: 0.00023798248451453627
+
+
+
+|===================================== Epoch: 52 =====================================|
+Epoch: 52, Total Time Elapsed: 24.9Mins, Train Loss: 0.00023999645247360432, Prev Min Train Loss: 0.0002249351584917185
+
+
+
+|===================================== Epoch: 53 =====================================|
+Epoch: 53, Total Time Elapsed: 25.29Mins, Train Loss: 0.00023423363347866796, Prev Min Train Loss: 0.0002249351584917185
+
+
+
+|===================================== Epoch: 54 =====================================|
+Epoch: 54, Total Time Elapsed: 25.68Mins, Train Loss: 0.00022412791251787175, Prev Min Train Loss: 0.0002249351584917185
+
+
+
+|===================================== Epoch: 55 =====================================|
+Epoch: 55, Total Time Elapsed: 26.07Mins, Train Loss: 0.00022703224303690473, Prev Min Train Loss: 0.00022412791251787175
+
+
+
+|===================================== Epoch: 56 =====================================|
+Epoch: 56, Total Time Elapsed: 26.45Mins, Train Loss: 0.00022674656627183647, Prev Min Train Loss: 0.00022412791251787175
+
+
+
+|===================================== Epoch: 57 =====================================|
+Epoch: 57, Total Time Elapsed: 26.83Mins, Train Loss: 0.00021196634579648716, Prev Min Train Loss: 0.00022412791251787175
+
+
+
+|===================================== Epoch: 58 =====================================|
+Epoch: 58, Total Time Elapsed: 27.23Mins, Train Loss: 0.00020288011293256858, Prev Min Train Loss: 0.00021196634579648716
+
+
+
+|===================================== Epoch: 59 =====================================|
+Epoch: 59, Total Time Elapsed: 27.63Mins, Train Loss: 0.00021833709480191356, Prev Min Train Loss: 0.00020288011293256858
+
+
+
+|===================================== Epoch: 60 =====================================|
+Epoch: 60, Total Time Elapsed: 28.04Mins, Train Loss: 0.0002124201542822659, Prev Min Train Loss: 0.00020288011293256858
+Evaluating model on val data.
+                     easy                 medium               hard                 extra                all                 
+count                345                  549                  333                  309                  1536                
+=====================   EXECUTION ACCURACY     =====================
+execution            0.000                0.000                0.003                0.000                0.001               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.000                0.000                0.000                0.000                0.000               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.000                0.000                0.333                0.000                0.125               
+select(no AGG)       0.000                0.000                0.333                0.000                0.125               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.000                0.000                0.000               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                0.831                0.856                0.718                0.851               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.667                0.000                0.667                1.000                0.625               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.000                0.000                0.003                0.000                0.001               
+select(no AGG)       0.000                0.000                0.003                0.000                0.001               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.000                0.000                0.000               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               0.997                1.000                1.000                1.000                0.999               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.010                0.000                0.006                0.003                0.004               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               1.000                1.000                0.006                1.000                0.001               
+select(no AGG)       1.000                1.000                0.006                1.000                0.001               
+where                1.000                1.000                1.000                1.000                1.000               
+where(no OP)         1.000                1.000                1.000                1.000                1.000               
+group(no Having)     1.000                1.000                1.000                1.000                1.000               
+group                1.000                1.000                1.000                1.000                1.000               
+order                1.000                1.000                1.000                1.000                1.000               
+and/or               0.999                0.907                0.922                0.836                0.919               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.020                1.000                0.012                0.006                0.007               
+
+
+
+|===================================== Epoch: 61 =====================================|
+Epoch: 61, Total Time Elapsed: 28.99Mins, Train Loss: 0.0002039146234059048, Prev Min Train Loss: 0.00020288011293256858
+
+
+
+|===================================== Epoch: 62 =====================================|
+Epoch: 62, Total Time Elapsed: 29.38Mins, Train Loss: 0.0002017731565387057, Prev Min Train Loss: 0.00020288011293256858
+
+
+
+|===================================== Epoch: 63 =====================================|
+Epoch: 63, Total Time Elapsed: 29.77Mins, Train Loss: 0.00019903527112350447, Prev Min Train Loss: 0.0002017731565387057
+
+
+
+|===================================== Epoch: 64 =====================================|
+Epoch: 64, Total Time Elapsed: 30.17Mins, Train Loss: 0.00019689147000563905, Prev Min Train Loss: 0.00019903527112350447
+
+
+
+|===================================== Epoch: 65 =====================================|
+Epoch: 65, Total Time Elapsed: 30.59Mins, Train Loss: 0.00019352830894146832, Prev Min Train Loss: 0.00019689147000563905
+
+
+
+|===================================== Epoch: 66 =====================================|
+Epoch: 66, Total Time Elapsed: 31.02Mins, Train Loss: 0.00018391634296706166, Prev Min Train Loss: 0.00019352830894146832
+
+
+
+|===================================== Epoch: 67 =====================================|
+Epoch: 67, Total Time Elapsed: 31.41Mins, Train Loss: 0.00019031257866620267, Prev Min Train Loss: 0.00018391634296706166
+
+
+
+|===================================== Epoch: 68 =====================================|
+Epoch: 68, Total Time Elapsed: 31.81Mins, Train Loss: 0.00017654085050197818, Prev Min Train Loss: 0.00018391634296706166
+
+
+
+|===================================== Epoch: 69 =====================================|
+Epoch: 69, Total Time Elapsed: 32.21Mins, Train Loss: 0.00017836485929219364, Prev Min Train Loss: 0.00017654085050197818
+
+
+
+|===================================== Epoch: 70 =====================================|
+Epoch: 70, Total Time Elapsed: 32.61Mins, Train Loss: 0.0001791493261100681, Prev Min Train Loss: 0.00017654085050197818
+Evaluating model on val data.
+                     easy                 medium               hard                 extra                all                 
+count                345                  549                  333                  309                  1536                
+=====================   EXECUTION ACCURACY     =====================
+execution            0.000                0.000                0.003                0.000                0.001               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.000                0.000                0.003                0.000                0.001               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.000                0.000                1.000                0.000                0.083               
+select(no AGG)       0.000                0.000                1.000                0.000                0.083               
+where                0.000                0.000                1.000                0.000                0.200               
+where(no OP)         0.000                0.000                1.000                0.000                0.200               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                0.831                0.856                0.718                0.851               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.333                0.000                1.000                0.250                0.375               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.000                0.000                0.003                0.000                0.001               
+select(no AGG)       0.000                0.000                0.003                0.000                0.001               
+where                0.000                0.000                0.005                0.000                0.001               
+where(no OP)         0.000                0.000                0.005                0.000                0.001               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               0.997                1.000                1.000                1.000                0.999               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.005                0.000                0.003                0.003                0.002               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               1.000                1.000                0.006                1.000                0.001               
+select(no AGG)       1.000                1.000                0.006                1.000                0.001               
+where                1.000                1.000                0.009                1.000                0.002               
+where(no OP)         1.000                1.000                0.009                1.000                0.002               
+group(no Having)     1.000                1.000                1.000                1.000                1.000               
+group                1.000                1.000                1.000                1.000                1.000               
+order                1.000                1.000                1.000                1.000                1.000               
+and/or               0.999                0.907                0.922                0.836                0.919               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.010                1.000                0.006                0.006                0.004               
+
+
+
+|===================================== Epoch: 71 =====================================|
+Epoch: 71, Total Time Elapsed: 33.55Mins, Train Loss: 0.00019165255585255423, Prev Min Train Loss: 0.00017654085050197818
+
+
+
+|===================================== Epoch: 72 =====================================|
+Epoch: 72, Total Time Elapsed: 33.94Mins, Train Loss: 0.00018549613130920898, Prev Min Train Loss: 0.00017654085050197818
+
+
+
+|===================================== Epoch: 73 =====================================|
+Epoch: 73, Total Time Elapsed: 34.33Mins, Train Loss: 0.00019240136492032535, Prev Min Train Loss: 0.00017654085050197818
+
+
+
+|===================================== Epoch: 74 =====================================|
+Epoch: 74, Total Time Elapsed: 34.72Mins, Train Loss: 0.00017813400352254875, Prev Min Train Loss: 0.00017654085050197818
+
+
+
+|===================================== Epoch: 75 =====================================|
+Epoch: 75, Total Time Elapsed: 35.11Mins, Train Loss: 0.00017864270889186447, Prev Min Train Loss: 0.00017654085050197818
+
+
+
+|===================================== Epoch: 76 =====================================|
+Epoch: 76, Total Time Elapsed: 35.5Mins, Train Loss: 0.00017916182793832248, Prev Min Train Loss: 0.00017654085050197818
+
+
+
+|===================================== Epoch: 77 =====================================|
+Epoch: 77, Total Time Elapsed: 35.9Mins, Train Loss: 0.00017774493597855204, Prev Min Train Loss: 0.00017654085050197818
+
+
+
+|===================================== Epoch: 78 =====================================|
+Epoch: 78, Total Time Elapsed: 36.28Mins, Train Loss: 0.00017529234657757763, Prev Min Train Loss: 0.00017654085050197818
+
+
+
+|===================================== Epoch: 79 =====================================|
+Epoch: 79, Total Time Elapsed: 36.68Mins, Train Loss: 0.00016941855956853193, Prev Min Train Loss: 0.00017529234657757763
+
+
+
+|===================================== Epoch: 80 =====================================|
+Epoch: 80, Total Time Elapsed: 37.09Mins, Train Loss: 0.00017212281028671056, Prev Min Train Loss: 0.00016941855956853193
+Evaluating model on val data.
+                     easy                 medium               hard                 extra                all                 
+count                345                  549                  333                  309                  1536                
+=====================   EXECUTION ACCURACY     =====================
+execution            0.000                0.000                0.000                0.000                0.000               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.000                0.000                0.000                0.000                0.000               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.000                0.000                0.000                0.000                0.000               
+select(no AGG)       0.200                0.000                0.333                0.000                0.133               
+where                0.500                0.000                0.000                0.000                0.182               
+where(no OP)         0.750                0.000                0.000                0.000                0.273               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                0.832                0.855                0.718                0.852               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.750                0.250                0.333                0.500                0.462               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.000                0.000                0.000                0.000                0.000               
+select(no AGG)       0.003                0.000                0.003                0.000                0.001               
+where                0.014                0.000                0.000                0.000                0.002               
+where(no OP)         0.020                0.000                0.000                0.000                0.003               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                1.000                0.996                1.000                0.999               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.015                0.002                0.003                0.003                0.004               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               1.000                1.000                1.000                1.000                1.000               
+select(no AGG)       0.006                1.000                0.006                1.000                0.003               
+where                0.026                1.000                1.000                1.000                0.005               
+where(no OP)         0.040                1.000                1.000                1.000                0.007               
+group(no Having)     1.000                1.000                1.000                1.000                1.000               
+group                1.000                1.000                1.000                1.000                1.000               
+order                1.000                1.000                1.000                1.000                1.000               
+and/or               1.000                0.909                0.921                0.836                0.920               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.030                0.004                0.006                0.006                0.009               
+
+
+
+|===================================== Epoch: 81 =====================================|
+Epoch: 81, Total Time Elapsed: 38.02Mins, Train Loss: 0.00017927201690637153, Prev Min Train Loss: 0.00016941855956853193
+
+
+
+|===================================== Epoch: 82 =====================================|
+Epoch: 82, Total Time Elapsed: 38.43Mins, Train Loss: 0.00017093940397075146, Prev Min Train Loss: 0.00016941855956853193
+
+
+
+|===================================== Epoch: 83 =====================================|
+Epoch: 83, Total Time Elapsed: 38.83Mins, Train Loss: 0.0001752956273630967, Prev Min Train Loss: 0.00016941855956853193
+
+
+
+|===================================== Epoch: 84 =====================================|
+Epoch: 84, Total Time Elapsed: 39.21Mins, Train Loss: 0.00017756973246956862, Prev Min Train Loss: 0.00016941855956853193
+
+
+
+|===================================== Epoch: 85 =====================================|
+Epoch: 85, Total Time Elapsed: 39.6Mins, Train Loss: 0.00016711669598200364, Prev Min Train Loss: 0.00016941855956853193
+
+
+
+|===================================== Epoch: 86 =====================================|
+Epoch: 86, Total Time Elapsed: 40.0Mins, Train Loss: 0.0001646895718208688, Prev Min Train Loss: 0.00016711669598200364
+
+
+
+|===================================== Epoch: 87 =====================================|
+Epoch: 87, Total Time Elapsed: 40.4Mins, Train Loss: 0.00017001468284393777, Prev Min Train Loss: 0.0001646895718208688
+
+
+
+|===================================== Epoch: 88 =====================================|
+Epoch: 88, Total Time Elapsed: 40.8Mins, Train Loss: 0.00016198625677693585, Prev Min Train Loss: 0.0001646895718208688
+
+
+
+|===================================== Epoch: 89 =====================================|
+Epoch: 89, Total Time Elapsed: 41.18Mins, Train Loss: 0.00016214861249622773, Prev Min Train Loss: 0.00016198625677693585
+
+
+
+|===================================== Epoch: 90 =====================================|
+Epoch: 90, Total Time Elapsed: 41.58Mins, Train Loss: 0.00016267005134845285, Prev Min Train Loss: 0.00016198625677693585
+Evaluating model on val data.
+                     easy                 medium               hard                 extra                all                 
+count                345                  549                  333                  309                  1536                
+=====================   EXECUTION ACCURACY     =====================
+execution            0.000                0.000                0.000                0.000                0.000               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.000                0.000                0.000                0.000                0.000               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.000                0.000                0.000                0.000                0.000               
+select(no AGG)       0.000                0.000                0.500                0.000                0.125               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.000                0.000                0.000               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               1.000                0.832                0.856                0.718                0.852               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.000                0.500                1.000                0.000                0.429               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.000                0.000                0.000                0.000                0.000               
+select(no AGG)       0.000                0.000                0.003                0.000                0.001               
+where                0.000                0.000                0.000                0.000                0.000               
+where(no OP)         0.000                0.000                0.000                0.000                0.000               
+group(no Having)     0.000                0.000                0.000                0.000                0.000               
+group                0.000                0.000                0.000                0.000                0.000               
+order                0.000                0.000                0.000                0.000                0.000               
+and/or               0.997                1.000                1.000                1.000                0.999               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.000                0.002                0.006                0.000                0.002               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               1.000                1.000                1.000                1.000                1.000               
+select(no AGG)       1.000                1.000                0.006                1.000                0.001               
+where                1.000                1.000                1.000                1.000                1.000               
+where(no OP)         1.000                1.000                1.000                1.000                1.000               
+group(no Having)     1.000                1.000                1.000                1.000                1.000               
+group                1.000                1.000                1.000                1.000                1.000               
+order                1.000                1.000                1.000                1.000                1.000               
+and/or               0.999                0.909                0.922                0.836                0.920               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             1.000                0.004                0.012                1.000                0.004               
+
+
+
+|===================================== Epoch: 91 =====================================|
+Epoch: 91, Total Time Elapsed: 42.55Mins, Train Loss: 0.0001550717892462779, Prev Min Train Loss: 0.00016198625677693585
+
+
+
+|===================================== Epoch: 92 =====================================|
+Epoch: 92, Total Time Elapsed: 42.95Mins, Train Loss: 0.00015399234106428926, Prev Min Train Loss: 0.0001550717892462779
+
+
+
+|===================================== Epoch: 93 =====================================|
+Epoch: 93, Total Time Elapsed: 43.35Mins, Train Loss: 0.00015886654866830382, Prev Min Train Loss: 0.00015399234106428926
+
+
+
+|===================================== Epoch: 94 =====================================|
+Epoch: 94, Total Time Elapsed: 43.73Mins, Train Loss: 0.00015987506309794012, Prev Min Train Loss: 0.00015399234106428926
+
+
+
+|===================================== Epoch: 95 =====================================|
+Epoch: 95, Total Time Elapsed: 44.11Mins, Train Loss: 0.00015467740734565526, Prev Min Train Loss: 0.00015399234106428926
+
+
+
+|===================================== Epoch: 96 =====================================|
+Epoch: 96, Total Time Elapsed: 44.5Mins, Train Loss: 0.00016548594974900922, Prev Min Train Loss: 0.00015399234106428926
+
+
+
+|===================================== Epoch: 97 =====================================|
+Epoch: 97, Total Time Elapsed: 44.88Mins, Train Loss: 0.0001669377068147803, Prev Min Train Loss: 0.00015399234106428926
+
+
+
+|===================================== Epoch: 98 =====================================|
+Epoch: 98, Total Time Elapsed: 45.31Mins, Train Loss: 0.00016605178726151877, Prev Min Train Loss: 0.00015399234106428926
+
+
+
+|===================================== Epoch: 99 =====================================|
+Epoch: 99, Total Time Elapsed: 45.7Mins, Train Loss: 0.0001656762731087429, Prev Min Train Loss: 0.00015399234106428926
+
+
+
+|===================================== Epoch: 100 =====================================|
+Epoch: 100, Total Time Elapsed: 46.1Mins, Train Loss: 0.0001557427076987989, Prev Min Train Loss: 0.00015399234106428926
+Evaluating model on val data.
+Traceback (most recent call last):
+  File "evaluation.py", line 869, in <module>
+    evaluate(gold, pred, db_dir, etype, kmaps)
+  File "evaluation.py", line 548, in evaluate
+    exec_score = eval_exec_match(db, p_str, g_str, p_sql, g_sql)
+  File "evaluation.py", line 629, in eval_exec_match
+    q_res = cursor.fetchall()
+sqlite3.OperationalError: Could not decode to UTF-8 column 'last_name' with text 'Treyes Albarrac��N'
+
+
+
+|===================================== Epoch: 101 =====================================|
+Epoch: 101, Total Time Elapsed: 46.79Mins, Train Loss: 0.00015477635289139972, Prev Min Train Loss: 0.00015399234106428926
+
+
+
+|===================================== Epoch: 102 =====================================|
+Epoch: 102, Total Time Elapsed: 47.18Mins, Train Loss: 0.00015037374578147385, Prev Min Train Loss: 0.00015399234106428926
+
+
+
+|===================================== Epoch: 103 =====================================|
+Epoch: 103, Total Time Elapsed: 47.57Mins, Train Loss: 0.00014832748498874078, Prev Min Train Loss: 0.00015037374578147385
+
+
+
+|===================================== Epoch: 104 =====================================|
+Epoch: 104, Total Time Elapsed: 47.99Mins, Train Loss: 0.00015087421103750402, Prev Min Train Loss: 0.00014832748498874078
+
+
+
+|===================================== Epoch: 105 =====================================|
+Epoch: 105, Total Time Elapsed: 48.38Mins, Train Loss: 0.00014781082966938792, Prev Min Train Loss: 0.00014832748498874078
+
+
+
+|===================================== Epoch: 106 =====================================|

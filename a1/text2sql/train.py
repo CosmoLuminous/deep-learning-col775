@@ -13,10 +13,10 @@ from torch.utils.data.dataloader import DataLoader
 import torch.optim as optim
 import torch.nn as nn
 
-from text2sql import Seq2Seq
+from text2sql import Seq2Seq, Seq2SeqAttn
 from dataset import Text2SQLDataset, collate
 from utils import *
-from beam_search import beam_search, greedy_decoder
+from beam_search import beam_search, greedy_decoder, beam_search_attn_decoder
 
 def get_parser():
     """
@@ -26,7 +26,7 @@ def get_parser():
     parser = argparse.ArgumentParser(description="Text2SQL")
     
     # model type
-    parser.add_argument("--model_type", type=str, default="Seq2Seq", help="Select the model you want to run from [Seq2Seq, Seq2SeqAttn].")
+    parser.add_argument("--model_type", type=str, default="lstm_lstm", help="Select the model you want to run from [lstm_lstm | lstm_lstm_attn | bert_lstm_attn_frozen | bert_lstm_attn_tuned].")
 
     # path to data files.
     parser.add_argument("--data_dir", type=str, default="./data", help="Path to dataset directory.")
@@ -65,6 +65,7 @@ def get_parser():
 
     parser.add_argument("--search_type", type=str, default="greedy", help="Type of {greedy, beam} search to perform on decoder.")
 
+    parser.add_argument("--beam_size", type=int, default=1, help="Beam size to be used during beam search decoding.")
     return parser
 
 
@@ -109,7 +110,7 @@ def get_eval_stats(args, prefix):
     return a,b,c,d
 
 def train(args):
-    if args.model_type == "Seq2Seq":
+    if args.model_type == "lstm_lstm":
         model = Seq2Seq(args).to(device)
         # Define the loss function and optimizer
         criterion = nn.CrossEntropyLoss(ignore_index=0)
@@ -119,6 +120,19 @@ def train(args):
                 optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs, verbose=False)
                 ]
         scheduler =  schedulers[1]
+    elif args.model_type == "lstm_lstm_attn":
+        model = Seq2SeqAttn(args).to(device)
+        # Define the loss function and optimizer
+        criterion = nn.CrossEntropyLoss(ignore_index=0)
+        optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+        schedulers = [
+                optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.1, last_epoch= -1, verbose=False),
+                optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs, verbose=False)
+                ]
+        scheduler =  schedulers[1]
+    else:
+        pass
+
     train_dataset = Text2SQLDataset(args.processed_data, "train")
     train_loader = DataLoader(train_dataset, batch_size = args.batch_size, shuffle=True, 
                             num_workers=args.num_workers, collate_fn=collate)
@@ -186,7 +200,7 @@ def train(args):
             if epoch % 5 == 0:
                 print("Running evaluation script...")
                 exec_accu, exact_match_accu = model_eval(args, prefix, model, val_dataset.de_word2idx, val_loader)
-                
+            
             val_accuracy_tracker["exec_accu"].append(exec_accu)
             val_accuracy_tracker["exact_match_accu"].append(exact_match_accu)
             
@@ -245,7 +259,7 @@ def model_eval(args, prefix, model=None, de_word2idx = None, val_loader=None):
 
     if model == None:
         print("loading saved model...")
-        model = load_checkpoint(args, "latest")
+        model = load_checkpoint(args, "best")
         model = model.to(args.device)
         model.eval()
     else:
@@ -283,11 +297,15 @@ def model_eval(args, prefix, model=None, de_word2idx = None, val_loader=None):
 
         words = torch.zeros(batch_size, max_target_len).to(args.device)
 
-        _, (hidden, cell) = model.encoder(question)
+        encoder_out, (hidden, cell) = model.encoder(question)
         if args.search_type == "beam":
             for b in range(batch_size):
-                words[b,:] = beam_search(args, model, hidden[:,b,:].unsqueeze(1), cell[:,b,:].unsqueeze(1),
-                start_token, end_token, max_target_len, 1)
+                if args.model_type == "lstm_lstm":
+                    words[b,:] = beam_search(args, model, hidden[:,b,:].unsqueeze(1), cell[:,b,:].unsqueeze(1),
+                    start_token, end_token, max_target_len, args.beam_size)
+                else:
+                    words[b,:] = beam_search_attn_decoder(args, model, encoder_out[b,:,:].unsqueeze(0), hidden[:,b,:].unsqueeze(1), cell[:,b,:].unsqueeze(1),
+                    start_token, end_token, max_target_len, args.beam_size)
         else:
             words = greedy_decoder(args, model, hidden, cell, query, batch_size, target_vocab_size, max_target_len)
         

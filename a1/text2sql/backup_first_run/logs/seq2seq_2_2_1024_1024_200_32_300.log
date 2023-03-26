@@ -1,0 +1,1314 @@
+2023-03-21 23:26:02.295303: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcusolver.so.11'; dlerror: libcusolver.so.11: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/cuda-11.0/lib64:/usr/local/cuda-11.0/lib64
+2023-03-21 23:26:02.297798: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/cuda-11.0/lib64:/usr/local/cuda-11.0/lib64
+2023-03-21 23:26:02.297836: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1835] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+Namespace(batch_size=32, checkpoint_dir='checkpoints/seq2seq_2_2_1024_1024_300_32_200', data_dir='data', de_hidden=1024, de_num_layers=2, device=device(type='cuda'), embed_dim=300, en_hidden=1024, en_num_layers=2, epochs=200, model_type='Seq2Seq', num_workers=24, processed_data='processed_data', restore=False, result_dir='results/seq2seq_2_2_1024_1024_300_32_200', search_type='greedy')
+Running on device: cuda
+Loading GloVe embeddings...
+Loading Encoder...
+Loading Seq2Seq LSTM Decoder...
+Dataset Length = 7754
+Encoder Vocab Size = 2040, Decoder Vocab Size = 2342
+Dataset Length = 1939
+Encoder Vocab Size = 2040, Decoder Vocab Size = 2342
+
+
+
+|===================================== Epoch: 0 =====================================|
+/mnt/home/siy197580/projects/deep-learning/a1/text2sql/text2sql.py:54: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  embedding_matrix[v] = torch.tensor(glove.vectors[glove.stoi[k]])
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 0, Total Time Elapsed: 0.76Mins, Train Loss: 4.30427968551102, Val Loss: 4.044550794069885, Execution Accuracy = 0.0, Exact Match Accuracy = 0.0
+
+
+
+|===================================== Epoch: 1 =====================================|
+Evaluating model on val data.
+Epoch: 1, Total Time Elapsed: 2.17Mins, Train Loss: 3.9522996517856424, Val Loss: 3.921462531949653, Execution Accuracy = 0.0, Exact Match Accuracy = 0.0
+
+
+
+|===================================== Epoch: 2 =====================================|
+Evaluating model on val data.
+Epoch: 2, Total Time Elapsed: 3.08Mins, Train Loss: 3.871353332888442, Val Loss: 4.05239375302049, Execution Accuracy = 0.0, Exact Match Accuracy = 0.0
+
+
+
+|===================================== Epoch: 3 =====================================|
+Evaluating model on val data.
+Epoch: 3, Total Time Elapsed: 3.98Mins, Train Loss: 3.7435412946551914, Val Loss: 3.6519711799308903, Execution Accuracy = 0.0, Exact Match Accuracy = 0.0
+
+
+
+|===================================== Epoch: 4 =====================================|
+Evaluating model on val data.
+Epoch: 4, Total Time Elapsed: 4.9Mins, Train Loss: 3.5120610994566617, Val Loss: 3.4253247956760595, Execution Accuracy = 0.0, Exact Match Accuracy = 0.0
+
+
+
+|===================================== Epoch: 5 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 5, Total Time Elapsed: 5.83Mins, Train Loss: 3.230584945207761, Val Loss: 3.223015386550153, Execution Accuracy = 0.0, Exact Match Accuracy = 0.0
+
+
+
+|===================================== Epoch: 6 =====================================|
+Evaluating model on val data.
+Epoch: 6, Total Time Elapsed: 7.31Mins, Train Loss: 2.9889807151668846, Val Loss: 2.9957209845058252, Execution Accuracy = 0.0, Exact Match Accuracy = 0.0
+
+
+
+|===================================== Epoch: 7 =====================================|
+Evaluating model on val data.
+Epoch: 7, Total Time Elapsed: 8.23Mins, Train Loss: 2.800442186402686, Val Loss: 2.898069983623067, Execution Accuracy = 0.0, Exact Match Accuracy = 0.0
+
+
+
+|===================================== Epoch: 8 =====================================|
+Evaluating model on val data.
+Epoch: 8, Total Time Elapsed: 9.15Mins, Train Loss: 2.6491593009650463, Val Loss: 2.8271017387265065, Execution Accuracy = 0.0, Exact Match Accuracy = 0.0
+
+
+
+|===================================== Epoch: 9 =====================================|
+Evaluating model on val data.
+Epoch: 9, Total Time Elapsed: 10.06Mins, Train Loss: 2.5236508218349254, Val Loss: 2.740820943332109, Execution Accuracy = 0.0, Exact Match Accuracy = 0.0
+
+
+
+|===================================== Epoch: 10 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 10, Total Time Elapsed: 10.99Mins, Train Loss: 2.4138173375110075, Val Loss: 2.650015715692864, Execution Accuracy = 0.018, Exact Match Accuracy = 0.002
+
+
+
+|===================================== Epoch: 11 =====================================|
+Evaluating model on val data.
+Epoch: 11, Total Time Elapsed: 12.43Mins, Train Loss: 2.294744135911573, Val Loss: 2.6595359258964413, Execution Accuracy = 0.018, Exact Match Accuracy = 0.002
+
+
+
+|===================================== Epoch: 12 =====================================|
+Evaluating model on val data.
+Epoch: 12, Total Time Elapsed: 13.35Mins, Train Loss: 2.216277776922218, Val Loss: 2.616974531627092, Execution Accuracy = 0.018, Exact Match Accuracy = 0.002
+
+
+
+|===================================== Epoch: 13 =====================================|
+Evaluating model on val data.
+Epoch: 13, Total Time Elapsed: 14.26Mins, Train Loss: 2.1127191919358177, Val Loss: 2.580499389132515, Execution Accuracy = 0.018, Exact Match Accuracy = 0.002
+
+
+
+|===================================== Epoch: 14 =====================================|
+Evaluating model on val data.
+Epoch: 14, Total Time Elapsed: 15.17Mins, Train Loss: 2.042808445392813, Val Loss: 2.5535932662057097, Execution Accuracy = 0.018, Exact Match Accuracy = 0.002
+
+
+
+|===================================== Epoch: 15 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 15, Total Time Elapsed: 16.08Mins, Train Loss: 1.964436642917586, Val Loss: 2.4927139653534187, Execution Accuracy = 0.019, Exact Match Accuracy = 0.005
+
+
+
+|===================================== Epoch: 16 =====================================|
+Evaluating model on val data.
+Epoch: 16, Total Time Elapsed: 17.52Mins, Train Loss: 1.885424067454083, Val Loss: 2.457511155331721, Execution Accuracy = 0.019, Exact Match Accuracy = 0.005
+
+
+
+|===================================== Epoch: 17 =====================================|
+Evaluating model on val data.
+Epoch: 17, Total Time Elapsed: 18.43Mins, Train Loss: 1.811691540258902, Val Loss: 2.4789126916009874, Execution Accuracy = 0.019, Exact Match Accuracy = 0.005
+
+
+
+|===================================== Epoch: 18 =====================================|
+Evaluating model on val data.
+Epoch: 18, Total Time Elapsed: 19.33Mins, Train Loss: 1.748891189265153, Val Loss: 2.4250176421931533, Execution Accuracy = 0.019, Exact Match Accuracy = 0.005
+
+
+
+|===================================== Epoch: 19 =====================================|
+Evaluating model on val data.
+Epoch: 19, Total Time Elapsed: 20.24Mins, Train Loss: 1.6639530070034074, Val Loss: 2.4254093717356198, Execution Accuracy = 0.019, Exact Match Accuracy = 0.005
+
+
+
+|===================================== Epoch: 20 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 20, Total Time Elapsed: 21.15Mins, Train Loss: 1.6321693820717893, Val Loss: 2.420485553194265, Execution Accuracy = 0.027, Exact Match Accuracy = 0.012
+
+
+
+|===================================== Epoch: 21 =====================================|
+Evaluating model on val data.
+Epoch: 21, Total Time Elapsed: 22.59Mins, Train Loss: 1.5575979854834914, Val Loss: 2.4100866767226674, Execution Accuracy = 0.027, Exact Match Accuracy = 0.012
+
+
+
+|===================================== Epoch: 22 =====================================|
+Evaluating model on val data.
+Epoch: 22, Total Time Elapsed: 23.49Mins, Train Loss: 1.5082531436480613, Val Loss: 2.3999020173901418, Execution Accuracy = 0.027, Exact Match Accuracy = 0.012
+
+
+
+|===================================== Epoch: 23 =====================================|
+Evaluating model on val data.
+Epoch: 23, Total Time Elapsed: 24.39Mins, Train Loss: 1.4377895029484, Val Loss: 2.4037269627461666, Execution Accuracy = 0.027, Exact Match Accuracy = 0.012
+
+
+
+|===================================== Epoch: 24 =====================================|
+Evaluating model on val data.
+Epoch: 24, Total Time Elapsed: 25.31Mins, Train Loss: 1.3870071935555572, Val Loss: 2.364702236456949, Execution Accuracy = 0.027, Exact Match Accuracy = 0.012
+
+
+
+|===================================== Epoch: 25 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 25, Total Time Elapsed: 26.23Mins, Train Loss: 1.3139713931476138, Val Loss: 2.3788104878097283, Execution Accuracy = 0.031, Exact Match Accuracy = 0.016
+
+
+
+|===================================== Epoch: 26 =====================================|
+Evaluating model on val data.
+Epoch: 26, Total Time Elapsed: 27.69Mins, Train Loss: 1.2701372675934937, Val Loss: 2.350636847683641, Execution Accuracy = 0.031, Exact Match Accuracy = 0.016
+
+
+
+|===================================== Epoch: 27 =====================================|
+Evaluating model on val data.
+Epoch: 27, Total Time Elapsed: 28.6Mins, Train Loss: 1.2109681159380532, Val Loss: 2.353312840227221, Execution Accuracy = 0.031, Exact Match Accuracy = 0.016
+
+
+
+|===================================== Epoch: 28 =====================================|
+Evaluating model on val data.
+Epoch: 28, Total Time Elapsed: 29.53Mins, Train Loss: 1.157558090156979, Val Loss: 2.3548738233378677, Execution Accuracy = 0.031, Exact Match Accuracy = 0.016
+
+
+
+|===================================== Epoch: 29 =====================================|
+Evaluating model on val data.
+Epoch: 29, Total Time Elapsed: 30.45Mins, Train Loss: 1.11269151747472, Val Loss: 2.3840738163619744, Execution Accuracy = 0.031, Exact Match Accuracy = 0.016
+
+
+
+|===================================== Epoch: 30 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 30, Total Time Elapsed: 31.37Mins, Train Loss: 1.0613687271443906, Val Loss: 2.363431881685726, Execution Accuracy = 0.035, Exact Match Accuracy = 0.023
+
+
+
+|===================================== Epoch: 31 =====================================|
+Evaluating model on val data.
+Epoch: 31, Total Time Elapsed: 32.85Mins, Train Loss: 1.024987481749107, Val Loss: 2.330538384249953, Execution Accuracy = 0.035, Exact Match Accuracy = 0.023
+
+
+
+|===================================== Epoch: 32 =====================================|
+Evaluating model on val data.
+Epoch: 32, Total Time Elapsed: 33.77Mins, Train Loss: 0.9529469229066323, Val Loss: 2.351946224931811, Execution Accuracy = 0.035, Exact Match Accuracy = 0.023
+
+
+
+|===================================== Epoch: 33 =====================================|
+Evaluating model on val data.
+Epoch: 33, Total Time Elapsed: 34.68Mins, Train Loss: 0.9368152875959137, Val Loss: 2.3676339915541353, Execution Accuracy = 0.035, Exact Match Accuracy = 0.023
+
+
+
+|===================================== Epoch: 34 =====================================|
+Evaluating model on val data.
+Epoch: 34, Total Time Elapsed: 35.72Mins, Train Loss: 0.9043834383595627, Val Loss: 2.3463109204026518, Execution Accuracy = 0.035, Exact Match Accuracy = 0.023
+
+
+
+|===================================== Epoch: 35 =====================================|
+Evaluating model on val data.
+Traceback (most recent call last):
+  File "evaluation.py", line 877, in <module>
+    evaluate(gold, pred, db_dir, etype, kmaps)
+  File "evaluation.py", line 554, in evaluate
+    exact_score = evaluator.eval_exact_match(p_sql, g_sql)
+  File "evaluation.py", line 380, in eval_exact_match
+    partial_scores = self.eval_partial_match(pred, label)
+  File "evaluation.py", line 419, in eval_partial_match
+    label_total, pred_total, cnt = eval_and_or(pred, label)
+  File "evaluation.py", line 198, in eval_and_or
+    pred_ao = set(pred_ao)
+TypeError: unhashable type: 'dict'
+Running evaluation script...
+Error in calculating performance. Returning -1
+Epoch: 35, Total Time Elapsed: 36.67Mins, Train Loss: 0.8705868105338924, Val Loss: 2.367072105407715, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 36 =====================================|
+Evaluating model on val data.
+Epoch: 36, Total Time Elapsed: 37.85Mins, Train Loss: 0.8130038257979562, Val Loss: 2.360970905569733, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 37 =====================================|
+Evaluating model on val data.
+Epoch: 37, Total Time Elapsed: 38.74Mins, Train Loss: 0.7637655138969421, Val Loss: 2.3749996990454, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 38 =====================================|
+Evaluating model on val data.
+Epoch: 38, Total Time Elapsed: 39.62Mins, Train Loss: 0.7439986486984379, Val Loss: 2.3693784807549148, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 39 =====================================|
+Evaluating model on val data.
+Epoch: 39, Total Time Elapsed: 40.49Mins, Train Loss: 0.7268974177631331, Val Loss: 2.390126642633657, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 40 =====================================|
+Evaluating model on val data.
+Traceback (most recent call last):
+  File "evaluation.py", line 877, in <module>
+    evaluate(gold, pred, db_dir, etype, kmaps)
+  File "evaluation.py", line 554, in evaluate
+    exact_score = evaluator.eval_exact_match(p_sql, g_sql)
+  File "evaluation.py", line 380, in eval_exact_match
+    partial_scores = self.eval_partial_match(pred, label)
+  File "evaluation.py", line 419, in eval_partial_match
+    label_total, pred_total, cnt = eval_and_or(pred, label)
+  File "evaluation.py", line 198, in eval_and_or
+    pred_ao = set(pred_ao)
+TypeError: unhashable type: 'dict'
+Running evaluation script...
+Error in calculating performance. Returning -1
+Epoch: 40, Total Time Elapsed: 41.37Mins, Train Loss: 0.7098101476828257, Val Loss: 2.3999423570320255, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 41 =====================================|
+Evaluating model on val data.
+Epoch: 41, Total Time Elapsed: 42.43Mins, Train Loss: 0.6697350546656322, Val Loss: 2.373558192956643, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 42 =====================================|
+Evaluating model on val data.
+Epoch: 42, Total Time Elapsed: 43.33Mins, Train Loss: 0.6411045310183318, Val Loss: 2.3607508374042196, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 43 =====================================|
+Evaluating model on val data.
+Epoch: 43, Total Time Elapsed: 44.2Mins, Train Loss: 0.6446207569214543, Val Loss: 2.369098180630168, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 44 =====================================|
+Evaluating model on val data.
+Epoch: 44, Total Time Elapsed: 45.08Mins, Train Loss: 0.6276962554749147, Val Loss: 2.363368751572781, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 45 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 45, Total Time Elapsed: 45.95Mins, Train Loss: 0.5920189847180872, Val Loss: 2.419823875192736, Execution Accuracy = 0.07, Exact Match Accuracy = 0.069
+
+
+
+|===================================== Epoch: 46 =====================================|
+Evaluating model on val data.
+Epoch: 46, Total Time Elapsed: 47.59Mins, Train Loss: 0.5760760837131076, Val Loss: 2.3980876168266674, Execution Accuracy = 0.07, Exact Match Accuracy = 0.069
+
+
+
+|===================================== Epoch: 47 =====================================|
+Evaluating model on val data.
+Epoch: 47, Total Time Elapsed: 48.51Mins, Train Loss: 0.5699278750292067, Val Loss: 2.4161125558321594, Execution Accuracy = 0.07, Exact Match Accuracy = 0.069
+
+
+
+|===================================== Epoch: 48 =====================================|
+Evaluating model on val data.
+Epoch: 48, Total Time Elapsed: 49.42Mins, Train Loss: 0.5510055630050078, Val Loss: 2.4326692839137842, Execution Accuracy = 0.07, Exact Match Accuracy = 0.069
+
+
+
+|===================================== Epoch: 49 =====================================|
+Evaluating model on val data.
+Epoch: 49, Total Time Elapsed: 50.33Mins, Train Loss: 0.5247737732198503, Val Loss: 2.52217827664047, Execution Accuracy = 0.07, Exact Match Accuracy = 0.069
+
+
+
+|===================================== Epoch: 50 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 50, Total Time Elapsed: 51.26Mins, Train Loss: 0.5331002277601894, Val Loss: 2.4601194526328416, Execution Accuracy = 0.083, Exact Match Accuracy = 0.08
+
+
+
+|===================================== Epoch: 51 =====================================|
+Evaluating model on val data.
+Epoch: 51, Total Time Elapsed: 52.9Mins, Train Loss: 0.504174800934615, Val Loss: 2.5055193099819246, Execution Accuracy = 0.083, Exact Match Accuracy = 0.08
+
+
+
+|===================================== Epoch: 52 =====================================|
+Evaluating model on val data.
+Epoch: 52, Total Time Elapsed: 53.8Mins, Train Loss: 0.483938663094132, Val Loss: 2.4713719301536434, Execution Accuracy = 0.083, Exact Match Accuracy = 0.08
+
+
+
+|===================================== Epoch: 53 =====================================|
+Evaluating model on val data.
+Epoch: 53, Total Time Elapsed: 54.74Mins, Train Loss: 0.49051083704081094, Val Loss: 2.509445405397259, Execution Accuracy = 0.083, Exact Match Accuracy = 0.08
+
+
+
+|===================================== Epoch: 54 =====================================|
+Evaluating model on val data.
+Epoch: 54, Total Time Elapsed: 55.65Mins, Train Loss: 0.47250946926972504, Val Loss: 2.498699020166866, Execution Accuracy = 0.083, Exact Match Accuracy = 0.08
+
+
+
+|===================================== Epoch: 55 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 55, Total Time Elapsed: 56.57Mins, Train Loss: 0.4554024385326684, Val Loss: 2.4925288626405058, Execution Accuracy = 0.096, Exact Match Accuracy = 0.089
+
+
+
+|===================================== Epoch: 56 =====================================|
+Evaluating model on val data.
+Epoch: 56, Total Time Elapsed: 58.26Mins, Train Loss: 0.4536963947761206, Val Loss: 2.4929925457375948, Execution Accuracy = 0.096, Exact Match Accuracy = 0.089
+
+
+
+|===================================== Epoch: 57 =====================================|
+Evaluating model on val data.
+Epoch: 57, Total Time Elapsed: 59.18Mins, Train Loss: 0.43135659194286957, Val Loss: 2.532655053451413, Execution Accuracy = 0.096, Exact Match Accuracy = 0.089
+
+
+
+|===================================== Epoch: 58 =====================================|
+Evaluating model on val data.
+Epoch: 58, Total Time Elapsed: 60.09Mins, Train Loss: 0.41835858093367684, Val Loss: 2.555265606426802, Execution Accuracy = 0.096, Exact Match Accuracy = 0.089
+
+
+
+|===================================== Epoch: 59 =====================================|
+Evaluating model on val data.
+Epoch: 59, Total Time Elapsed: 61.0Mins, Train Loss: 0.43516125183537174, Val Loss: 2.543568624824774, Execution Accuracy = 0.096, Exact Match Accuracy = 0.089
+
+
+
+|===================================== Epoch: 60 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 60, Total Time Elapsed: 61.93Mins, Train Loss: 0.41143644346621794, Val Loss: 2.5801866464927548, Execution Accuracy = 0.088, Exact Match Accuracy = 0.088
+
+
+
+|===================================== Epoch: 61 =====================================|
+Evaluating model on val data.
+Epoch: 61, Total Time Elapsed: 63.58Mins, Train Loss: 0.4074769477540083, Val Loss: 2.6234793487142345, Execution Accuracy = 0.088, Exact Match Accuracy = 0.088
+
+
+
+|===================================== Epoch: 62 =====================================|
+Evaluating model on val data.
+Epoch: 62, Total Time Elapsed: 64.5Mins, Train Loss: 0.4068028422785394, Val Loss: 2.6798993153650255, Execution Accuracy = 0.088, Exact Match Accuracy = 0.088
+
+
+
+|===================================== Epoch: 63 =====================================|
+Evaluating model on val data.
+Epoch: 63, Total Time Elapsed: 65.42Mins, Train Loss: 0.4154632038785597, Val Loss: 2.5894285381817426, Execution Accuracy = 0.088, Exact Match Accuracy = 0.088
+
+
+
+|===================================== Epoch: 64 =====================================|
+Evaluating model on val data.
+Epoch: 64, Total Time Elapsed: 66.34Mins, Train Loss: 0.4070330697567865, Val Loss: 2.653846068460433, Execution Accuracy = 0.088, Exact Match Accuracy = 0.088
+
+
+
+|===================================== Epoch: 65 =====================================|
+Evaluating model on val data.
+Traceback (most recent call last):
+  File "evaluation.py", line 877, in <module>
+    evaluate(gold, pred, db_dir, etype, kmaps)
+  File "evaluation.py", line 548, in evaluate
+    exec_score = eval_exec_match(db, p_str, g_str, p_sql, g_sql)
+  File "evaluation.py", line 648, in eval_exec_match
+    return res_map(p_res, p_val_units) == res_map(q_res, q_val_units)
+  File "evaluation.py", line 643, in res_map
+    rmap[key] = [r[idx] for r in res]
+  File "evaluation.py", line 643, in <listcomp>
+    rmap[key] = [r[idx] for r in res]
+IndexError: tuple index out of range
+Running evaluation script...
+Error in calculating performance. Returning -1
+Epoch: 65, Total Time Elapsed: 67.26Mins, Train Loss: 0.3845833921383438, Val Loss: 2.6987674255840113, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 66 =====================================|
+Evaluating model on val data.
+Epoch: 66, Total Time Elapsed: 68.71Mins, Train Loss: 0.38704664300008074, Val Loss: 2.7178633642978354, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 67 =====================================|
+Evaluating model on val data.
+Epoch: 67, Total Time Elapsed: 69.6Mins, Train Loss: 0.3985604196173664, Val Loss: 2.749063126376418, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 68 =====================================|
+Evaluating model on val data.
+Epoch: 68, Total Time Elapsed: 70.48Mins, Train Loss: 0.39378437363071206, Val Loss: 2.6930932021531904, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 69 =====================================|
+Evaluating model on val data.
+Epoch: 69, Total Time Elapsed: 71.37Mins, Train Loss: 0.3922812519250093, Val Loss: 2.699195869633409, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 70 =====================================|
+Evaluating model on val data.
+Traceback (most recent call last):
+  File "evaluation.py", line 877, in <module>
+    evaluate(gold, pred, db_dir, etype, kmaps)
+  File "evaluation.py", line 554, in evaluate
+    exact_score = evaluator.eval_exact_match(p_sql, g_sql)
+  File "evaluation.py", line 380, in eval_exact_match
+    partial_scores = self.eval_partial_match(pred, label)
+  File "evaluation.py", line 419, in eval_partial_match
+    label_total, pred_total, cnt = eval_and_or(pred, label)
+  File "evaluation.py", line 198, in eval_and_or
+    pred_ao = set(pred_ao)
+TypeError: unhashable type: 'dict'
+Running evaluation script...
+Error in calculating performance. Returning -1
+Epoch: 70, Total Time Elapsed: 72.25Mins, Train Loss: 0.3819266703639011, Val Loss: 2.6534972112686908, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 71 =====================================|
+Evaluating model on val data.
+Epoch: 71, Total Time Elapsed: 73.86Mins, Train Loss: 0.37348421439221857, Val Loss: 2.7275109271534155, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 72 =====================================|
+Evaluating model on val data.
+Epoch: 72, Total Time Elapsed: 74.74Mins, Train Loss: 0.386725344162419, Val Loss: 2.6425292179232738, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 73 =====================================|
+Evaluating model on val data.
+Epoch: 73, Total Time Elapsed: 75.63Mins, Train Loss: 0.3785423431622148, Val Loss: 2.67919822403642, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 74 =====================================|
+Evaluating model on val data.
+Epoch: 74, Total Time Elapsed: 76.52Mins, Train Loss: 0.3768760760625203, Val Loss: 2.659792073437425, Execution Accuracy = -1.0, Exact Match Accuracy = -1.0
+
+
+
+|===================================== Epoch: 75 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 75, Total Time Elapsed: 77.4Mins, Train Loss: 0.39015496230910346, Val Loss: 2.6425467749110987, Execution Accuracy = 0.103, Exact Match Accuracy = 0.1
+
+
+
+|===================================== Epoch: 76 =====================================|
+Evaluating model on val data.
+Epoch: 76, Total Time Elapsed: 79.06Mins, Train Loss: 0.37356359845816844, Val Loss: 2.633994493328157, Execution Accuracy = 0.103, Exact Match Accuracy = 0.1
+
+
+
+|===================================== Epoch: 77 =====================================|
+Evaluating model on val data.
+Epoch: 77, Total Time Elapsed: 79.97Mins, Train Loss: 0.35838233860431873, Val Loss: 2.682998993357674, Execution Accuracy = 0.103, Exact Match Accuracy = 0.1
+
+
+
+|===================================== Epoch: 78 =====================================|
+Evaluating model on val data.
+Epoch: 78, Total Time Elapsed: 80.89Mins, Train Loss: 0.34809457918498743, Val Loss: 2.740000314399844, Execution Accuracy = 0.103, Exact Match Accuracy = 0.1
+
+
+
+|===================================== Epoch: 79 =====================================|
+Evaluating model on val data.
+Epoch: 79, Total Time Elapsed: 81.82Mins, Train Loss: 0.34415613936543954, Val Loss: 2.789739499326612, Execution Accuracy = 0.103, Exact Match Accuracy = 0.1
+
+
+
+|===================================== Epoch: 80 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 80, Total Time Elapsed: 82.74Mins, Train Loss: 0.3520092902850712, Val Loss: 2.7313069925933586, Execution Accuracy = 0.114, Exact Match Accuracy = 0.114
+
+
+
+|===================================== Epoch: 81 =====================================|
+Evaluating model on val data.
+Epoch: 81, Total Time Elapsed: 84.44Mins, Train Loss: 0.35794339086783766, Val Loss: 2.7473578453063965, Execution Accuracy = 0.114, Exact Match Accuracy = 0.114
+
+
+
+|===================================== Epoch: 82 =====================================|
+Evaluating model on val data.
+Epoch: 82, Total Time Elapsed: 85.37Mins, Train Loss: 0.34973416088049303, Val Loss: 2.7499296801989197, Execution Accuracy = 0.114, Exact Match Accuracy = 0.114
+
+
+
+|===================================== Epoch: 83 =====================================|
+Evaluating model on val data.
+Epoch: 83, Total Time Elapsed: 86.29Mins, Train Loss: 0.34584186689108, Val Loss: 2.751195888050267, Execution Accuracy = 0.114, Exact Match Accuracy = 0.114
+
+
+
+|===================================== Epoch: 84 =====================================|
+Evaluating model on val data.
+Epoch: 84, Total Time Elapsed: 87.21Mins, Train Loss: 0.34216958719761775, Val Loss: 2.787444325744129, Execution Accuracy = 0.114, Exact Match Accuracy = 0.114
+
+
+
+|===================================== Epoch: 85 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 85, Total Time Elapsed: 88.14Mins, Train Loss: 0.3389868211353757, Val Loss: 2.8085772971637915, Execution Accuracy = 0.118, Exact Match Accuracy = 0.118
+
+
+
+|===================================== Epoch: 86 =====================================|
+Evaluating model on val data.
+Epoch: 86, Total Time Elapsed: 89.81Mins, Train Loss: 0.3352325391254307, Val Loss: 2.792858078831532, Execution Accuracy = 0.118, Exact Match Accuracy = 0.118
+
+
+
+|===================================== Epoch: 87 =====================================|
+Evaluating model on val data.
+Epoch: 87, Total Time Elapsed: 90.75Mins, Train Loss: 0.339112114943104, Val Loss: 2.781824983534266, Execution Accuracy = 0.118, Exact Match Accuracy = 0.118
+
+
+
+|===================================== Epoch: 88 =====================================|
+Evaluating model on val data.
+Epoch: 88, Total Time Elapsed: 91.68Mins, Train Loss: 0.33915174191380726, Val Loss: 2.746011499498711, Execution Accuracy = 0.118, Exact Match Accuracy = 0.118
+
+
+
+|===================================== Epoch: 89 =====================================|
+Evaluating model on val data.
+Epoch: 89, Total Time Elapsed: 92.63Mins, Train Loss: 0.32908090145744906, Val Loss: 2.821646018106429, Execution Accuracy = 0.118, Exact Match Accuracy = 0.118
+
+
+
+|===================================== Epoch: 90 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 90, Total Time Elapsed: 93.55Mins, Train Loss: 0.33143986976195755, Val Loss: 2.7834524639317246, Execution Accuracy = 0.117, Exact Match Accuracy = 0.121
+
+
+
+|===================================== Epoch: 91 =====================================|
+Evaluating model on val data.
+Epoch: 91, Total Time Elapsed: 95.23Mins, Train Loss: 0.34089167042033663, Val Loss: 2.823720515751448, Execution Accuracy = 0.117, Exact Match Accuracy = 0.121
+
+
+
+|===================================== Epoch: 92 =====================================|
+Evaluating model on val data.
+Epoch: 92, Total Time Elapsed: 96.15Mins, Train Loss: 0.336716113880338, Val Loss: 2.803268174656102, Execution Accuracy = 0.117, Exact Match Accuracy = 0.121
+
+
+
+|===================================== Epoch: 93 =====================================|
+Evaluating model on val data.
+Epoch: 93, Total Time Elapsed: 97.06Mins, Train Loss: 0.33823855006645737, Val Loss: 2.7821039215463106, Execution Accuracy = 0.117, Exact Match Accuracy = 0.121
+
+
+
+|===================================== Epoch: 94 =====================================|
+Evaluating model on val data.
+Epoch: 94, Total Time Elapsed: 97.99Mins, Train Loss: 0.3365563748427379, Val Loss: 2.8257800067057377, Execution Accuracy = 0.117, Exact Match Accuracy = 0.121
+
+
+
+|===================================== Epoch: 95 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 95, Total Time Elapsed: 98.91Mins, Train Loss: 0.3375052624523885, Val Loss: 2.8414296458979122, Execution Accuracy = 0.116, Exact Match Accuracy = 0.113
+
+
+
+|===================================== Epoch: 96 =====================================|
+Evaluating model on val data.
+Epoch: 96, Total Time Elapsed: 100.59Mins, Train Loss: 0.3386869618186244, Val Loss: 2.8116780949420614, Execution Accuracy = 0.116, Exact Match Accuracy = 0.113
+
+
+
+|===================================== Epoch: 97 =====================================|
+Evaluating model on val data.
+Epoch: 97, Total Time Elapsed: 101.5Mins, Train Loss: 0.33386326921574866, Val Loss: 2.8327088629613155, Execution Accuracy = 0.116, Exact Match Accuracy = 0.113
+
+
+
+|===================================== Epoch: 98 =====================================|
+Evaluating model on val data.
+Epoch: 98, Total Time Elapsed: 102.42Mins, Train Loss: 0.33104077515042857, Val Loss: 2.944286467599087, Execution Accuracy = 0.116, Exact Match Accuracy = 0.113
+
+
+
+|===================================== Epoch: 99 =====================================|
+Evaluating model on val data.
+Epoch: 99, Total Time Elapsed: 103.34Mins, Train Loss: 0.3550158620125963, Val Loss: 2.873540252935691, Execution Accuracy = 0.116, Exact Match Accuracy = 0.113
+
+
+
+|===================================== Epoch: 100 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 100, Total Time Elapsed: 104.26Mins, Train Loss: 0.33045185532098936, Val Loss: 2.9058277313826513, Execution Accuracy = 0.113, Exact Match Accuracy = 0.113
+
+
+
+|===================================== Epoch: 101 =====================================|
+Evaluating model on val data.
+Epoch: 101, Total Time Elapsed: 105.94Mins, Train Loss: 0.3240441172824475, Val Loss: 2.8668921365112556, Execution Accuracy = 0.113, Exact Match Accuracy = 0.113
+
+
+
+|===================================== Epoch: 102 =====================================|
+Evaluating model on val data.
+Epoch: 102, Total Time Elapsed: 106.85Mins, Train Loss: 0.3182946101996143, Val Loss: 2.916564417667076, Execution Accuracy = 0.113, Exact Match Accuracy = 0.113
+
+
+
+|===================================== Epoch: 103 =====================================|
+Evaluating model on val data.
+Epoch: 103, Total Time Elapsed: 107.76Mins, Train Loss: 0.3190763318612252, Val Loss: 2.925385398942916, Execution Accuracy = 0.113, Exact Match Accuracy = 0.113
+
+
+
+|===================================== Epoch: 104 =====================================|
+Evaluating model on val data.
+Epoch: 104, Total Time Elapsed: 108.68Mins, Train Loss: 0.3194309298271014, Val Loss: 2.93426335835066, Execution Accuracy = 0.113, Exact Match Accuracy = 0.113
+
+
+
+|===================================== Epoch: 105 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 105, Total Time Elapsed: 109.6Mins, Train Loss: 0.3187181294087029, Val Loss: 2.9341257067977407, Execution Accuracy = 0.12, Exact Match Accuracy = 0.123
+
+
+
+|===================================== Epoch: 106 =====================================|
+Evaluating model on val data.
+Epoch: 106, Total Time Elapsed: 111.27Mins, Train Loss: 0.31470816757208037, Val Loss: 3.0048880792054975, Execution Accuracy = 0.12, Exact Match Accuracy = 0.123
+
+
+
+|===================================== Epoch: 107 =====================================|
+Evaluating model on val data.
+Epoch: 107, Total Time Elapsed: 112.19Mins, Train Loss: 0.3152685594043614, Val Loss: 2.9427874244627406, Execution Accuracy = 0.12, Exact Match Accuracy = 0.123
+
+
+
+|===================================== Epoch: 108 =====================================|
+Evaluating model on val data.
+Epoch: 108, Total Time Elapsed: 113.1Mins, Train Loss: 0.31873727396682455, Val Loss: 2.9559828003899, Execution Accuracy = 0.12, Exact Match Accuracy = 0.123
+
+
+
+|===================================== Epoch: 109 =====================================|
+Evaluating model on val data.
+Epoch: 109, Total Time Elapsed: 114.02Mins, Train Loss: 0.3105011498363911, Val Loss: 3.0286085195228702, Execution Accuracy = 0.12, Exact Match Accuracy = 0.123
+
+
+
+|===================================== Epoch: 110 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 110, Total Time Elapsed: 114.93Mins, Train Loss: 0.31473774607044186, Val Loss: 2.9875786734409018, Execution Accuracy = 0.118, Exact Match Accuracy = 0.117
+
+
+
+|===================================== Epoch: 111 =====================================|
+Evaluating model on val data.
+Epoch: 111, Total Time Elapsed: 116.59Mins, Train Loss: 0.3148365112121213, Val Loss: 3.0094477290012795, Execution Accuracy = 0.118, Exact Match Accuracy = 0.117
+
+
+
+|===================================== Epoch: 112 =====================================|
+Evaluating model on val data.
+Epoch: 112, Total Time Elapsed: 117.5Mins, Train Loss: 0.3166132978941678, Val Loss: 2.977321982383728, Execution Accuracy = 0.118, Exact Match Accuracy = 0.117
+
+
+
+|===================================== Epoch: 113 =====================================|
+Evaluating model on val data.
+Epoch: 113, Total Time Elapsed: 118.44Mins, Train Loss: 0.31263936921156976, Val Loss: 3.003726421809587, Execution Accuracy = 0.118, Exact Match Accuracy = 0.117
+
+
+
+|===================================== Epoch: 114 =====================================|
+Evaluating model on val data.
+Epoch: 114, Total Time Elapsed: 119.36Mins, Train Loss: 0.31789195089919087, Val Loss: 3.010005259123005, Execution Accuracy = 0.118, Exact Match Accuracy = 0.117
+
+
+
+|===================================== Epoch: 115 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 115, Total Time Elapsed: 120.27Mins, Train Loss: 0.3121169893829911, Val Loss: 3.0012249477574082, Execution Accuracy = 0.129, Exact Match Accuracy = 0.129
+
+
+
+|===================================== Epoch: 116 =====================================|
+Evaluating model on val data.
+Epoch: 116, Total Time Elapsed: 122.01Mins, Train Loss: 0.3131083329150706, Val Loss: 3.0211475677177555, Execution Accuracy = 0.129, Exact Match Accuracy = 0.129
+
+
+
+|===================================== Epoch: 117 =====================================|
+Evaluating model on val data.
+Epoch: 117, Total Time Elapsed: 122.92Mins, Train Loss: 0.31292512902507075, Val Loss: 2.984401958887694, Execution Accuracy = 0.129, Exact Match Accuracy = 0.129
+
+
+
+|===================================== Epoch: 118 =====================================|
+Evaluating model on val data.
+Epoch: 118, Total Time Elapsed: 123.83Mins, Train Loss: 0.3130798058377372, Val Loss: 3.026711913405872, Execution Accuracy = 0.129, Exact Match Accuracy = 0.129
+
+
+
+|===================================== Epoch: 119 =====================================|
+Evaluating model on val data.
+Epoch: 119, Total Time Elapsed: 124.75Mins, Train Loss: 0.315414283317303, Val Loss: 3.0109944402194415, Execution Accuracy = 0.129, Exact Match Accuracy = 0.129
+
+
+
+|===================================== Epoch: 120 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 120, Total Time Elapsed: 125.66Mins, Train Loss: 0.3143160685958195, Val Loss: 3.0544195702818575, Execution Accuracy = 0.125, Exact Match Accuracy = 0.127
+
+
+
+|===================================== Epoch: 121 =====================================|
+Evaluating model on val data.
+Epoch: 121, Total Time Elapsed: 127.32Mins, Train Loss: 0.3077513296540382, Val Loss: 3.116028643045269, Execution Accuracy = 0.125, Exact Match Accuracy = 0.127
+
+
+
+|===================================== Epoch: 122 =====================================|
+Evaluating model on val data.
+Epoch: 122, Total Time Elapsed: 128.23Mins, Train Loss: 0.3091013345085544, Val Loss: 3.064763164911114, Execution Accuracy = 0.125, Exact Match Accuracy = 0.127
+
+
+
+|===================================== Epoch: 123 =====================================|
+Evaluating model on val data.
+Epoch: 123, Total Time Elapsed: 129.15Mins, Train Loss: 0.30814532107777065, Val Loss: 3.1183590361329374, Execution Accuracy = 0.125, Exact Match Accuracy = 0.127
+
+
+
+|===================================== Epoch: 124 =====================================|
+Evaluating model on val data.
+Epoch: 124, Total Time Elapsed: 130.05Mins, Train Loss: 0.3079720519697715, Val Loss: 3.093653018357324, Execution Accuracy = 0.125, Exact Match Accuracy = 0.127
+
+
+
+|===================================== Epoch: 125 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 125, Total Time Elapsed: 130.96Mins, Train Loss: 0.3061587158667207, Val Loss: 3.1234005357398362, Execution Accuracy = 0.125, Exact Match Accuracy = 0.128
+
+
+
+|===================================== Epoch: 126 =====================================|
+Evaluating model on val data.
+Epoch: 126, Total Time Elapsed: 132.67Mins, Train Loss: 0.306662239778189, Val Loss: 3.110676747853639, Execution Accuracy = 0.125, Exact Match Accuracy = 0.128
+
+
+
+|===================================== Epoch: 127 =====================================|
+Evaluating model on val data.
+Epoch: 127, Total Time Elapsed: 133.57Mins, Train Loss: 0.30912439880792986, Val Loss: 3.063332917260342, Execution Accuracy = 0.125, Exact Match Accuracy = 0.128
+
+
+
+|===================================== Epoch: 128 =====================================|
+Evaluating model on val data.
+Epoch: 128, Total Time Elapsed: 134.48Mins, Train Loss: 0.3086456015031524, Val Loss: 3.0863728191031785, Execution Accuracy = 0.125, Exact Match Accuracy = 0.128
+
+
+
+|===================================== Epoch: 129 =====================================|
+Evaluating model on val data.
+Epoch: 129, Total Time Elapsed: 135.39Mins, Train Loss: 0.3073098308142321, Val Loss: 3.0911296039331155, Execution Accuracy = 0.125, Exact Match Accuracy = 0.128
+
+
+
+|===================================== Epoch: 130 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 130, Total Time Elapsed: 136.31Mins, Train Loss: 0.31023012181368387, Val Loss: 3.077953782237944, Execution Accuracy = 0.132, Exact Match Accuracy = 0.134
+
+
+
+|===================================== Epoch: 131 =====================================|
+Evaluating model on val data.
+Epoch: 131, Total Time Elapsed: 137.98Mins, Train Loss: 0.31068157364802107, Val Loss: 3.04928270910607, Execution Accuracy = 0.132, Exact Match Accuracy = 0.134
+
+
+
+|===================================== Epoch: 132 =====================================|
+Evaluating model on val data.
+Epoch: 132, Total Time Elapsed: 138.9Mins, Train Loss: 0.3051480520286678, Val Loss: 3.092920051246393, Execution Accuracy = 0.132, Exact Match Accuracy = 0.134
+
+
+
+|===================================== Epoch: 133 =====================================|
+Evaluating model on val data.
+Epoch: 133, Total Time Elapsed: 139.82Mins, Train Loss: 0.30964218141365446, Val Loss: 3.011263487768955, Execution Accuracy = 0.132, Exact Match Accuracy = 0.134
+
+
+
+|===================================== Epoch: 134 =====================================|
+Evaluating model on val data.
+Epoch: 134, Total Time Elapsed: 140.74Mins, Train Loss: 0.3115373026932218, Val Loss: 3.0641696550807014, Execution Accuracy = 0.132, Exact Match Accuracy = 0.134
+
+
+
+|===================================== Epoch: 135 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 135, Total Time Elapsed: 141.65Mins, Train Loss: 0.305911897754473, Val Loss: 3.1074830567250484, Execution Accuracy = 0.13, Exact Match Accuracy = 0.131
+
+
+
+|===================================== Epoch: 136 =====================================|
+Evaluating model on val data.
+Epoch: 136, Total Time Elapsed: 143.34Mins, Train Loss: 0.30588402743202175, Val Loss: 3.0888978633724276, Execution Accuracy = 0.13, Exact Match Accuracy = 0.131
+
+
+
+|===================================== Epoch: 137 =====================================|
+Evaluating model on val data.
+Epoch: 137, Total Time Elapsed: 144.26Mins, Train Loss: 0.3038787126786424, Val Loss: 3.1116071489990733, Execution Accuracy = 0.13, Exact Match Accuracy = 0.131
+
+
+
+|===================================== Epoch: 138 =====================================|
+Evaluating model on val data.
+Epoch: 138, Total Time Elapsed: 145.17Mins, Train Loss: 0.30486442798694957, Val Loss: 3.1358660948081094, Execution Accuracy = 0.13, Exact Match Accuracy = 0.131
+
+
+
+|===================================== Epoch: 139 =====================================|
+Evaluating model on val data.
+Epoch: 139, Total Time Elapsed: 146.08Mins, Train Loss: 0.30571279021692865, Val Loss: 3.0885511597649, Execution Accuracy = 0.13, Exact Match Accuracy = 0.131
+
+
+
+|===================================== Epoch: 140 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 140, Total Time Elapsed: 147.0Mins, Train Loss: 0.30635116638715376, Val Loss: 3.163196888126311, Execution Accuracy = 0.131, Exact Match Accuracy = 0.129
+
+
+
+|===================================== Epoch: 141 =====================================|
+Evaluating model on val data.
+Epoch: 141, Total Time Elapsed: 148.71Mins, Train Loss: 0.3046507215426292, Val Loss: 3.1503785887702564, Execution Accuracy = 0.131, Exact Match Accuracy = 0.129
+
+
+
+|===================================== Epoch: 142 =====================================|
+Evaluating model on val data.
+Epoch: 142, Total Time Elapsed: 149.63Mins, Train Loss: 0.303472863732542, Val Loss: 3.1466041138914767, Execution Accuracy = 0.131, Exact Match Accuracy = 0.129
+
+
+
+|===================================== Epoch: 143 =====================================|
+Evaluating model on val data.
+Epoch: 143, Total Time Elapsed: 150.55Mins, Train Loss: 0.30538965283352654, Val Loss: 3.175787042398922, Execution Accuracy = 0.131, Exact Match Accuracy = 0.129
+
+
+
+|===================================== Epoch: 144 =====================================|
+Evaluating model on val data.
+Epoch: 144, Total Time Elapsed: 151.48Mins, Train Loss: 0.30397635630864667, Val Loss: 3.185951105883864, Execution Accuracy = 0.131, Exact Match Accuracy = 0.129
+
+
+
+|===================================== Epoch: 145 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 145, Total Time Elapsed: 152.39Mins, Train Loss: 0.3043366812874751, Val Loss: 3.2024206216218043, Execution Accuracy = 0.133, Exact Match Accuracy = 0.135
+
+
+
+|===================================== Epoch: 146 =====================================|
+Evaluating model on val data.
+Epoch: 146, Total Time Elapsed: 154.09Mins, Train Loss: 0.3025699684649338, Val Loss: 3.215705662477212, Execution Accuracy = 0.133, Exact Match Accuracy = 0.135
+
+
+
+|===================================== Epoch: 147 =====================================|
+Evaluating model on val data.
+Epoch: 147, Total Time Elapsed: 155.0Mins, Train Loss: 0.30273390484690177, Val Loss: 3.2290605756103017, Execution Accuracy = 0.133, Exact Match Accuracy = 0.135
+
+
+
+|===================================== Epoch: 148 =====================================|
+Evaluating model on val data.
+Epoch: 148, Total Time Elapsed: 155.91Mins, Train Loss: 0.30281162605364137, Val Loss: 3.2405199418302444, Execution Accuracy = 0.133, Exact Match Accuracy = 0.135
+
+
+
+|===================================== Epoch: 149 =====================================|
+Evaluating model on val data.
+Epoch: 149, Total Time Elapsed: 156.82Mins, Train Loss: 0.303035252072193, Val Loss: 3.1923319120876124, Execution Accuracy = 0.133, Exact Match Accuracy = 0.135
+
+
+
+|===================================== Epoch: 150 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 150, Total Time Elapsed: 157.73Mins, Train Loss: 0.3018257764509185, Val Loss: 3.226468529857573, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 151 =====================================|
+Evaluating model on val data.
+Epoch: 151, Total Time Elapsed: 159.39Mins, Train Loss: 0.3033056995628302, Val Loss: 3.2351454945861318, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 152 =====================================|
+Evaluating model on val data.
+Epoch: 152, Total Time Elapsed: 160.29Mins, Train Loss: 0.3014570608305833, Val Loss: 3.2578980434136313, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 153 =====================================|
+Evaluating model on val data.
+Epoch: 153, Total Time Elapsed: 161.2Mins, Train Loss: 0.30397307590692624, Val Loss: 3.267717341907689, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 154 =====================================|
+Evaluating model on val data.
+Epoch: 154, Total Time Elapsed: 162.11Mins, Train Loss: 0.3026625151619499, Val Loss: 3.225752742564092, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 155 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 155, Total Time Elapsed: 163.03Mins, Train Loss: 0.30198555896556917, Val Loss: 3.2223264936540947, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 156 =====================================|
+Evaluating model on val data.
+Epoch: 156, Total Time Elapsed: 164.7Mins, Train Loss: 0.3021475180309005, Val Loss: 3.2348340280720445, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 157 =====================================|
+Evaluating model on val data.
+Epoch: 157, Total Time Elapsed: 165.61Mins, Train Loss: 0.3016114645779378, Val Loss: 3.2519533165165635, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 158 =====================================|
+Evaluating model on val data.
+Epoch: 158, Total Time Elapsed: 166.51Mins, Train Loss: 0.3016359786437863, Val Loss: 3.2313229177818923, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 159 =====================================|
+Evaluating model on val data.
+Epoch: 159, Total Time Elapsed: 167.43Mins, Train Loss: 0.30112545707343535, Val Loss: 3.230387496166542, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 160 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 160, Total Time Elapsed: 168.35Mins, Train Loss: 0.30125536699108624, Val Loss: 3.267815595767537, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 161 =====================================|
+Evaluating model on val data.
+Epoch: 161, Total Time Elapsed: 170.06Mins, Train Loss: 0.3005367812428455, Val Loss: 3.256786790050444, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 162 =====================================|
+Evaluating model on val data.
+Epoch: 162, Total Time Elapsed: 170.97Mins, Train Loss: 0.30134291303010635, Val Loss: 3.2605842957731155, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 163 =====================================|
+Evaluating model on val data.
+Epoch: 163, Total Time Elapsed: 171.88Mins, Train Loss: 0.30134590270587935, Val Loss: 3.29079433151933, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 164 =====================================|
+Evaluating model on val data.
+Epoch: 164, Total Time Elapsed: 172.81Mins, Train Loss: 0.30058354415275435, Val Loss: 3.276646610166206, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 165 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 165, Total Time Elapsed: 173.72Mins, Train Loss: 0.30121408084047185, Val Loss: 3.2896227113536147, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 166 =====================================|
+Evaluating model on val data.
+Epoch: 166, Total Time Elapsed: 175.44Mins, Train Loss: 0.30148580523184787, Val Loss: 3.3042558607507924, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 167 =====================================|
+Evaluating model on val data.
+Epoch: 167, Total Time Elapsed: 176.37Mins, Train Loss: 0.3017796076251646, Val Loss: 3.295604455666464, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 168 =====================================|
+Evaluating model on val data.
+Epoch: 168, Total Time Elapsed: 177.27Mins, Train Loss: 0.3010020820814886, Val Loss: 3.2918808792458205, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 169 =====================================|
+Evaluating model on val data.
+Epoch: 169, Total Time Elapsed: 178.2Mins, Train Loss: 0.301253355702255, Val Loss: 3.3222286564404846, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 170 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 170, Total Time Elapsed: 179.11Mins, Train Loss: 0.30079783585091185, Val Loss: 3.334925886060371, Execution Accuracy = 0.136, Exact Match Accuracy = 0.142
+
+
+
+|===================================== Epoch: 171 =====================================|
+Evaluating model on val data.
+Epoch: 171, Total Time Elapsed: 180.81Mins, Train Loss: 0.30048347396369823, Val Loss: 3.3116743232383103, Execution Accuracy = 0.136, Exact Match Accuracy = 0.142
+
+
+
+|===================================== Epoch: 172 =====================================|
+Evaluating model on val data.
+Epoch: 172, Total Time Elapsed: 181.73Mins, Train Loss: 0.30252232184871236, Val Loss: 3.3197713445444577, Execution Accuracy = 0.136, Exact Match Accuracy = 0.142
+
+
+
+|===================================== Epoch: 173 =====================================|
+Evaluating model on val data.
+Epoch: 173, Total Time Elapsed: 182.65Mins, Train Loss: 0.300654133160909, Val Loss: 3.3072186161260135, Execution Accuracy = 0.136, Exact Match Accuracy = 0.142
+
+
+
+|===================================== Epoch: 174 =====================================|
+Evaluating model on val data.
+Epoch: 174, Total Time Elapsed: 183.56Mins, Train Loss: 0.30137534924004794, Val Loss: 3.296989972474145, Execution Accuracy = 0.136, Exact Match Accuracy = 0.142
+
+
+
+|===================================== Epoch: 175 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 175, Total Time Elapsed: 184.47Mins, Train Loss: 0.30039339503388346, Val Loss: 3.3090985075372163, Execution Accuracy = 0.136, Exact Match Accuracy = 0.141
+
+
+
+|===================================== Epoch: 176 =====================================|
+Evaluating model on val data.
+Epoch: 176, Total Time Elapsed: 186.07Mins, Train Loss: 0.3014002999773732, Val Loss: 3.301398687675351, Execution Accuracy = 0.136, Exact Match Accuracy = 0.141
+
+
+
+|===================================== Epoch: 177 =====================================|
+Evaluating model on val data.
+Epoch: 177, Total Time Elapsed: 186.97Mins, Train Loss: 0.3002484935669251, Val Loss: 3.306597318805632, Execution Accuracy = 0.136, Exact Match Accuracy = 0.141
+
+
+
+|===================================== Epoch: 178 =====================================|
+Evaluating model on val data.
+Epoch: 178, Total Time Elapsed: 187.88Mins, Train Loss: 0.30026288152722175, Val Loss: 3.295101089555709, Execution Accuracy = 0.136, Exact Match Accuracy = 0.141
+
+
+
+|===================================== Epoch: 179 =====================================|
+Evaluating model on val data.
+Epoch: 179, Total Time Elapsed: 188.79Mins, Train Loss: 0.30070488357249603, Val Loss: 3.296612368255365, Execution Accuracy = 0.136, Exact Match Accuracy = 0.141
+
+
+
+|===================================== Epoch: 180 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 180, Total Time Elapsed: 189.7Mins, Train Loss: 0.3004556072592245, Val Loss: 3.3065316071275803, Execution Accuracy = 0.134, Exact Match Accuracy = 0.139
+
+
+
+|===================================== Epoch: 181 =====================================|
+Evaluating model on val data.
+Epoch: 181, Total Time Elapsed: 191.32Mins, Train Loss: 0.301112324857908, Val Loss: 3.310672206956832, Execution Accuracy = 0.134, Exact Match Accuracy = 0.139
+
+
+
+|===================================== Epoch: 182 =====================================|
+Evaluating model on val data.
+Epoch: 182, Total Time Elapsed: 192.22Mins, Train Loss: 0.30004789824348416, Val Loss: 3.310303934284898, Execution Accuracy = 0.134, Exact Match Accuracy = 0.139
+
+
+
+|===================================== Epoch: 183 =====================================|
+Evaluating model on val data.
+Epoch: 183, Total Time Elapsed: 193.13Mins, Train Loss: 0.300814385460728, Val Loss: 3.3207394724986594, Execution Accuracy = 0.134, Exact Match Accuracy = 0.139
+
+
+
+|===================================== Epoch: 184 =====================================|
+Evaluating model on val data.
+Epoch: 184, Total Time Elapsed: 194.05Mins, Train Loss: 0.3008539948321174, Val Loss: 3.3328079923254545, Execution Accuracy = 0.134, Exact Match Accuracy = 0.139
+
+
+
+|===================================== Epoch: 185 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 185, Total Time Elapsed: 194.96Mins, Train Loss: 0.30000672835872005, Val Loss: 3.3059004857891896, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 186 =====================================|
+Evaluating model on val data.
+Epoch: 186, Total Time Elapsed: 196.65Mins, Train Loss: 0.30027642055058185, Val Loss: 3.3174624579851746, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 187 =====================================|
+Evaluating model on val data.
+Epoch: 187, Total Time Elapsed: 197.56Mins, Train Loss: 0.30003084935278557, Val Loss: 3.3138184723306874, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 188 =====================================|
+Evaluating model on val data.
+Epoch: 188, Total Time Elapsed: 198.48Mins, Train Loss: 0.3003110322687361, Val Loss: 3.3069876432418823, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 189 =====================================|
+Evaluating model on val data.
+Epoch: 189, Total Time Elapsed: 199.39Mins, Train Loss: 0.3005261979843854, Val Loss: 3.3162840213931974, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 190 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 190, Total Time Elapsed: 200.29Mins, Train Loss: 0.2999942578651287, Val Loss: 3.3209637423030665, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 191 =====================================|
+Evaluating model on val data.
+Epoch: 191, Total Time Elapsed: 201.96Mins, Train Loss: 0.3022756676492377, Val Loss: 3.3196535501323763, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 192 =====================================|
+Evaluating model on val data.
+Epoch: 192, Total Time Elapsed: 202.87Mins, Train Loss: 0.30107880950955207, Val Loss: 3.3209915024335266, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 193 =====================================|
+Evaluating model on val data.
+Epoch: 193, Total Time Elapsed: 203.78Mins, Train Loss: 0.30093063444757656, Val Loss: 3.3221785826761216, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 194 =====================================|
+Evaluating model on val data.
+Epoch: 194, Total Time Elapsed: 204.68Mins, Train Loss: 0.3002106658961057, Val Loss: 3.3216249708269463, Execution Accuracy = 0.136, Exact Match Accuracy = 0.14
+
+
+
+|===================================== Epoch: 195 =====================================|
+Evaluating model on val data.
+Running evaluation script...
+Epoch: 195, Total Time Elapsed: 205.59Mins, Train Loss: 0.30085947858208, Val Loss: 3.321885779255726, Execution Accuracy = 0.136, Exact Match Accuracy = 0.141
+
+
+
+|===================================== Epoch: 196 =====================================|
+Evaluating model on val data.
+Epoch: 196, Total Time Elapsed: 207.22Mins, Train Loss: 0.3007333890646083, Val Loss: 3.3226836626646947, Execution Accuracy = 0.136, Exact Match Accuracy = 0.141
+
+
+
+|===================================== Epoch: 197 =====================================|
+Evaluating model on val data.
+Epoch: 197, Total Time Elapsed: 208.13Mins, Train Loss: 0.3001158085379581, Val Loss: 3.323918905414519, Execution Accuracy = 0.136, Exact Match Accuracy = 0.141
+
+
+
+|===================================== Epoch: 198 =====================================|
+Evaluating model on val data.
+Epoch: 198, Total Time Elapsed: 209.04Mins, Train Loss: 0.299811549270104, Val Loss: 3.3230865959261284, Execution Accuracy = 0.136, Exact Match Accuracy = 0.141
+
+
+
+|===================================== Epoch: 199 =====================================|
+Evaluating model on val data.
+Epoch: 199, Total Time Elapsed: 209.95Mins, Train Loss: 0.30018721361464434, Val Loss: 3.322027470244736, Execution Accuracy = 0.136, Exact Match Accuracy = 0.141
+Dataset Length = 1939
+Encoder Vocab Size = 2040, Decoder Vocab Size = 2342
+
+|--------- Model Load Success. Trained Epoch: 199
+Evaluating model on val data.
+Running evaluation script...
+Execution Accuracy = 0.137, Exact Match Accuracy = 0.141
