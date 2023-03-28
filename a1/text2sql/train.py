@@ -13,8 +13,8 @@ from torch.utils.data.dataloader import DataLoader
 import torch.optim as optim
 import torch.nn as nn
 
-from text2sql import Seq2Seq, Seq2SeqAttn
-from dataset import Text2SQLDataset, collate
+from text2sql import Seq2Seq, Seq2SeqAttn, Bert2SeqAttn
+from dataset import Text2SQLDataset, collate, Text2SQLBertDataset, collate_bert
 from utils import *
 from beam_search import beam_search, greedy_decoder, beam_search_attn_decoder
 
@@ -66,6 +66,11 @@ def get_parser():
     parser.add_argument("--search_type", type=str, default="greedy", help="Type of {greedy, beam} search to perform on decoder.")
 
     parser.add_argument("--beam_size", type=int, default=1, help="Beam size to be used during beam search decoding.")
+
+    parser.add_argument("--bert_tune_layers", type=int, default=-1, help="Number of layers to finetune for bert encoder.")
+    
+    parser.add_argument("--lr", type=float, default=0.0001, help="learning rate for the model.")
+
     return parser
 
 
@@ -114,32 +119,65 @@ def train(args):
         model = Seq2Seq(args).to(device)
         # Define the loss function and optimizer
         criterion = nn.CrossEntropyLoss(ignore_index=0)
-        optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+        optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+        # optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
         schedulers = [
                 optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.1, last_epoch= -1, verbose=False),
                 optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs, verbose=False)
                 ]
         scheduler =  schedulers[1]
+        train_dataset = Text2SQLDataset(args.processed_data, "train")
+        train_loader = DataLoader(train_dataset, batch_size = args.batch_size, shuffle=True, 
+                                num_workers=args.num_workers, collate_fn=collate)
+
+        val_dataset = Text2SQLDataset(args.processed_data, "val")
+        val_loader = DataLoader(val_dataset, batch_size = args.batch_size, shuffle=False, 
+                                num_workers=args.num_workers, collate_fn=collate)
     elif args.model_type == "lstm_lstm_attn":
         model = Seq2SeqAttn(args).to(device)
         # Define the loss function and optimizer
         criterion = nn.CrossEntropyLoss(ignore_index=0)
-        optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+        optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+        # optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
         schedulers = [
                 optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.1, last_epoch= -1, verbose=False),
                 optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs, verbose=False)
                 ]
         scheduler =  schedulers[1]
+        train_dataset = Text2SQLDataset(args.processed_data, "train")
+        train_loader = DataLoader(train_dataset, batch_size = args.batch_size, shuffle=True, 
+                                num_workers=args.num_workers, collate_fn=collate)
+
+        val_dataset = Text2SQLDataset(args.processed_data, "val")
+        val_loader = DataLoader(val_dataset, batch_size = args.batch_size, shuffle=False, 
+                                num_workers=args.num_workers, collate_fn=collate)
+
+    elif args.model_type == "bert_lstm_attn_frozen" or args.model_type == "bert_lstm_attn_tuned":
+        # if args.model_type == "bert_lstm_attn_tuned":
+        #     eta = 0.0001
+        #     if args.bert_tune_layers == -1:
+        #         eta = 0.00002
+        # else:
+        #     eta = 0.001
+        model = Bert2SeqAttn(args).to(device)
+        # Define the loss function and optimizer
+        criterion = nn.CrossEntropyLoss(ignore_index=0)
+        optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+        schedulers = [
+                optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.1, last_epoch= -1, verbose=False),
+                optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs, verbose=False)
+                ]
+        scheduler =  schedulers[1]
+        train_dataset = Text2SQLBertDataset(args.processed_data, "train")
+        train_loader = DataLoader(train_dataset, batch_size = args.batch_size, shuffle=True, 
+                                num_workers=args.num_workers, collate_fn=collate_bert)
+
+        val_dataset = Text2SQLBertDataset(args.processed_data, "val")
+        val_loader = DataLoader(val_dataset, batch_size = args.batch_size, shuffle=False, 
+                                num_workers=args.num_workers, collate_fn=collate_bert)
     else:
         pass
 
-    train_dataset = Text2SQLDataset(args.processed_data, "train")
-    train_loader = DataLoader(train_dataset, batch_size = args.batch_size, shuffle=True, 
-                            num_workers=args.num_workers, collate_fn=collate)
-
-    val_dataset = Text2SQLDataset(args.processed_data, "val")
-    val_loader = DataLoader(val_dataset, batch_size = args.batch_size, shuffle=False, 
-                            num_workers=args.num_workers, collate_fn=collate)
     
     loss_tracker = defaultdict(list)
     time_tracker = defaultdict(list)
@@ -159,7 +197,11 @@ def train(args):
             optimizer.zero_grad()
             question = data['question'].to(device)
             query = data['query'].to(device)
-            output, _ = model(question, query)
+            if args.model_type == "lstm_lstm" or  args.model_type == "lstm_lstm_attn":
+                output, _ = model(question, query)
+            else:
+                ques_attn_mask = data['ques_attn_mask'].to(device)
+                output, _ = model(question, ques_attn_mask, query)
         #     print("output and target", output.shape, query.shape)
             output = output.reshape(-1, output.shape[2])
             query = query.reshape(-1)    
@@ -179,11 +221,11 @@ def train(args):
         if epoch % 1 == 0:
             print("Evaluating model on val data.")            
             prefix = "train_eval"
-            if os.path.exists(os.path.join(args.result_dir, f"{prefix}_gold.txt")):
-                os.remove(os.path.join(args.result_dir, f"{prefix}_gold.txt"))
+            # if os.path.exists(os.path.join(args.result_dir, f"{prefix}_gold.txt")):
+            #     os.remove(os.path.join(args.result_dir, f"{prefix}_gold.txt"))
 
-            if os.path.exists(os.path.join(args.result_dir, f"{prefix}_pred.txt")):
-                os.remove(os.path.join(args.result_dir, f"{prefix}_pred.txt"))
+            # if os.path.exists(os.path.join(args.result_dir, f"{prefix}_pred.txt")):
+            #     os.remove(os.path.join(args.result_dir, f"{prefix}_pred.txt"))
             
             for i, data in enumerate(val_loader):
                 question = data['question'].to(device)
@@ -191,7 +233,11 @@ def train(args):
                 og_query = data['og_query']
                 db_id = data['db_id']
 
-                output, words = model(question, query)
+                if args.model_type == "lstm_lstm" or  args.model_type == "lstm_lstm_attn":
+                    output, words = model(question, query)
+                else:
+                    ques_attn_mask = data['ques_attn_mask'].to(device)
+                    output, words = model(question, ques_attn_mask, query)
                 output = output.reshape(-1, output.shape[2])
                 query = query.reshape(-1)    
                 loss = criterion(output, query)
@@ -250,10 +296,15 @@ def train(args):
 
 def model_eval(args, prefix, model=None, de_word2idx = None, val_loader=None):
     if val_loader == None:
-        val_dataset = Text2SQLDataset(args.processed_data, "val")
+        if args.model_type == "bert_lstm_attn_frozen" or args.model_type == "bert_lstm_attn_tuned":
+            val_dataset = Text2SQLBertDataset(args.processed_data, "val")
+            val_loader = DataLoader(val_dataset, batch_size = args.batch_size, shuffle=False, 
+            num_workers=args.num_workers, collate_fn=collate_bert)
+        else:
+            val_dataset = Text2SQLDataset(args.processed_data, "val")
 
-        val_loader = DataLoader(val_dataset, batch_size = args.batch_size, shuffle=False, 
-        num_workers=args.num_workers, collate_fn=collate)
+            val_loader = DataLoader(val_dataset, batch_size = args.batch_size, shuffle=False, 
+            num_workers=args.num_workers, collate_fn=collate)
 
         de_word2idx = val_dataset.de_word2idx
 
@@ -284,6 +335,7 @@ def model_eval(args, prefix, model=None, de_word2idx = None, val_loader=None):
     start_token = de_word2idx["<sos>"]
     end_token = de_word2idx["<eos>"]
     target_vocab_size = len(de_word2idx)
+    decoder_hidden_units = args.de_hidden
 
     for i, data in enumerate(val_loader):
         
@@ -296,8 +348,14 @@ def model_eval(args, prefix, model=None, de_word2idx = None, val_loader=None):
         max_target_len = query.shape[1]
 
         words = torch.zeros(batch_size, max_target_len).to(args.device)
+        if args.model_type == "lstm_lstm" or  args.model_type == "lstm_lstm_attn":            
+            encoder_out, (hidden, cell) = model.encoder(question)
+        else:
+            ques_attn_mask = data['ques_attn_mask'].to(device)
+            encoder_out = model.encoder(question, ques_attn_mask)
+            hidden = torch.zeros(1, batch_size, decoder_hidden_units).to(args.device)
+            cell = torch.zeros(1, batch_size, decoder_hidden_units).to(args.device)
 
-        encoder_out, (hidden, cell) = model.encoder(question)
         if args.search_type == "beam":
             for b in range(batch_size):
                 if args.model_type == "lstm_lstm":
@@ -335,7 +393,10 @@ if __name__ == "__main__":
 
     args.data_dir = os.path.relpath(args.data_dir)
     args.processed_data = os.path.relpath(args.processed_data)
-    extension = args.model_type.lower() + "_" + str(args.en_num_layers) + "_" + str(args.de_num_layers) + "_" + str(args.en_hidden) + "_" + str(args.de_hidden) + "_" + str(args.embed_dim) + "_" + str(args.batch_size) + "_" + str(args.epochs)
+    if args.model_type == "bert_lstm_attn_tuned":
+        extension = args.model_type.lower() + str(args.bert_tune_layers) + "_" + str(args.lr) + "_" + str(args.en_num_layers) + "_" + str(args.de_num_layers) + "_" + str(args.en_hidden) + "_" + str(args.de_hidden) + "_" + str(args.embed_dim) + "_" + str(args.batch_size) + "_" + str(args.epochs)    
+    else:
+        extension = args.model_type.lower() + "_" + str(args.lr) + "_" + str(args.en_num_layers) + "_" + str(args.de_num_layers) + "_" + str(args.en_hidden) + "_" + str(args.de_hidden) + "_" + str(args.embed_dim) + "_" + str(args.batch_size) + "_" + str(args.epochs)
     args.checkpoint_dir = os.path.join(os.path.relpath(args.checkpoint_dir), extension)
     args.result_dir = os.path.join(os.path.relpath(args.result_dir), extension)
 

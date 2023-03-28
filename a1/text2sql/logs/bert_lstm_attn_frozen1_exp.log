@@ -1,0 +1,34 @@
+2023-03-26 18:18:08.920046: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcusolver.so.11'; dlerror: libcusolver.so.11: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/cuda-11.0/lib64:/usr/local/cuda-11.0/lib64
+2023-03-26 18:18:08.921825: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/cuda-11.0/lib64:/usr/local/cuda-11.0/lib64
+2023-03-26 18:18:08.921845: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1835] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+Some weights of the model checkpoint at bert-base-cased were not used when initializing BertModel: ['cls.predictions.decoder.weight', 'cls.seq_relationship.weight', 'cls.predictions.transform.dense.weight', 'cls.predictions.transform.LayerNorm.weight', 'cls.predictions.transform.LayerNorm.bias', 'cls.predictions.bias', 'cls.predictions.transform.dense.bias', 'cls.seq_relationship.bias']
+- This IS expected if you are initializing BertModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Namespace(batch_size=32, beam_size=1, bert_tune_layers=-1, checkpoint_dir='checkpoints/bert_lstm_attn_frozen_1_1_768_768_300_32_200', data_dir='data', de_hidden=768, de_num_layers=1, device=device(type='cuda'), embed_dim=300, en_hidden=768, en_num_layers=1, epochs=200, model_type='bert_lstm_attn_frozen', num_workers=24, processed_data='processed_data', restore=False, result_dir='results/bert_lstm_attn_frozen_1_1_768_768_300_32_200', search_type='beam')
+Running on device: cuda
+Loading Bert Encoder...
+BERT Encoder with frozen embeddings.
+Loading Seq2Seq LSTM Attention Decoder...
+Dataset Length = 7754
+Encoder Vocab Size = , Decoder Vocab Size = 2342
+Dataset Length = 1939
+Encoder Vocab Size = , Decoder Vocab Size = 2342
+
+
+
+|===================================== Epoch: 0 =====================================|
+/usr/local/lib/python3.7/dist-packages/torch/nn/modules/rnn.py:61: UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.3 and num_layers=1
+  "num_layers={}".format(dropout, num_layers))
+Evaluating model on val data.
+Running evaluation script...
+using existing model...
+Evaluating model on val data.
+Traceback (most recent call last):
+  File "train.py", line 410, in <module>
+    train(args)
+  File "train.py", line 237, in train
+    exec_accu, exact_match_accu = model_eval(args, prefix, model, val_dataset.de_word2idx, val_loader)
+  File "train.py", line 344, in model_eval
+    encoder_out = self.encoder(question, ques_attn_mask)
+NameError: name 'self' is not defined
