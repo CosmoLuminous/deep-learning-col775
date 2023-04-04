@@ -5,15 +5,10 @@ from utils import *
 import pandas as pd
 
 SPECIAL_TOKENS = ["<pad>", "<unk>", "<sos>", "<eos>", "<num_value>", "<str_value>"]
-SQL_KEYWORDS = ["t"+str(i+1) for i in range(10)] + [".", ",", "(", ")", "in", "not", "and", "between", "or", "where",
-            "except", "union", "intersect",
-            "group", "by", "order", "limit", "having","asc", "desc",
-            "count", "sum", "avg", "max", "min",
-           "<", ">", "=", "!=", ">=", "<=",
-            "like",
-            "distinct","*",
-            "join", "on", "as", "select", "from"
-           ] 
+SQL_KEYWORDS = ["t"+str(i+1) for i in range(10)] + [".", ",", "(", ")", "in", "not", "and", "between", "or", "where"] + ["except", "union", "intersect",
+            "group", "by", "order", "limit", "having","asc", "desc"] + ["count", "sum", "avg", "max", "min",
+           "<", ">", "=", "!=", ">=", "<="] + ["like", "distinct", "*", "join", "on", "as", "select", "from"]
+
 SQL_KEYWORDS = dict(zip(SQL_KEYWORDS, [10]*len(SQL_KEYWORDS)))
 
 def generate_schema_vocab(file_path):

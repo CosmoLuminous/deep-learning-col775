@@ -156,7 +156,7 @@ class LayerNorm(nn.Module):
 
 
 class GroupNorm(nn.Module):
-    def __init__(self, num_features, eps=1e-5, group=8, affine=True):
+    def __init__(self, num_features, eps=1e-5, group=4, affine=True):
         super(GroupNorm,self).__init__()
         self.eps = torch.tensor(eps)
         self.num_features = num_features

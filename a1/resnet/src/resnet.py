@@ -11,7 +11,7 @@ import torch.nn.functional as F
 from src.normalization import NoNorm, BatchNorm, InstanceNorm, LayerNorm, GroupNorm, BatchInstanceNorm
 
 def layer_normalization(dim, norm_type):
-    if norm_type == "torch_bn":
+    if norm_type == "torch_bn" or norm_type == "inbuilt":
         return nn.BatchNorm2d(dim)
 
     elif norm_type == "bn":

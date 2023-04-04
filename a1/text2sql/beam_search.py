@@ -36,7 +36,8 @@ def beam_search(args, model, en_ht, en_ct, start_token, end_token, max_target_le
                 new_candidate = (new_seq, (ht, ct), updated_score)
                 new_beam.append(new_candidate)
 
-        new_beam = sorted(new_beam, reverse=True, key=lambda x: x[2])
+        # new_beam = sorted(new_beam, reverse=False, key=lambda x: x[2])
+        new_beam.sort(key=lambda x: x[2])
         beam = new_beam[:beam_size]
         i += 1
 
@@ -47,6 +48,46 @@ def beam_search(args, model, en_ht, en_ct, start_token, end_token, max_target_le
         decoded_words[:, t] = torch.LongTensor([best_candidate[t]])
     
     return decoded_words
+
+
+
+# def beam_search_bak(args, model, en_ht, en_ct, start_token, end_token, max_target_len = 80, beam_size = 3):
+#     beam = [([start_token], (en_ht, en_ct), 0)]
+#     # print("Beam Search input hidden and cell shape, start and end tokens", en_ht.shape, en_ct.shape, start_token, end_token)
+
+#     i = 0
+#     while i < max_target_len -1:
+#         new_beam = []
+#         for sequence, (ht, ct), score in beam:
+#             prev_token = [sequence[-1]] #get first token for each beam
+#             prev_token = torch.LongTensor(prev_token).to(args.device)
+
+#             decoder_out, (ht, ct) = model.decoder(prev_token, (ht, ct)) #pass through decoder
+
+#             decoder_out = decoder_out.squeeze(1)
+#             top_info = decoder_out.topk(beam_size, dim=1) #get top k=beam_size possible word indices and their values
+#             top_vals, top_inds = top_info
+
+#             for j in range(beam_size):
+#                 new_word_idx = top_inds[0][j]                
+#                 new_seq = sequence + [new_word_idx.item()]
+#                 new_word_prob = torch.log(top_vals[0][j])
+#                 updated_score = score - new_word_prob
+#                 new_candidate = (new_seq, (ht, ct), updated_score)
+#                 new_beam.append(new_candidate)
+
+#         # new_beam = sorted(new_beam, reverse=True, key=lambda x: x[2])
+#         new_beam.sort(key=lambda x: x[2])
+#         beam = new_beam[:beam_size]
+#         i += 1
+
+#     best_candidate = beam[0][0] #return best candidate based on score
+#     decoded_words = torch.zeros(1, max_target_len)
+
+#     for t in range(max_target_len):
+#         decoded_words[:, t] = torch.LongTensor([best_candidate[t]])
+    
+#     return decoded_words
 
 def beam_search_attn_decoder(args, model, encoder_out, en_ht, en_ct, start_token, end_token, max_target_len = 80, beam_size = 3):
     beam = [([start_token], (en_ht, en_ct), 0)]
@@ -73,7 +114,8 @@ def beam_search_attn_decoder(args, model, encoder_out, en_ht, en_ct, start_token
                 new_candidate = (new_seq, (ht, ct), updated_score)
                 new_beam.append(new_candidate)
 
-        new_beam = sorted(new_beam, reverse=True, key=lambda x: x[2])
+        # new_beam = sorted(new_beam, reverse=True, key=lambda x: x[2])
+        new_beam.sort(key=lambda x: x[2])
         beam = new_beam[:beam_size]
         i += 1
 

@@ -14,19 +14,19 @@ NUM_VALUE_TOKEN = "<num_value>"
 STR_VALUE_TOKEN = "<str_value>"
 VALUE_NUM_SYMBOL = "{value}"
 
-def sanatize_string(s):
+# def sanatize_string(s):
     
-    s = s.strip().lower()
-    s = s.replace("\t", " ").replace(";", " ; ")
-    s = s.replace(",", " , ").replace("?", " ? ")
-    s = s.replace(")", " ) ").replace("(", " ( ")
-    s = s.replace("> =", ">=").replace("! =", "!=").replace("< =", "<=").replace("< >", "<>")
-    s = s.replace(">=", " >= ").replace("<=", " <= ")
-    s = s.replace(">", " > ").replace("<", " < ")
-    s = s.replace("!=", " != ").replace("=", " = ")
-    s = s.replace("<>", " <> ")
+#     s = s.strip().lower()
+#     s = s.replace("\t", " ").replace(";", " ; ")
+#     s = s.replace(",", " , ").replace("?", " ? ")
+#     s = s.replace(")", " ) ").replace("(", " ( ")
+#     s = s.replace("> =", ">=").replace("! =", "!=").replace("< =", "<=").replace("< >", "<>")
+#     s = s.replace(">=", " >= ").replace("<=", " <= ")
+#     s = s.replace(">", " > ").replace("<", " < ")
+#     s = s.replace("!=", " != ").replace("=", " = ")
+#     s = s.replace("<>", " <> ")
 
-    return s
+#     return s
 
 def identify_values(s):
     # identify string or number values

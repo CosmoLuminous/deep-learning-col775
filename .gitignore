@@ -5,7 +5,12 @@ notebooks/
 a1/resnet/data/
 a1/resnet/refs/
 a1/resnet/checkpoints/
-
+a1/text2sql/data/
+a1/text2sql/refs/
+a1/text2sql/checkpoints/
+a1/text2sql/.vector_cache/
+a1/resnet/models/
+a1/text2sql/models/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

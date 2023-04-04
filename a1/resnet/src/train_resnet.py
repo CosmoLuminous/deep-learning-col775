@@ -238,7 +238,7 @@ def model_eval(args, test_loader, train_loader, val_loader):
 
     test_accuracy = "Test Accuracy = " + str(accu) + "%"
     test_micro_f1 = "Test Micro-F1 Score = " + str(micro_f1)
-    test_macro_f1 = "Test Micro-F1 Score = " + str(macro_f1)
+    test_macro_f1 = "Test Macro-F1 Score = " + str(macro_f1)
 
     actuals = []
     predictions = []
@@ -282,7 +282,7 @@ def model_eval(args, test_loader, train_loader, val_loader):
 
     val_accuracy = "Val Accuracy = " + str(accu) + "%"
     val_micro_f1 = "Val Micro-F1 Score = " + str(micro_f1)
-    val_macro_f1 = "Val Micro-F1 Score = " + str(macro_f1)
+    val_macro_f1 = "Val Macro-F1 Score = " + str(macro_f1)
 
     test_result = [
         EXP_NAME, test_accuracy, test_micro_f1, test_macro_f1, train_accuracy,

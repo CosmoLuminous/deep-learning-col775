@@ -25,7 +25,7 @@ def get_parser():
     Generate a parameter parser
     """
     # parse parameters
-    parser = argparse.ArgumentParser(description="Text2SQL")
+    parser = argparse.ArgumentParser(description="Text2SQL Inference")
 
     # path to data files.
     parser.add_argument("--test_data_file", type=str, help="Test data file path.")
@@ -251,7 +251,7 @@ def model_eval(args, prefix="test", model=None, de_word2idx = None, val_loader=N
     with open(pred_file, "r") as f:
         pred_file_content = f.readlines()
 
-    df_pred = pd.DataFrame([line for line in pred_file_content])
+    df_pred = pd.DataFrame([line.replace(" \n", "") for line in pred_file_content])
     df_pred.to_csv(args.output_file, index=False, header=False)
 
     return exec_accu, exact_match_accu 
